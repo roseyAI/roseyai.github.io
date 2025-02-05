@@ -1,157 +1,130 @@
-const logotext = "JOHN";
+const logotext = "ROSE";
 const meta = {
-    title: "John Doe",
-    description: "I’m John Doe data scientist _ Full stack devloper,currently working in Berlin",
+    title: "Rose Ann S. Renolla",
+    description: "I'm Rose Ann Renolla, a Marketing Specialist and Executive Assistant with expertise in digital marketing, workflow automation, and CRM management",
 };
 
 const introdata = {
-    title: "I’m John Doe",
+    title: "I'm Rose Ann Renolla",
     animated: {
-        first: "I love coding",
-        second: "I code cool websites",
-        third: "I develop mobile apps",
+        first: "I optimize operations",
+        second: "I automate workflows",
+        third: "I enhance digital marketing",
     },
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum",
-    your_img_url: "https://images.unsplash.com/photo-1514790193030-c89d266d5a9d",
+    description: "Detail-oriented Executive Assistant & Operations Specialist with 5+ years of experience in executive support, workflow automation, and digital marketing.",
+    your_img_url: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80",
 };
 
 const dataabout = {
-    title: "abit about my self",
-    aboutme: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis dolor id ligula semper elementum feugiat pretium nulla. Nunc non commodo dolor. Nunc mollis dignissim facilisis. Morbi ut magna ultricies.",
+    title: "About myself",
+    aboutme: "As a Marketing Specialist and Executive Assistant with over 5 years of experience, I specialize in optimizing operations, implementing digital marketing strategies, and streamlining workflows through automation. My expertise spans across Shopify management, CRM tools, and project management platforms, allowing me to deliver comprehensive solutions that enhance operational efficiency and drive business growth.",
 };
+
 const worktimeline = [{
-        jobtitle: "Designer of week",
-        where: "YAdfi",
-        date: "2020",
+        jobtitle: "Marketing & Operations Specialist",
+        where: "HelpFlow",
+        date: "2025-Present",
     },
     {
-        jobtitle: "Designer of week",
-        where: "Jamalya",
-        date: "2019",
+        jobtitle: "QA Analyst/Customer Experience Specialist",
+        where: "HelpFlow",
+        date: "2021-2025",
     },
     {
-        jobtitle: "Designer of week",
-        where: "ALquds",
-        date: "2019",
+        jobtitle: "Email Campaign Manager",
+        where: "Gowor Publishing",
+        date: "2022-Present",
+    },
+    {
+        jobtitle: "Project Manager",
+        where: "Summit Digital",
+        date: "2017-2021",
     },
 ];
 
 const skills = [{
-        name: "Python",
+        name: "Operations & Project Management",
+        value: 95,
+    },
+    {
+        name: "Shopify & E-commerce",
         value: 90,
     },
     {
-        name: "Djano",
+        name: "Automation & Process Optimization",
         value: 85,
     },
     {
-        name: "Javascript",
-        value: 80,
-    },
-    {
-        name: "React",
-        value: 60,
-    },
-    {
-        name: "Jquery",
+        name: "Digital Marketing",
         value: 85,
+    },
+    {
+        name: "CRM Management",
+        value: 90,
     },
 ];
 
 const services = [{
-        title: "UI & UX Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+        title: "Operations Optimization",
+        description: "Streamline business processes using tools like Asana, Airtable, and Notion to improve operational efficiency.",
     },
     {
-        title: "Mobile Apps",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+        title: "Digital Marketing",
+        description: "Develop and execute email campaigns, manage CRM systems, and implement SEO strategies for business growth.",
     },
     {
-        title: "Wordpress Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+        title: "Workflow Automation",
+        description: "Create automated workflows using Zapier and AI tools to enhance productivity and reduce manual tasks.",
     },
 ];
 
 const dataportfolio = [{
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/800/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
         img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Email Campaign Management - 30% Increase in Engagement",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-
-    {
-        img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Shopify Platform Optimization Projects",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Workflow Automation Systems",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/550/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "CRM Implementation and Management",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Project Management Systems Setup",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Customer Experience Enhancement Projects",
         link: "#",
     },
 ];
 
 const contactConfig = {
-    YOUR_EMAIL: "name@domain.com",
-    YOUR_FONE: "(555)123-4567",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vehicula eu nunc et sollicitudin. Cras pulvinar, nisi at imperdiet pharetra. ",
-    // creat an emailjs.com account 
-    // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
+    YOUR_EMAIL: "rsrenolla@gmail.com",
+    YOUR_FONE: "+639054446784",
+    description: "Looking forward to connecting with you! Feel free to reach out for collaborations, opportunities, or just a friendly chat about operations optimization and digital marketing.",
     YOUR_SERVICE_ID: "service_id",
     YOUR_TEMPLATE_ID: "template_id",
     YOUR_USER_ID: "user_id",
 };
 
 const socialprofils = {
-    github: "https://github.com",
-    facebook: "https://facebook.com",
-    linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com",
+    linkedin: "https://linkedin.com/in/[your-linkedin]",
+    github: "https://github.com/[your-github]",
+    // Add other social profiles as needed
 };
+
 export {
     meta,
     dataabout,

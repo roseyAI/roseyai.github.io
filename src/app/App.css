@@ -40,3 +40,93 @@
         max-width: 1140px;
     }
 }
+
+/* Update background color */
+body {
+    background-color: black !important;
+}
+
+/* Update link and button colors */
+a {
+    color: #E0AF37 !important;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #E0AF37 !important;
+    opacity: 0.8;
+}
+
+.btn {
+    background-color: #E0AF37 !important;
+    border-color: #E0AF37 !important;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Update navigation links */
+.nav-link {
+    color: #E0AF37 !important;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+/* Update social media icons */
+.social-icons a {
+    color: #E0AF37 !important;
+}
+
+/* Update any text that should be gold */
+.theme-color {
+    color: #E0AF37 !important;
+}
+
+/* Update cursor color */
+.cursor__dot div {
+    background-color: #E0AF37 !important;
+}
+
+/* Add styles for form elements */
+input:focus, textarea:focus, select:focus {
+    border-color: #E0AF37 !important;
+    box-shadow: 0 0 0 0.2rem rgba(224, 175, 55, 0.25) !important;
+}
+
+/* Style text selection */
+::selection {
+    background-color: #E0AF37 !important;
+    color: black !important;
+}
+
+/* Style scrollbar (for webkit browsers) */
+::-webkit-scrollbar-thumb {
+    background-color: #E0AF37 !important;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: black;
+}
+
+/* Add a gold border to images on hover */
+img:hover {
+    border: 2px solid #E0AF37;
+    transition: border 0.3s ease;
+}
+
+/* Style headings with a subtle gold underline */
+h1, h2, h3, h4, h5, h6 {
+    border-bottom: 2px solid rgba(224, 175, 55, 0.3);
+    padding-bottom: 5px;
+}
+
+/* Style custom checkboxes */
+input[type="checkbox"]:checked {
+    background-color: #E0AF37 !important;
+    border-color: #E0AF37 !important;
+}

@@ -349,6 +349,66 @@ if (showMoreBtn) {
 }
 
 // ================================
+// Contact Form Submission
+// ================================
+
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            company: document.getElementById('company').value || 'Not provided',
+            message: document.getElementById('message').value,
+            timestamp: new Date().toISOString()
+        };
+
+        // Replace this URL with your n8n webhook URL
+        const n8nWebhookUrl = 'YOUR_N8N_WEBHOOK_URL_HERE';
+
+        // Disable submit button
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        try {
+            const response = await fetch(n8nWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                formStatus.className = 'form-status success';
+                formStatus.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
+                contactForm.reset();
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            formStatus.className = 'form-status error';
+            formStatus.textContent = '✗ Failed to send message. Please try reaching out via Upwork instead.';
+            console.error('Form submission error:', error);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+
+            // Hide status message after 5 seconds
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+            }, 5000);
+        }
+    });
+}
+
+// ================================
 // Loading Complete
 // ================================
 

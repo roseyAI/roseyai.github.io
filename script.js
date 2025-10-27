@@ -320,7 +320,36 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ================================
+// Show More Projects Button
+// ================================
+
+const showMoreBtn = document.getElementById('showMoreBtn');
+const hiddenProjects = document.querySelectorAll('.hidden-project');
+
+if (showMoreBtn) {
+    showMoreBtn.addEventListener('click', () => {
+        const isExpanded = showMoreBtn.classList.contains('expanded');
+
+        hiddenProjects.forEach(project => {
+            if (isExpanded) {
+                project.style.display = 'none';
+            } else {
+                project.style.display = 'flex';
+            }
+        });
+
+        if (isExpanded) {
+            showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
+            showMoreBtn.classList.remove('expanded');
+        } else {
+            showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Projects';
+            showMoreBtn.classList.add('expanded');
+        }
+    });
+}
+
+// ================================
 // Loading Complete
 // ================================
 
-console.log('%c✅ Portfolio loaded successfully!', 'color: #00FF41; font-weight: bold;');
+console.log('%c✅ Portfolio loaded successfully!', 'color: #7dd3a0; font-weight: bold;');

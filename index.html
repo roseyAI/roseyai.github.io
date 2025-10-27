@@ -53,32 +53,6 @@
     <section id="home" class="section hero-section">
         <div class="container">
             <div class="hero-content">
-                <div class="terminal-window">
-                    <div class="terminal-header">
-                        <span class="terminal-button red"></span>
-                        <span class="terminal-button yellow"></span>
-                        <span class="terminal-button green"></span>
-                        <span class="terminal-title">rose@automation</span>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="terminal-line">
-                            <span class="prompt">~$</span>
-                            <span class="command">whoami</span>
-                        </div>
-                        <div class="terminal-output">Rose</div>
-                        <div class="terminal-line">
-                            <span class="prompt">~$</span>
-                            <span class="command">cat role.txt</span>
-                        </div>
-                        <div class="terminal-output">Sales Operations & AI Automation Specialist</div>
-                        <div class="terminal-line">
-                            <span class="prompt">~$</span>
-                            <span id="typed-text" class="command"></span>
-                            <span class="cursor">|</span>
-                        </div>
-                    </div>
-                </div>
-
                 <h1 class="hero-title">
                     Transforming Manual Processes Into
                     <span class="highlight">Automated Solutions</span>
@@ -129,10 +103,7 @@
 
             <div class="about-content">
                 <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-user-circle"></i>
-                        <p class="image-note">Photo coming soon</p>
-                    </div>
+                    <img src="profile-photo.png" alt="Rose - AI Automation Specialist" class="profile-photo">
                 </div>
 
                 <div class="about-text">
@@ -154,29 +125,6 @@
                         complex processes, from lead capture to internal workflow optimization. My goal is to
                         free up your team's valuable time so they can focus on what truly matters!
                     </p>
-
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Systems are second nature</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>AI and No-Code Savvy</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Experience in startups and Fortune 500</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>No handholding needed</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>I just make it happen!</span>
-                        </div>
-                    </div>
 
                     <div class="about-cta">
                         <p class="cta-text">
@@ -473,7 +421,7 @@
                 </div>
 
                 <!-- Project 7 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">Shopify</span>
                         <span class="project-type">E-commerce</span>
@@ -496,7 +444,7 @@
                 </div>
 
                 <!-- Project 8 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">n8n</span>
                         <span class="project-type">Content Automation</span>
@@ -519,7 +467,7 @@
                 </div>
 
                 <!-- Project 9 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">Make.com</span>
                         <span class="project-type">Content Automation</span>
@@ -542,7 +490,7 @@
                 </div>
 
                 <!-- Project 10 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">Shopify</span>
                         <span class="project-type">E-commerce</span>
@@ -565,7 +513,7 @@
                 </div>
 
                 <!-- Project 11 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">Make.com</span>
                         <span class="project-type">Client Onboarding</span>
@@ -588,7 +536,7 @@
                 </div>
 
                 <!-- Project 12 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">Shopify</span>
                         <span class="project-type">Lead Generation</span>
@@ -610,7 +558,7 @@
                 </div>
 
                 <!-- Project 13 -->
-                <div class="project-card">
+                <div class="project-card hidden-project">
                     <div class="project-header">
                         <span class="project-tag">ActiveCampaign</span>
                         <span class="project-type">Lead Nurturing</span>
@@ -631,6 +579,12 @@
                         <span>Automated qualification • Behavioral tracking • Pipeline management</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="show-more-container">
+                <button id="showMoreBtn" class="btn btn-outline btn-large">
+                    <i class="fas fa-chevron-down"></i> Show More Projects
+                </button>
             </div>
         </div>
     </section>

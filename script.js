@@ -106,38 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
-// Bottom Navigation - Hide on Scroll Down, Show on Scroll Up
+// Right Navigation - Always Visible
 // ================================
 
-let lastScrollTop = 0;
 const bottomNav = document.getElementById('bottomNav');
-const scrollThreshold = 100;
 
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Show nav when near bottom of page
-    if ((window.innerHeight + scrollTop) >= document.body.offsetHeight - 100) {
-        bottomNav.style.opacity = '1';
-        bottomNav.style.transform = 'translateX(-50%) translateY(0)';
-        return;
-    }
-
-    // Hide/show based on scroll direction (optional - commented out for always visible)
-    /*
-    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-        // Scrolling down
-        bottomNav.style.opacity = '0';
-        bottomNav.style.transform = 'translateX(-50%) translateY(100px)';
-    } else {
-        // Scrolling up
-        bottomNav.style.opacity = '1';
-        bottomNav.style.transform = 'translateX(-50%) translateY(0)';
-    }
-    */
-
-    lastScrollTop = scrollTop;
-}, { passive: true });
+// Navigation is now always visible on the right side
+// No scroll-based hiding/showing needed
 
 // ================================
 // Matrix Background Effect (Optional Enhanced Version)

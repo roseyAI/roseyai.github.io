@@ -8,13 +8,13 @@
     --color-bg: #000000;
     --color-bg-secondary: #0a0a0a;
     --color-bg-tertiary: #111111;
-    --color-primary: #00FF41;
-    --color-primary-dark: #00cc34;
-    --color-primary-light: #33ff66;
+    --color-primary: #7dd3a0;
+    --color-primary-dark: #5fb884;
+    --color-primary-light: #9de0b8;
     --color-text: #ffffff;
     --color-text-secondary: #a0a0a0;
     --color-border: #1a1a1a;
-    --color-border-bright: #00FF41;
+    --color-border-bright: #7dd3a0;
 
     /* Fonts */
     --font-mono: 'JetBrains Mono', monospace;
@@ -137,26 +137,26 @@ strong {
 }
 
 /* ================================
-   Bottom Navigation
+   Right Sidebar Navigation
    ================================ */
 
 .bottom-nav {
     position: fixed;
-    bottom: var(--spacing-lg);
-    left: 50%;
-    transform: translateX(-50%);
+    right: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1000;
-    animation: slideUp 0.5s ease-out;
+    animation: slideIn 0.5s ease-out;
 }
 
-@keyframes slideUp {
+@keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateX(-50%) translateY(100px);
+        transform: translateY(-50%) translateX(100px);
     }
     to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(-50%) translateX(0);
     }
 }
 
@@ -165,10 +165,11 @@ strong {
     backdrop-filter: blur(10px);
     border: 1px solid var(--color-border);
     border-radius: 50px;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-xs);
     display: flex;
+    flex-direction: column;
     gap: var(--spacing-xs);
-    box-shadow: 0 10px 40px rgba(0, 255, 65, 0.1);
+    box-shadow: 0 10px 40px rgba(125, 211, 160, 0.1);
 }
 
 .nav-item {
@@ -185,12 +186,12 @@ strong {
 
 .nav-item:hover {
     color: var(--color-primary);
-    background: rgba(0, 255, 65, 0.1);
+    background: rgba(125, 211, 160, 0.1);
 }
 
 .nav-item.active {
     color: var(--color-primary);
-    background: rgba(0, 255, 65, 0.15);
+    background: rgba(125, 211, 160, 0.15);
 }
 
 .nav-item i {
@@ -997,10 +998,14 @@ strong {
 
     .bottom-nav {
         bottom: var(--spacing-md);
+        right: 50%;
+        top: auto;
+        transform: translateX(50%);
     }
 
     .nav-container {
         padding: 0.25rem 0.5rem;
+        flex-direction: row;
     }
 
     .nav-item {

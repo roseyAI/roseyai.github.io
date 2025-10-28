@@ -70,9 +70,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--spacing-sm);
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: clamp(1.125rem, 2.5vw, 1.375rem); }
 
 p {
     margin-bottom: var(--spacing-md);
@@ -113,15 +113,20 @@ strong {
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-xl);
+    position: relative;
 }
 
 .section-tag {
     font-family: var(--font-mono);
     font-size: 0.875rem;
     color: var(--color-primary);
-    display: block;
+    display: inline-block;
     margin-bottom: var(--spacing-sm);
-    opacity: 0.8;
+    opacity: 0.9;
+    padding: 0.25rem 0.75rem;
+    background: rgba(125, 211, 160, 0.05);
+    border: 1px solid rgba(125, 211, 160, 0.2);
+    border-radius: 4px;
 }
 
 .section-title {
@@ -161,20 +166,22 @@ strong {
 }
 
 .nav-container {
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border);
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--color-primary);
     border-radius: 50px;
-    padding: var(--spacing-sm) var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
-    box-shadow: 0 10px 40px rgba(125, 211, 160, 0.1);
+    gap: var(--spacing-sm);
+    box-shadow:
+        0 10px 40px rgba(125, 211, 160, 0.25),
+        0 0 30px rgba(125, 211, 160, 0.15);
 }
 
 .nav-item {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -182,20 +189,49 @@ strong {
     color: var(--color-text-secondary);
     transition: var(--transition);
     position: relative;
+    border: 1px solid transparent;
+}
+
+.nav-item::after {
+    content: attr(title);
+    position: absolute;
+    right: 70px;
+    background: var(--color-bg-tertiary);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-primary);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(10px);
+    transition: var(--transition);
+    font-family: var(--font-mono);
+    box-shadow: 0 5px 20px rgba(125, 211, 160, 0.2);
+}
+
+.nav-item:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .nav-item:hover {
     color: var(--color-primary);
-    background: rgba(125, 211, 160, 0.1);
+    background: rgba(125, 211, 160, 0.15);
+    border-color: var(--color-primary);
+    transform: scale(1.1);
 }
 
 .nav-item.active {
     color: var(--color-primary);
-    background: rgba(125, 211, 160, 0.15);
+    background: rgba(125, 211, 160, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 20px rgba(125, 211, 160, 0.3);
 }
 
 .nav-item i {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
 }
 
 /* ================================
@@ -343,6 +379,10 @@ strong {
     justify-content: center;
     position: relative;
     overflow: hidden;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(125, 211, 160, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(125, 211, 160, 0.04) 0%, transparent 50%),
+        var(--color-bg);
 }
 
 .hero-content {
@@ -365,11 +405,12 @@ strong {
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     margin-bottom: var(--spacing-xl);
-    max-width: 700px;
+    max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
 }
 
 .hero-cta {
@@ -393,7 +434,7 @@ strong {
 
 .stat-number {
     display: block;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color-primary);
     font-family: var(--font-mono);
@@ -401,7 +442,7 @@ strong {
 
 .stat-label {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -433,7 +474,9 @@ strong {
    ================================ */
 
 .about-section {
-    background: var(--color-bg-secondary);
+    background:
+        linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%),
+        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(125, 211, 160, 0.02) 50px, rgba(125, 211, 160, 0.02) 51px);
 }
 
 .about-content {
@@ -464,9 +507,10 @@ strong {
 }
 
 .about-text .intro-text {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     color: var(--color-text);
     margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
 }
 
 .about-highlights {
@@ -592,7 +636,10 @@ strong {
    ================================ */
 
 .projects-section {
-    background: var(--color-bg-secondary);
+    background:
+        radial-gradient(circle at 10% 20%, rgba(125, 211, 160, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 90% 90%, rgba(125, 211, 160, 0.03) 0%, transparent 50%),
+        var(--color-bg-secondary);
 }
 
 .projects-grid {
@@ -609,17 +656,40 @@ strong {
     transition: var(--transition);
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--color-primary);
+    opacity: 0;
+    transition: var(--transition);
 }
 
 .project-card:hover {
     border-color: var(--color-primary);
     transform: translateY(-4px);
-    box-shadow: 0 10px 40px rgba(0, 255, 65, 0.15);
+    box-shadow: 0 10px 40px rgba(125, 211, 160, 0.15);
+}
+
+.project-card:hover::before {
+    opacity: 1;
 }
 
 .project-card.featured {
     grid-column: span 2;
-    background: linear-gradient(135deg, rgba(0, 255, 65, 0.05) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(125, 211, 160, 0.05) 0%, transparent 100%);
+    border-color: rgba(125, 211, 160, 0.3);
+}
+
+.project-card.featured::before {
+    opacity: 0.5;
 }
 
 .project-header {
@@ -838,7 +908,9 @@ strong {
    ================================ */
 
 .contact-section {
-    background: var(--color-bg-secondary);
+    background:
+        linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%),
+        radial-gradient(circle at 50% 50%, rgba(125, 211, 160, 0.03) 0%, transparent 70%);
 }
 
 .contact-content {

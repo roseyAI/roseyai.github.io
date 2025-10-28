@@ -3,728 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rose - Sales Operations and AI Automation Specialist. 5+ years of experience building workflow automations that save time and streamline operations.">
-    <meta name="author" content="Rose">
-    <meta name="keywords" content="AI Automation, Sales Operations, n8n, Make.com, Zapier, Workflow Automation, CRM, Business Automation">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="Rose - AI Automation & Operations Specialist">
-    <meta property="og:description" content="Transforming manual bottlenecks into seamless automated solutions">
-    <meta property="og:type" content="website">
-
-    <title>Rose - AI Automation & Operations Specialist</title>
-
-    <!-- Fonts -->
+    <title>Rose - AI Automation Specialist</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav" id="bottomNav">
-        <div class="nav-container">
-            <a href="#home" class="nav-item active" data-section="home" title="Home">
-                <i class="fas fa-home"></i>
-            </a>
-            <a href="#about" class="nav-item" data-section="about" title="About">
-                <i class="fas fa-user"></i>
-            </a>
-            <a href="#stack" class="nav-item" data-section="stack" title="Tech Stack">
-                <i class="fas fa-layer-group"></i>
-            </a>
-            <a href="#projects" class="nav-item" data-section="projects" title="Projects">
-                <i class="fas fa-briefcase"></i>
-            </a>
-            <a href="#contact" class="nav-item" data-section="contact" title="Contact">
-                <i class="fas fa-envelope"></i>
-            </a>
+    <!-- Header -->
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="logo">
+            <span class="wave">👋</span>
+            <h1>Hi, I'm Rose!</h1>
+        </div>
+
+        <a href="#contact" class="btn-get-started">Get Started</a>
+    </header>
+
+    <!-- Card Navigation -->
+    <nav class="card-nav" id="cardNav">
+        <div class="card-container">
+            <!-- About Card -->
+            <div class="nav-card">
+                <h2 class="card-title">About</h2>
+                <ul class="card-links">
+                    <li>
+                        <a href="about.html" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>My Story</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tech-stack.html" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Tech Stack</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Projects Card -->
+            <div class="nav-card">
+                <h2 class="card-title">Projects</h2>
+                <ul class="card-links">
+                    <li>
+                        <a href="projects.html#featured" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Featured Work</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="projects.html" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>All Projects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="projects.html#case-studies" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Case Studies</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="nav-card">
+                <h2 class="card-title">Contact</h2>
+                <ul class="card-links">
+                    <li>
+                        <a href="contact.html" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Contact Form</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.upwork.com/freelancers/~01c86edb65b24f814a" target="_blank" rel="noopener" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Upwork</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/rose-ann-renolla/" target="_blank" rel="noopener" class="card-link">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="section hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Transforming Manual Processes Into
-                    <span class="highlight">Automated Solutions</span>
-                </h1>
-
-                <p class="hero-subtitle">
-                    5+ years of experience streamlining operations and building AI-powered automations
-                    that save time and boost productivity.
-                </p>
-
-                <div class="hero-cta">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i> Let's Automate
-                    </a>
-                    <a href="#projects" class="btn btn-secondary">
-                        <i class="fas fa-code"></i> View Projects
-                    </a>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">16+</span>
-                        <span class="stat-label">Projects Delivered</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5+</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Client Satisfaction</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Animated Background -->
-        <div class="matrix-bg"></div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">// About Me</span>
-                <h2 class="section-title">Who I Am</h2>
-            </div>
-
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="profile-photo.png" alt="Rose - AI Automation Specialist" class="profile-photo">
-                </div>
-
-                <div class="about-text">
-                    <p class="intro-text">
-                        Hello, I'm <span class="highlight">Rose</span>! A Sales Operations and AI Automation Specialist
-                        with over 5+ years of experience supporting teams and streamlining processes.
-                    </p>
-
-                    <p>
-                        With over a decade of experience in <strong>customer success and operations</strong>,
-                        I specialize in transforming manual bottlenecks into seamless automated solutions.
-                        I don't just understand repetitive tasks—I've lived them. That's why I'm passionate
-                        about building systems that <strong>reduce manual work, bridge support gaps, and ensure
-                        smooth, self-sufficient operations.</strong>
-                    </p>
-
-                    <p>
-                        I leverage powerful tools like <strong>n8n, Airtable, Zapier, and Make</strong> to streamline
-                        complex processes, from lead capture to internal workflow optimization. My goal is to
-                        free up your team's valuable time so they can focus on what truly matters!
-                    </p>
-
-                    <div class="about-cta">
-                        <p class="cta-text">
-                            <i class="fas fa-laptop-code"></i>
-                            Currently seeking remote freelance roles and project collaborations focused on
-                            <strong>CRM and business automation.</strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Stack Section -->
-    <section id="stack" class="section stack-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">// Technical Arsenal</span>
-                <h2 class="section-title">Tech Stack</h2>
-            </div>
-
-            <div class="stack-grid">
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-robot"></i> Automation Platforms
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fas fa-cogs"></i>
-                            <span>n8n</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-bolt"></i>
-                            <span>Make.com</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-zap"></i>
-                            <span>Zapier</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-brain"></i> AI & ML Tools
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fas fa-sparkles"></i>
-                            <span>Google Gemini</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-comments"></i>
-                            <span>ChatGPT</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                            <span>Claude AI</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-database"></i> Data & CRM
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fas fa-table"></i>
-                            <span>Airtable</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-file-excel"></i>
-                            <span>Google Sheets</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <span>ActiveCampaign</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-shopping-cart"></i> E-commerce & APIs
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fas fa-shopping-bag"></i>
-                            <span>Shopify</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fab fa-wordpress"></i>
-                            <span>WordPress</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-plug"></i>
-                            <span>REST APIs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-comments"></i> Communication
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fab fa-telegram"></i>
-                            <span>Telegram Bots</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fab fa-slack"></i>
-                            <span>Slack</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>Email APIs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-code"></i> Development
-                    </h3>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <i class="fas fa-code-branch"></i>
-                            <span>API Integration</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-database"></i>
-                            <span>Data Processing</span>
-                        </div>
-                        <div class="tech-item">
-                            <i class="fas fa-flask"></i>
-                            <span>Webhook Design</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">// Portfolio</span>
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Automation solutions that deliver real business impact</p>
-            </div>
-
-            <div class="projects-grid">
-                <!-- Project 1 - Featured -->
-                <div class="project-card featured">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">Lead Automation</span>
-                    </div>
-                    <h3 class="project-title">Automated Lead Follow-up System</h3>
-                    <p class="project-description">
-                        Flexible automation template designed to handle consistent and timely follow-up with potential customers.
-                        Monitors new leads, sends immediate welcome emails, and triggers smart follow-ups based on engagement.
-                        Increases conversions by 35-65% while saving 3-7 hours weekly.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>Email Automation</span>
-                        <span>Lead Scoring</span>
-                        <span>CRM Integration</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>35-65% more conversions • Saves 3-7 hours/week • Instant responses</span>
-                    </div>
-                </div>
-
-                <!-- Project 2 - Featured -->
-                <div class="project-card featured">
-                    <div class="project-header">
-                        <span class="project-tag">ActiveCampaign</span>
-                        <span class="project-type">Lead Automation</span>
-                    </div>
-                    <h3 class="project-title">Multiple Lead Magnet Automation</h3>
-                    <p class="project-description">
-                        Lead magnet automation that delivers requested content while simultaneously segmenting contacts
-                        based on interests. Built custom ActiveCampaign form with conditional logic to automatically
-                        send targeted PDF resources. Eliminated manual process, saving 5-10 hours weekly.
-                    </p>
-                    <div class="project-tech">
-                        <span>ActiveCampaign</span>
-                        <span>WordPress</span>
-                        <span>Conditional Logic</span>
-                        <span>Auto-tagging</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Instant delivery • Smart segmentation • 5-10 hours saved/week</span>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">AI Chatbot</span>
-                    </div>
-                    <h3 class="project-title">AI Customer Service Chatbot for Shopify</h3>
-                    <p class="project-description">
-                        Developed an intelligent customer service chatbot integrating Google Gemini AI
-                        to provide personalized 24/7 customer support with order tracking capabilities.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>Google Gemini</span>
-                        <span>Shopify API</span>
-                        <span>AI Agent</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>24/7 automated support • Reduced response time • Scalable solution</span>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-tag">Make</span>
-                        <span class="project-type">AI Chatbot</span>
-                    </div>
-                    <h3 class="project-title">Intelligent Telegram Customer Service Bot</h3>
-                    <p class="project-description">
-                        Built a sentiment-analyzing Telegram chatbot that auto-responds to positive messages
-                        and alerts teams for negative feedback in real-time. Supports multiple languages using Gemini LLM.
-                    </p>
-                    <div class="project-tech">
-                        <span>Make.com</span>
-                        <span>Telegram API</span>
-                        <span>Sentiment Analysis</span>
-                        <span>Email Alerts</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Instant triage • Multi-language support • Proactive issue resolution</span>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">Lead Generation</span>
-                    </div>
-                    <h3 class="project-title">Google Maps Business Scraper</h3>
-                    <p class="project-description">
-                        Automated data extraction system that scrapes business information from Google Maps
-                        with integrated processing and Google Sheets storage. Includes deduplication and smart data cleaning.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>SerpAPI</span>
-                        <span>Google Sheets</span>
-                        <span>Data Pipeline</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Automated lead generation • Deduplication • Location intelligence</span>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">AI Chatbot</span>
-                    </div>
-                    <h3 class="project-title">Telegram Calendar Booking Assistant</h3>
-                    <p class="project-description">
-                        Seamless appointment booking system through Telegram with Google Calendar integration.
-                        Uses AI to interpret natural language and convert to calendar actions. Perfect for restaurants, spas, and service businesses.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>Telegram</span>
-                        <span>Google Calendar</span>
-                        <span>OpenAI</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>No app switching • Natural language • Automated confirmations</span>
-                    </div>
-                </div>
-
-                <!-- Project 7 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Shopify</span>
-                        <span class="project-type">E-commerce</span>
-                    </div>
-                    <h3 class="project-title">Dynamic Retail & Trade Pricing Display</h3>
-                    <p class="project-description">
-                        Custom Shopify Liquid solution that displays different pricing tiers based on
-                        customer type (retail vs. wholesale). Shows both RRP and trade prices for approved customers.
-                    </p>
-                    <div class="project-tech">
-                        <span>Shopify Liquid</span>
-                        <span>Custom Code</span>
-                        <span>B2B Features</span>
-                        <span>Metafields</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>B2B functionality • Dynamic pricing • Enhanced UX</span>
-                    </div>
-                </div>
-
-                <!-- Project 8 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">Content Automation</span>
-                    </div>
-                    <h3 class="project-title">X Post Generator and Publisher</h3>
-                    <p class="project-description">
-                        Automated content creation system that generates and publishes posts to X (Twitter).
-                        Uses AI to create platform-optimized content from topic inputs and auto-publishes with confirmation.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>OpenAI</span>
-                        <span>X API</span>
-                        <span>Form Input</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>AI-powered content • Auto-publishing • Time-efficient</span>
-                    </div>
-                </div>
-
-                <!-- Project 9 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Make.com</span>
-                        <span class="project-type">Content Automation</span>
-                    </div>
-                    <h3 class="project-title">RSS-to-Multi-Platform Content Automation</h3>
-                    <p class="project-description">
-                        Monitors RSS feeds and generates platform-specific social media content for YouTube, Instagram,
-                        Facebook, and LinkedIn. Reduced manual content creation time by 90% while maintaining consistency.
-                    </p>
-                    <div class="project-tech">
-                        <span>Make.com</span>
-                        <span>RSS Feed</span>
-                        <span>AI Generation</span>
-                        <span>Google Docs</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>90% time savings • 6+ platforms • Brand consistency</span>
-                    </div>
-                </div>
-
-                <!-- Project 10 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Shopify</span>
-                        <span class="project-type">E-commerce</span>
-                    </div>
-                    <h3 class="project-title">Automated Shopify Giveaway Campaign</h3>
-                    <p class="project-description">
-                        Fully automated giveaway using Social Boost app with ActiveCampaign integration.
-                        Generated 527% Instagram growth and 6,150% email list increase with zero manual work post-launch.
-                    </p>
-                    <div class="project-tech">
-                        <span>Shopify</span>
-                        <span>Social Boost</span>
-                        <span>ActiveCampaign</span>
-                        <span>Landing Page</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>527% follower growth • 6,150% email growth • 18.2K views</span>
-                    </div>
-                </div>
-
-                <!-- Project 11 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Make.com</span>
-                        <span class="project-type">Client Onboarding</span>
-                    </div>
-                    <h3 class="project-title">Client Onboarding Automation</h3>
-                    <p class="project-description">
-                        Eliminates manual onboarding tasks by auto-creating folders, updating databases, sending welcome emails,
-                        and triggering notifications. Saves 2-3 hours per client using Google Suite integration.
-                    </p>
-                    <div class="project-tech">
-                        <span>Make.com</span>
-                        <span>Google Forms</span>
-                        <span>Gmail</span>
-                        <span>Telegram</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>2-3 hours saved/client • Fully customizable • Scalable</span>
-                    </div>
-                </div>
-
-                <!-- Project 12 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Shopify</span>
-                        <span class="project-type">Lead Generation</span>
-                    </div>
-                    <h3 class="project-title">Shopify Newsletter Form Enhancement</h3>
-                    <p class="project-description">
-                        Added first and last name fields to Prestige theme newsletter form for better personalization
-                        and segmentation. Custom Liquid code modification improves email marketing effectiveness.
-                    </p>
-                    <div class="project-tech">
-                        <span>Shopify Liquid</span>
-                        <span>Form Customization</span>
-                        <span>CRM Integration</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Better personalization • Improved segmentation • Native integration</span>
-                    </div>
-                </div>
-
-                <!-- Project 13 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">ActiveCampaign</span>
-                        <span class="project-type">Lead Nurturing</span>
-                    </div>
-                    <h3 class="project-title">Website Engagement & Nurturing Automations</h3>
-                    <p class="project-description">
-                        Three powerful CRM automations: tracks lead engagement, nurtures interest with targeted content,
-                        and qualifies leads with pipeline management. Includes 30-day follow-up workflows.
-                    </p>
-                    <div class="project-tech">
-                        <span>ActiveCampaign</span>
-                        <span>Website Tracking</span>
-                        <span>Sales Pipeline</span>
-                        <span>Task Management</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Automated qualification • Behavioral tracking • Pipeline management</span>
-                    </div>
-                </div>
-
-                <!-- Project 14 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">n8n</span>
-                        <span class="project-type">CRM Automation</span>
-                    </div>
-                    <h3 class="project-title">ActiveCampaign Account Auto-Update System</h3>
-                    <p class="project-description">
-                        Automated workflow that syncs trade customer data from Google Sheets to ActiveCampaign.
-                        Intelligently creates new accounts or updates existing ones with business details including address, phone, and business type.
-                    </p>
-                    <div class="project-tech">
-                        <span>n8n</span>
-                        <span>ActiveCampaign</span>
-                        <span>Google Sheets</span>
-                        <span>Data Sync</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Automated data sync • Prevents duplicates • Real-time updates</span>
-                    </div>
-                </div>
-
-                <!-- Project 15 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Make.com</span>
-                        <span class="project-type">AI Chatbot</span>
-                    </div>
-                    <h3 class="project-title">Future Self Hotline - Voice Journal Bot</h3>
-                    <p class="project-description">
-                        Personal Telegram voice journal bot that captures voice messages, converts them to text,
-                        and uses AI to provide reflective responses. A unique blend of journaling and AI-powered self-reflection.
-                    </p>
-                    <div class="project-tech">
-                        <span>Make.com</span>
-                        <span>Telegram</span>
-                        <span>CloudConvert</span>
-                        <span>Voice Processing</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Voice-to-text • AI reflection • Personal growth tool</span>
-                    </div>
-                </div>
-
-                <!-- Project 16 -->
-                <div class="project-card hidden-project">
-                    <div class="project-header">
-                        <span class="project-tag">Make.com</span>
-                        <span class="project-type">Content Automation</span>
-                    </div>
-                    <h3 class="project-title">YouTube Vizard Video Processing Flow</h3>
-                    <p class="project-description">
-                        Advanced video processing workflow that integrates with YouTube and Vizard.
-                        Automates video content transformation and distribution for efficient social media management.
-                    </p>
-                    <div class="project-tech">
-                        <span>Make.com</span>
-                        <span>YouTube API</span>
-                        <span>Vizard</span>
-                        <span>Video Processing</span>
-                    </div>
-                    <div class="project-impact">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Automated video processing • Multi-platform distribution • Content repurposing</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="show-more-container">
-                <button id="showMoreBtn" class="btn btn-outline btn-large">
-                    <i class="fas fa-chevron-down"></i> Show More Projects
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">// Get In Touch</span>
-                <h2 class="section-title">Let's Build Something</h2>
-                <p class="section-subtitle">
-                    If you're tired of repetitive tasks eating into your day, let's connect.
-                    I can help you automate those processes and reclaim hours every week.
-                </p>
-            </div>
-
-            <div class="contact-content">
-                <div class="contact-form-wrapper">
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company">Company (Optional)</label>
-                            <input type="text" id="company" name="company" placeholder="Your company name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Tell me about your automation needs..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-large">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-
-                        <div id="formStatus" class="form-status"></div>
-                    </form>
-
-                    <div class="contact-info">
-                        <p class="contact-text">
-                            <i class="fas fa-envelope"></i>
-                            Prefer another way to connect?
-                        </p>
-                        <a href="https://www.upwork.com/freelancers/~01c86edb65b24f814a" target="_blank" rel="noopener" class="btn btn-secondary btn-large">
-                            <i class="fas fa-arrow-right"></i> View Upwork Profile
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p class="footer-text">
-                    <span class="prompt">~$</span>
-                    Built with passion for automation
-                </p>
-                <p class="footer-copyright">
-                    © 2025 Rose. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

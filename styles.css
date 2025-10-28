@@ -85,9 +85,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-lg) var(--spacing-xl);
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: var(--spacing-xl);
+    background: transparent;
 }
 
 /* Hamburger Menu */
@@ -176,9 +175,7 @@ body {
 .card-nav {
     position: relative;
     z-index: 50;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-xl);
+    padding: 0 var(--spacing-xl) var(--spacing-xl);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);

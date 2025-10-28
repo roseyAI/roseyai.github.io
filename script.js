@@ -5,11 +5,17 @@
 
 const menuToggle = document.getElementById('menuToggle');
 const cardNav = document.getElementById('cardNav');
+const centerContent = document.querySelector('.center-content');
 
 if (menuToggle && cardNav) {
     menuToggle.addEventListener('click', () => {
         menuToggle.classList.toggle('active');
         cardNav.classList.toggle('active');
+
+        // Hide center content when menu is open
+        if (centerContent) {
+            centerContent.classList.toggle('hidden');
+        }
     });
 
     // Close menu when clicking outside
@@ -17,6 +23,7 @@ if (menuToggle && cardNav) {
         if (!menuToggle.contains(e.target) && !cardNav.contains(e.target)) {
             menuToggle.classList.remove('active');
             cardNav.classList.remove('active');
+            if (centerContent) centerContent.classList.remove('hidden');
         }
     });
 
@@ -25,6 +32,7 @@ if (menuToggle && cardNav) {
         if (e.key === 'Escape') {
             menuToggle.classList.remove('active');
             cardNav.classList.remove('active');
+            if (centerContent) centerContent.classList.remove('hidden');
         }
     });
 }

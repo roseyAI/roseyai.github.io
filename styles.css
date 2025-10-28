@@ -39,17 +39,31 @@
 
 body {
     font-family: var(--font-primary);
-    background-color: var(--color-bg);
+    background-color: var(--color-text-dark);
     color: var(--color-text-dark);
     min-height: 100vh;
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Container with rounded border */
+.main-container {
+    background-color: var(--color-bg);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 1400px;
+    min-height: calc(100vh - 2rem);
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
+    box-shadow: 0 25px 100px rgba(0, 0, 0, 0.3);
 }
 
 /* Dotted Background Pattern (like n8n) */
-body::before {
+.main-container::before {
     content: '';
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -260,10 +274,61 @@ body::before {
 }
 
 /* ================================
+   Center Content Area
+   ================================ */
+
+.center-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--spacing-2xl);
+    text-align: center;
+    opacity: 1;
+    transition: var(--transition);
+}
+
+.center-content.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero-message {
+    max-width: 600px;
+}
+
+.tagline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    line-height: 1.2;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ================================
    Responsive Design
    ================================ */
 
 @media (max-width: 768px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+
+    .main-container {
+        border-radius: 16px;
+        min-height: calc(100vh - 1rem);
+    }
+
     .header {
         padding: var(--spacing-md) var(--spacing-lg);
     }
@@ -303,6 +368,15 @@ body::before {
     .card-link {
         font-size: 1rem;
     }
+
+    .subtitle {
+        font-size: 2rem;
+    }
+
+    .center-content {
+        min-height: 50vh;
+        padding: var(--spacing-xl);
+    }
 }
 
 @media (max-width: 480px) {
@@ -317,5 +391,13 @@ body::before {
     .btn-get-started {
         padding: 0.5rem 1rem;
         font-size: 0.875rem;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
     }
 }

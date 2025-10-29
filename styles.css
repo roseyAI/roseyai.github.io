@@ -45,19 +45,10 @@ body {
     position: relative;
 }
 
-/* Main Container */
-.main-container {
-    width: 100%;
-    max-width: 700px;
-    min-height: 100vh;
-    margin: 0 auto;
-    position: relative;
-}
-
-/* Dotted Background Pattern (like n8n) */
-.main-container::before {
+/* Dotted Background Pattern (like n8n) - Full Width */
+body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -67,6 +58,16 @@ body {
     background-size: 24px 24px;
     z-index: 0;
     pointer-events: none;
+}
+
+/* Main Container */
+.main-container {
+    width: 100%;
+    max-width: 700px;
+    min-height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 /* ================================
@@ -79,10 +80,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-lg) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-md);
     background: var(--color-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: var(--spacing-sm);
+    border-radius: 12px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Hamburger Menu */
@@ -140,7 +144,7 @@ body {
 }
 
 .logo h1 {
-    font-size: 1.5rem;
+    font-size: 0.96rem;
     font-weight: 600;
     color: var(--color-text-dark);
 }
@@ -149,11 +153,11 @@ body {
 .btn-get-started {
     background: var(--color-text-dark);
     color: var(--color-text-light);
-    padding: 0.75rem 1.75rem;
-    border-radius: 12px;
+    padding: 0.6rem 1.4rem;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.64rem;
     transition: var(--transition);
     border: 2px solid var(--color-text-dark);
 }
@@ -226,7 +230,7 @@ body {
 
 .card-title {
     color: var(--color-text-light);
-    font-size: 2rem;
+    font-size: 1.28rem;
     font-weight: 600;
     margin-bottom: var(--spacing-lg);
 }
@@ -245,14 +249,14 @@ body {
     gap: var(--spacing-sm);
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    font-size: 1.125rem;
+    font-size: 0.72rem;
     padding: var(--spacing-sm);
     border-radius: 8px;
     transition: var(--transition);
 }
 
 .card-link i {
-    font-size: 1rem;
+    font-size: 0.64rem;
     transition: var(--transition);
 }
 
@@ -271,14 +275,14 @@ body {
    ================================ */
 
 .center-content {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    padding: var(--spacing-2xl);
     text-align: center;
+    width: 100%;
+    max-width: 600px;
     opacity: 1;
     transition: var(--transition);
 }
@@ -293,7 +297,7 @@ body {
 }
 
 .tagline {
-    font-size: 1.25rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--color-text-dark);
     margin-bottom: var(--spacing-sm);
@@ -301,7 +305,7 @@ body {
 }
 
 .subtitle {
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--color-text-dark);
     line-height: 1.2;
@@ -332,12 +336,12 @@ body {
     }
 
     .logo h1 {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     .btn-get-started {
         padding: 0.625rem 1.25rem;
-        font-size: 0.9375rem;
+        font-size: 0.75rem;
     }
 
     .card-nav {
@@ -355,15 +359,15 @@ body {
     }
 
     .card-title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .card-link {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 
     .subtitle {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
 
     .center-content {
@@ -378,19 +382,19 @@ body {
     }
 
     .logo h1 {
-        font-size: 1.125rem;
+        font-size: 0.9rem;
     }
 
     .btn-get-started {
         padding: 0.5rem 1rem;
-        font-size: 0.875rem;
+        font-size: 0.7rem;
     }
 
     .subtitle {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .tagline {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 }

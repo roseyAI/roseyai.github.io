@@ -100,7 +100,8 @@ body::before {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md) var(--spacing-lg);
-    margin: var(--spacing-md);
+    margin: var(--spacing-md) auto;
+    max-width: 800px;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 12px;
@@ -125,13 +126,18 @@ body::before {
 
 .icon-wrapper {
     display: flex;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2.75rem;
+    width: 2.75rem;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     transition: var(--transition);
     color: var(--color-text-dark);
+}
+
+.icon-wrapper svg {
+    width: 110%;
+    height: 110%;
 }
 
 .icon-nav-item:hover .icon-wrapper {
@@ -955,7 +961,7 @@ body::before {
     padding: var(--spacing-2xl) var(--spacing-xl);
     text-align: center;
     max-width: 800px;
-    margin: 0 auto var(--spacing-xl) auto;
+    margin: 0 auto 2.7rem auto;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 16px;

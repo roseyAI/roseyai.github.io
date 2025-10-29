@@ -809,6 +809,115 @@ body::before {
     margin-top: auto;
 }
 
+/* Detailed Project Styles */
+.detailed-project {
+    grid-column: 1 / -1;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.project-screenshot {
+    width: 100%;
+    border-radius: 12px;
+    margin: var(--spacing-lg) 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-details {
+    margin-top: var(--spacing-lg);
+}
+
+.detail-heading {
+    font-size: 1.04rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.problem-list,
+.benefits-list {
+    list-style: none;
+    padding-left: 0;
+    margin: var(--spacing-md) 0;
+}
+
+.problem-list li,
+.benefits-list li {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(26, 26, 26, 0.8);
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: var(--spacing-sm);
+}
+
+.problem-list li::before {
+    content: "⚠️";
+    position: absolute;
+    left: 0;
+}
+
+.benefits-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+.solution-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(26, 26, 26, 0.8);
+    margin: var(--spacing-md) 0;
+}
+
+.workflow-steps {
+    counter-reset: step-counter;
+    list-style: none;
+    padding-left: 0;
+    margin: var(--spacing-md) 0;
+}
+
+.workflow-steps > li {
+    counter-increment: step-counter;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(26, 26, 26, 0.8);
+    padding-left: 2rem;
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.workflow-steps > li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: var(--color-accent);
+    color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.72rem;
+}
+
+.workflow-steps ul {
+    list-style: disc;
+    margin-top: var(--spacing-xs);
+    padding-left: 1.5rem;
+}
+
+.workflow-steps ul li {
+    font-size: 0.88rem;
+    margin-bottom: var(--spacing-xs);
+}
+
 /* Responsive - Projects Page */
 @media (max-width: 768px) {
     .projects-grid {

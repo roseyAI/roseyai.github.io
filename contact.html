@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Rose</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+
+            <div class="logo">
+                <span class="wave">👋</span>
+                <h1>Hi, I'm Rose!</h1>
+            </div>
+
+            <a href="contact.html" class="btn-get-started">Get Started</a>
+        </header>
+
+        <!-- Contact Content -->
+        <main class="page-content">
+            <div class="content-wrapper">
+                <!-- Contact Section -->
+                <section class="contact-section">
+                    <h2 class="section-title">Let's Work Together</h2>
+                    <p class="contact-intro">
+                        Ready to automate your workflows and save hours every week? Fill out the form below and I'll get back to you within 24 hours.
+                    </p>
+
+                    <!-- Contact Form -->
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name *</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company" class="form-label optional">Company (Optional)</label>
+                            <input type="text" id="company" name="company" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea id="message" name="message" class="form-textarea" required placeholder="Tell me about your project or automation needs..."></textarea>
+                        </div>
+
+                        <button type="submit" class="form-button">Send Message</button>
+
+                        <div id="formMessage" class="form-message" style="display: none;"></div>
+                    </form>
+
+                    <!-- Additional Contact Links -->
+                    <div class="contact-links">
+                        <a href="https://www.upwork.com/freelancers/~01c86edb65b24f814a" target="_blank" rel="noopener" class="contact-link-card">
+                            <i class="fas fa-briefcase contact-link-icon"></i>
+                            <span class="contact-link-text">Upwork Profile</span>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/rose-ann-renolla/" target="_blank" rel="noopener" class="contact-link-card">
+                            <i class="fab fa-linkedin contact-link-icon"></i>
+                            <span class="contact-link-text">LinkedIn</span>
+                        </a>
+
+                        <a href="mailto:hello@roseyai.com" class="contact-link-card">
+                            <i class="fas fa-envelope contact-link-icon"></i>
+                            <span class="contact-link-text">Email Me</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formMessage = document.getElementById('formMessage');
+            const submitButton = this.querySelector('.form-button');
+
+            // Disable button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                message: document.getElementById('message').value
+            };
+
+            // TODO: Replace with your n8n webhook URL
+            const webhookURL = 'YOUR_N8N_WEBHOOK_URL_HERE';
+
+            try {
+                // Uncomment when you have the webhook URL
+                // const response = await fetch(webhookURL, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(formData)
+                // });
+
+                // if (response.ok) {
+                //     formMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                //     formMessage.className = 'form-message success';
+                //     this.reset();
+                // } else {
+                //     throw new Error('Failed to send message');
+                // }
+
+                // Temporary success message (remove when webhook is set up)
+                formMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                formMessage.className = 'form-message success';
+                this.reset();
+
+            } catch (error) {
+                formMessage.textContent = 'Oops! Something went wrong. Please try again or contact me directly via email.';
+                formMessage.className = 'form-message error';
+            }
+
+            formMessage.style.display = 'block';
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Message';
+        });
+    </script>
+</body>
+</html>

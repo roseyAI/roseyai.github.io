@@ -530,8 +530,18 @@ body::before {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 1.5rem;
     gap: var(--spacing-lg);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .profile-photo {
@@ -563,7 +573,7 @@ body::before {
 
 /* Work History Section */
 .work-history-section {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 1.5rem;
 }
 
 .timeline {
@@ -634,7 +644,7 @@ body::before {
 
 /* Tech Stack Section */
 .tech-stack-section {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 1.5rem;
 }
 
 .tech-grid {
@@ -856,12 +866,12 @@ body::before {
    ================================ */
 
 .contact-section-wrapper {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 1.5rem;
 }
 
 .contact-text-container {
     max-width: 800px;
-    margin: 0 auto 2.7rem auto;
+    margin: 0 auto 1.5rem auto;
     padding: var(--spacing-xl);
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
@@ -974,7 +984,7 @@ body::before {
 
 .contact-links-container {
     max-width: 800px;
-    margin: 2.7rem auto 0 auto;
+    margin: 1.5rem auto 0 auto;
     padding: var(--spacing-xl);
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
@@ -1046,7 +1056,7 @@ body::before {
     padding: var(--spacing-2xl) var(--spacing-xl);
     text-align: center;
     max-width: 800px;
-    margin: 0 auto 2.7rem auto;
+    margin: 0 auto 1.5rem auto;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 16px;

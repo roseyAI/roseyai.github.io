@@ -525,6 +525,15 @@ body::before {
     align-items: flex-start;
 }
 
+.profile-section-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    gap: var(--spacing-lg);
+}
+
 .profile-photo {
     width: 200px;
     height: 200px;
@@ -533,12 +542,20 @@ body::before {
     flex-shrink: 0;
 }
 
+.profile-photo-center {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: var(--spacing-md) 0;
+}
+
 .profile-text {
     flex: 1;
 }
 
 .bio {
-    font-size: 0.88rem;
+    font-size: 0.99rem;
     line-height: 1.7;
     color: var(--color-text-dark);
     margin-bottom: var(--spacing-md);
@@ -573,7 +590,7 @@ body::before {
 }
 
 .job-title {
-    font-size: 1.12rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--color-text-dark);
     margin-bottom: var(--spacing-xs);
@@ -581,7 +598,7 @@ body::before {
 
 .job-company {
     display: block;
-    font-size: 0.88rem;
+    font-size: 0.99rem;
     font-weight: 500;
     color: var(--color-accent);
     margin-bottom: var(--spacing-xs);
@@ -589,7 +606,7 @@ body::before {
 
 .job-date {
     display: block;
-    font-size: 0.72rem;
+    font-size: 0.81rem;
     color: rgba(26, 26, 26, 0.6);
 }
 
@@ -599,7 +616,7 @@ body::before {
 }
 
 .job-responsibilities li {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.6;
     color: var(--color-text-dark);
     margin-bottom: var(--spacing-sm);
@@ -799,20 +816,39 @@ body::before {
     align-items: center;
     margin: 0 auto;
     max-width: 800px;
-    padding: 0.5rem 0;
+    padding: 0.25rem 0;
+}
+
+.node-connector::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: rgba(26, 26, 26, 0.2);
+    border-radius: 50%;
+    margin-bottom: 2px;
 }
 
 .connector-line {
     width: 2px;
-    height: 20px;
-    background: rgba(26, 26, 26, 0.15);
+    height: 24px;
+    background: rgba(26, 26, 26, 0.2);
 }
 
 .connector-arrow {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: rgba(26, 26, 26, 0.3);
     transform: rotate(90deg);
-    margin-top: -8px;
+    margin-top: -6px;
+    line-height: 1;
+}
+
+.node-connector::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: rgba(26, 26, 26, 0.2);
+    border-radius: 50%;
+    margin-top: 2px;
 }
 
 /* ================================
@@ -1063,8 +1099,8 @@ body::before {
 }
 
 .btn-primary {
-    background: var(--color-text-dark);
-    color: var(--color-text-light);
+    background: white;
+    color: var(--color-text-dark);
     padding: 0.875rem 1.75rem;
     border-radius: 10px;
     text-decoration: none;
@@ -1075,13 +1111,13 @@ body::before {
 }
 
 .btn-primary:hover {
-    background: transparent;
-    color: var(--color-text-dark);
+    background: var(--color-text-dark);
+    color: white;
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: transparent;
+    background: white;
     color: var(--color-text-dark);
     padding: 0.875rem 1.75rem;
     border-radius: 10px;
@@ -1094,7 +1130,7 @@ body::before {
 
 .btn-secondary:hover {
     background: var(--color-text-dark);
-    color: var(--color-text-light);
+    color: white;
     transform: translateY(-2px);
 }
 
@@ -1182,14 +1218,14 @@ body::before {
 }
 
 .service-title {
-    font-size: 1.04rem;
+    font-size: 1.16rem;
     font-weight: 600;
     color: var(--color-text-dark);
     margin: 0;
 }
 
 .service-description {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.6;
     color: rgba(26, 26, 26, 0.7);
     margin: 0;

@@ -1468,6 +1468,15 @@ body::before {
         padding: 0 0.5rem;
     }
 
+    .icon-wrapper svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .icon-tooltip {
+        font-size: 0.7rem;
+    }
+
     .hero-title {
         font-size: 1.92rem;
     }
@@ -1494,6 +1503,40 @@ body::before {
 
     .service-cards {
         grid-template-columns: 1fr;
+    }
+
+    .what-i-do-section,
+    .featured-projects-section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .content-wrapper {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .project-detail-wrapper {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .project-detail-title {
+        font-size: 1.5rem;
+    }
+
+    .detail-section-heading {
+        font-size: 1.1rem;
+    }
+
+    .project-filters {
+        gap: 0.5rem;
+    }
+
+    .filter-btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .project-thumbnail {
+        height: 180px;
     }
 }
 
@@ -1608,15 +1651,84 @@ body::before {
     }
 
     .hero-title {
-        font-size: 1.54rem;
+        font-size: 1.3rem;
     }
 
     .rotating-text {
-        font-size: 2.08rem;
+        font-size: 1.8rem;
     }
 
     .nav-link {
         font-size: 0.72rem;
+    }
+
+    .icon-nav-item {
+        padding: 0 0.3rem;
+    }
+
+    .icon-wrapper svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .trust-item {
+        padding: var(--spacing-sm);
+    }
+
+    .trust-number {
+        font-size: 1.2rem;
+    }
+
+    .trust-label {
+        font-size: 0.75rem;
+    }
+
+    .service-card {
+        padding: var(--spacing-md);
+    }
+
+    .service-icon {
+        font-size: 1.5rem;
+    }
+
+    .service-title {
+        font-size: 1rem;
+    }
+
+    .service-description {
+        font-size: 0.85rem;
+    }
+
+    .project-detail-title {
+        font-size: 1.3rem;
+    }
+
+    .project-detail-intro,
+    .solution-text {
+        font-size: 0.88rem;
+    }
+
+    .filter-btn {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    .project-title {
+        font-size: 0.95rem;
+    }
+
+    .project-description {
+        font-size: 0.78rem;
+    }
+
+    .back-button {
+        font-size: 0.85rem;
+    }
+
+    .modal-close {
+        font-size: 2.5rem;
+        top: 1rem;
+        right: 1.5rem;
     }
 }
 

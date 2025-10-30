@@ -1,0 +1,381 @@
+{
+  "projects": [
+    {
+      "slug": "intelligent-telegram-customer-service-chatbot",
+      "title": "(make) Intelligent Telegram Customer Service Chatbot",
+      "service": "AI Chatbot",
+      "tag": "telegram",
+      "featured": "No",
+      "shortDescription": "Telegram chatbot as a smart customer service solution.",
+      "problem": "Customer service teams are overwhelmed with inquiries, leading to delayed responses and missed opportunities to address negative feedback before it escalates.",
+      "solution": "An automated Telegram chatbot that intelligently triages customer messages using sentiment analysis. Positive messages receive instant AI-powered responses, while negative messages trigger immediate email alerts to human support staff - ensuring no unhappy customer goes unnoticed.",
+      "keyFeatures": [
+        "Start Sentiment Detection: Automatically analyzes incoming messages to determine customer mood",
+        "Instant Positive Response: Provides immediate, helpful replies to satisfied customers",
+        "Negative Feedback Alerts: Sends real-time email notifications to team members when issues arise",
+        "Seamless Integration: Built on Make.com for reliable automation and easy maintenance",
+        "Different languages supported (using Gemini LLM)",
+        "Can be added to groups"
+      ],
+      "futureCustomizations": {
+        "customAiPrompts": "Businesses can tailor the chatbot's personality and response style to match their brand voice - from formal banking responses to casual e-commerce interactions.",
+        "faqIntegration": "Add a knowledge base node that pulls answers from company-specific FAQ documents, ensuring accurate and consistent information delivery.",
+        "multiChannelRouting": "Expand beyond sentiment analysis with intelligent routing based on keywords, urgency levels, or customer tiers - directing VIP customers to priority queues or technical issues to specialized teams."
+      },
+      "thumbnailImage": "telegram-chatbot-main.png",
+      "allImages": [
+        "telegram-chatbot-main.png",
+        "telegram-chatbot-workflow-1.png",
+        "telegram-chatbot-workflow-2.png",
+        "telegram-chatbot-workflow-3.png"
+      ]
+    },
+    {
+      "slug": "automated-lead-followup-system",
+      "title": "(n8n) Automated Lead Follow-up System",
+      "service": "Lead Automation",
+      "tag": "n8n",
+      "featured": "Yes",
+      "shortDescription": "This automated Lead Follow-Up System is a flexible automation template designed to handle one of the most critical aspects of business: consistent and timely follow-up with your potential customers!",
+      "problem": "It takes too much time to keep track of new potential customers (leads). Sometimes we're slow to reply to them. This means we might miss out on sales.",
+      "solution": "I built an automatic system to talk to new leads. It makes sure we respond fast and always send the right message. This saves time and helps us get more customers!",
+      "benefits": [
+        "More Sales: Helps us turn 35-65% more leads into customers by talking to them regularly.",
+        "Saves Time: Frees up 3-7 hours each week that used to be spent manually dealing with leads.",
+        "Fast Replies: We reply to leads in minutes, not hours or days.",
+        "Clear Messages: All our messages to potential customers are consistent and clear.",
+        "Learn What Works: It shows us which messages and timing work best, so we can keep getting better."
+      ],
+      "workflow": [
+        "New Lead Appears: When a new lead is added (like in a spreadsheet), the system instantly notices.",
+        "First Email: It immediately sends a welcome email to the new lead.",
+        "Update Status: The system marks the lead's status to show they've received the first email.",
+        "Watches for Replies: It keeps an eye out for any emails back from the lead.",
+        "Status Changes: If the lead replies, their status is changed to \"Responded\" right away.",
+        "Smart Follow-Up: The system waits for 3 days. After 3 days, it checks if the lead has replied. If they HAVEN'T replied: It sends a follow-up email. If they HAVE replied: It does nothing, because a person can take over from there."
+      ],
+      "thumbnailImage": "lead-followup-workflow.png",
+      "allImages": [
+        "lead-followup-workflow.png"
+      ]
+    },
+    {
+      "slug": "custom-ai-customer-order-support-chatbot",
+      "title": "(n8n) Custom AI Customer and Order support chatbot",
+      "service": "AI Chatbot",
+      "tag": "n8n",
+      "featured": "No",
+      "shortDescription": "Developed an intelligent customer service chatbot for a Shopify store using n8n workflow automation, integrating Google Gemini AI to provide personalized customer support.",
+      "technicalImplementation": {
+        "toolsUsed": [
+          "n8n (Workflow Automation)",
+          "Google Gemini Chat Model",
+          "Shopify API Integration",
+          "Simple Memory Storage"
+        ],
+        "architecture": [
+          "Chat trigger captures customer messages",
+          "AI agent processes inquiries using contextual prompts",
+          "Memory system maintains conversation history",
+          "Shopify integration retrieves order status and product information"
+        ]
+      },
+      "keyFeatures": [
+        "Contextual Responses: AI trained on specific website content and service offerings",
+        "Order Management: Real-time order status retrieval from Shopify",
+        "Conversation Memory: Maintains chat history for personalized interactions",
+        "Custom Prompting: Tailored responses based on business context (Mara Baraha store)"
+      ],
+      "businessImpact": [
+        "Automated Support: Reduces manual customer service workload",
+        "24/7 Availability: Instant responses to customer inquiries",
+        "Consistent Information: Ensures accurate product and service details",
+        "Scalable Solution: Handles multiple conversations simultaneously"
+      ],
+      "technicalSkills": [
+        "Workflow automation design",
+        "AI model integration and prompt engineering",
+        "API integrations (Shopify, Google Gemini)",
+        "Customer experience optimization",
+        "No-code/low-code development"
+      ],
+      "thumbnailImage": "ai-customer-support-shopify.png",
+      "allImages": [
+        "ai-customer-support-shopify.png",
+        "ai-customer-support-workflow.png"
+      ]
+    },
+    {
+      "slug": "google-maps-scraper",
+      "title": "(n8n) Google Maps Scraper",
+      "service": "Lead Generation",
+      "tag": "n8n",
+      "featured": "No",
+      "shortDescription": "Built an automated data extraction system that scrapes business information from Google Maps using n8n workflow automation, with integrated data processing and Google Sheets storage.",
+      "technicalImplementation": {
+        "toolsUsed": [
+          "n8n (Workflow Automation)",
+          "SerpAPI (Google Maps Scraping)",
+          "Google Sheets API",
+          "Data transformation nodes"
+        ],
+        "architecture": [
+          "Scheduled trigger for automated execution",
+          "SerpAPI integration for Google Maps data extraction",
+          "Multi-stage data processing pipeline",
+          "Google Sheets integration for data storage and management"
+        ]
+      },
+      "keyFeatures": [
+        "Automated Scheduling: Configurable time-based execution",
+        "Keyword & Location Extraction: Scrapes businesses based on search terms and geographic location",
+        "Data Processing Pipeline: Extracts next start values for pagination, Merges and transforms raw data, Removes duplicates and empty records, Formats data for storage",
+        "Google Sheets Integration: Automatically populates spreadsheet with cleaned data",
+        "Error Handling: Built-in status updates and loop completion detection"
+      ],
+      "businessApplications": [
+        "Lead Generation: Collect business contact information for sales prospecting",
+        "Market Research: Analyze competitor locations and business density",
+        "Data Analytics: Build databases for business intelligence",
+        "Location Intelligence: Map business distributions across geographic areas"
+      ],
+      "technicalSkills": [
+        "Web scraping and API integration",
+        "Data transformation and cleaning",
+        "Workflow automation design",
+        "Error handling and loop management",
+        "Cloud storage integration (Google Sheets)",
+        "Scheduled task automation"
+      ],
+      "thumbnailImage": "google-maps-scraper-workflow.png",
+      "allImages": [
+        "google-maps-scraper-workflow.png",
+        "google-maps-scraper-results.png"
+      ]
+    },
+    {
+      "slug": "telegram-booking-assistant",
+      "title": "(n8n) Seamless Calendar: Telegram Booking Assistant for Service Businesses",
+      "service": "AI Chatbot",
+      "tag": "n8n",
+      "featured": "No",
+      "shortDescription": "Booking assistant via Telegram",
+      "description": "Built this automation via n8n and Telegram!",
+      "toolsConnected": [
+        "Telegram",
+        "Ai Agent node",
+        "OpenAI LLM - to process user messages and craft a response",
+        "Window Buffer Memory - to save context",
+        "Google Calendar nodes"
+      ],
+      "coreFunctions": [
+        "Allows to set events to Google Calendar via messaging a Telegram bot",
+        "Has capabilities to retrieve existing events from Google Calendar",
+        "Uses AI to interpret natural language requests and convert them into calendar actions",
+        "Features built-in guardrails to ensure proper functioning and prevent misuse",
+        "Maintains a conversation memory to provide context-aware responses"
+      ],
+      "benefit": "This automation eliminates the need to switch between apps, allowing users to manage their schedule seamlessly through Telegram messages.",
+      "possibleUseCases": [
+        "Restaurant Reservation System: Customers could message the bot to check availability, make reservations, and receive confirmation—all through Telegram. The system could automatically update your Google Calendar with bookings.",
+        "Spa Appointment Scheduler: Clients could book treatments, check available time slots, and receive reminders about upcoming appointments.",
+        "Staff Schedule Management: Help staff check their upcoming shifts or appointments directly through Telegram.",
+        "Service Customization: Collect customer preferences (like dietary restrictions for restaurants or treatment preferences for spas) through guided conversation flows."
+      ],
+      "thumbnailImage": "telegram-booking-workflow.png",
+      "allImages": [
+        "telegram-booking-workflow.png",
+        "telegram-booking-demo-1.png",
+        "telegram-booking-demo-2.png"
+      ]
+    },
+    {
+      "slug": "x-post-generator-publisher",
+      "title": "(n8n) X post generator and publisher",
+      "service": "Social media content generation",
+      "tag": "n8n",
+      "featured": "No",
+      "shortDescription": "n8n automation that will generate and publish content to your X account!",
+      "description": "This n8n automation is designed to generate and publish content to X (formerly Twitter). The workflow consists of these main steps:",
+      "workflowSteps": [
+        "Enter Title Topic: The workflow begins with a form input where you enter the topic or title for your X post.",
+        "Generate AI Content: Using OpenAI Chat Model, the automation generates content based on your provided topic. It includes a \"Format AI Output\" component to structure the generated content properly for X.",
+        "Post to X: The workflow then automatically posts the generated content to your X account using the \"create:tweet\" action.",
+        "Show Confirmation: Finally, it displays a confirmation that your post has been published successfully."
+      ],
+      "benefit": "This automation streamlines the content creation and publishing process for X, allowing you to quickly generate AI-powered posts without having to manually write and publish them yourself.",
+      "videoDemo": "https://www.loom.com/share/adc345b9e191455a8409d7c63b6ea0cc?sid=6fec0242-33c2-4e9d-9d2e-be34303af425",
+      "thumbnailImage": "x-post-generator-workflow.png",
+      "allImages": [
+        "x-post-generator-workflow.png"
+      ]
+    },
+    {
+      "slug": "shopify-giveaway-social-boost",
+      "title": "Automated a Shopify Giveaway with Social Boost and ActiveCampaign(CRM)",
+      "service": "Marketing Automation",
+      "tag": "Shopify",
+      "featured": "No",
+      "shortDescription": "I planned and executed a fully automated giveaway for a Shopify store using the Social Boost app.",
+      "description": "I planned and executed a fully automated giveaway for a Shopify store using the Social Boost app that delivered exceptional results. I built a custom landing page in Shopify, configured viral sharing features, and integrated it with ActiveCampaign to capture and segment leads automatically.",
+      "results": {
+        "instagramGrowth": {
+          "metric": "Followers",
+          "increase": "527%",
+          "from": 118,
+          "to": 740
+        },
+        "emailListGrowth": {
+          "platform": "ActiveCampaign",
+          "increase": "6,150%",
+          "from": 8,
+          "to": "500+"
+        },
+        "additionalInsights": [
+          "18,200 views",
+          "The giveaway drove 526 unique visitors and 4,900 website visits",
+          "Strong engagement including 173 likes and 351 comments on the main Instagram post"
+        ]
+      },
+      "note": "The campaign generated remarkable growth with zero manual work post-launch.",
+      "thumbnailImage": "shopify-giveaway-main.png",
+      "allImages": [
+        "shopify-giveaway-main.png",
+        "shopify-giveaway-landing.png",
+        "shopify-giveaway-results.png"
+      ]
+    },
+    {
+      "slug": "client-onboarding-automation",
+      "title": "Client Onboarding Automation Workflow",
+      "service": "Client onboarding",
+      "tag": "n8n, make.com, telegram, googlesuite",
+      "featured": "No",
+      "shortDescription": "Automate your client onboarding!",
+      "problem": "Busy teams waste hours on repetitive onboarding tasks - creating folders, updating spreadsheets, sending welcome emails, and manual notifications.",
+      "solution": "This automated workflow eliminates manual work by connecting your existing Google Suite tools. When a new client submits a form, the system automatically: Creates organized client folders, Adds client data to your tracking database, Sends personalized welcome emails, Updates team spreadsheets, Triggers internal notifications, Sends progress updates via Telegram",
+      "builtFor": "Teams using Google Suite who want to save time on small but time-consuming manual tasks.",
+      "benefits": [
+        "Fully customizable to your business needs",
+        "Scalable as your client base grows",
+        "Works with tools you already use",
+        "Saves 2-3 hours per client onboarding"
+      ],
+      "techStack": "Make.com, Google Forms, Google Sheets, Gmail, Telegram",
+      "thumbnailImage": "client-onboarding-workflow.png",
+      "allImages": [
+        "client-onboarding-workflow.png"
+      ]
+    },
+    {
+      "slug": "multiple-lead-magnet-automation",
+      "title": "Multiple Lead Magnet Automation(WP-ActiveCampaign)",
+      "service": "Lead Automation",
+      "tag": "activecampaign",
+      "featured": "Yes",
+      "shortDescription": "This is a lead magnet automation that delivers requested content while simultaneously segmenting contacts based on their interests and behaviors for future marketing campaigns.",
+      "problem": "My client's WordPress form wasn't connected to ActiveCampaign, resulting in lost leads and manual work. Their team was manually sending PDFs to prospects who requested them, causing delays and inconsistent follow-up.",
+      "solution": "I built a custom form directly in ActiveCampaign and designed this automation workflow to automatically deliver different PDF resources based on the contact's profile and needs. The workflow: Triggers immediately when someone submits on the new form requesting a PDF download, Uses conditional logic to route contacts through appropriate pathways based on their information, Automatically sends targeted emails with the relevant PDF (Sales, PM, or HR versions) attached, Tags contacts based on which resource they downloaded for better segmentation",
+      "results": "This automation eliminated the manual process completely. Now when prospects request information, they receive the appropriate PDF instantly. Their team saves approximately 5-10 hours per week that was previously spent on manual follow-ups.",
+      "thumbnailImage": "lead-magnet-workflow.png",
+      "allImages": [
+        "lead-magnet-workflow.png",
+        "lead-magnet-form.png"
+      ]
+    },
+    {
+      "slug": "rss-to-multi-platform-content-automation",
+      "title": "RSS-to-Multi-Platform Content Automation",
+      "service": "Social media content generation",
+      "tag": "RSSFeed",
+      "featured": "No",
+      "shortDescription": "Built automated content creation system using Make.com that monitors an RSS feed and generates platform-specific social media content.",
+      "keyFeatures": [
+        "RSS feed monitoring",
+        "AI-powered content generation for multiple channels",
+        "Platform optimization for YouTube, Instagram, Facebook, LinkedIn",
+        "Automated Google Docs integration for content storage",
+        "Custom prompting for brand-consistent messaging"
+      ],
+      "results": "Reduced manual content creation time by 90% while maintaining consistent posting across 6+ social platforms.",
+      "thumbnailImage": "rss-content-automation.png",
+      "allImages": [
+        "rss-content-automation.png"
+      ]
+    },
+    {
+      "slug": "shopify-retail-trade-pricing",
+      "title": "Shopify Customization: Show Retail & Trade Pricing for Approved Customers",
+      "service": "Ecommerce Support",
+      "tag": "Shopify",
+      "featured": "No",
+      "shortDescription": "Shopify customizations to fit your needs",
+      "useCase": "When a customer with the tag \"Approved Trade\" logs into the Shopify storefront, they should see both: the Retail Price (RRP), and a special Trade Price (e.g., 20% off retail). This visibility should occur on: Product pages, Cart page, Collection pages (product cards)",
+      "problem": "Shopify does not natively support dual pricing per customer group on product or collection pages. Metafields such as trade_discount were already set up for variants, but: Only retail price displayed by default, The theme (Prestige) did not show trade pricing on product cards or collection views, Cart showed only retail prices",
+      "solution": "We implemented the following: Display RRP and Trade Price on Product Cards (Collections Page), Suppress Unnecessary Sale Price Block, Cart Page Trade Pricing Support, Created trade-pricing.liquid Snippet for Reusability",
+      "result": "Logged-in Trade customers now see: RRP and Trade Pricing on product cards, Trade prices in Cart (automatically calculated), Sale blocks hidden to avoid redundancy. This improves pricing transparency for Trade customers without interfering with standard retail experience.",
+      "configurationRequirements": {
+        "requiredMetafields": [
+          "Customer Metafield: custom.trade_customer (boolean)",
+          "Product Metafields: custom.trade_price (money) - Optional: Custom trade price",
+          "Product Metafields: custom.trade_discount (number) - Optional: Discount percentage"
+        ]
+      },
+      "notes": "Trade discount logic is based on a trade_discount metafield per variant. No automatic discount codes or cart-level discounts are applied — pricing is modified directly. Tested with Prestige theme",
+      "thumbnailImage": "shopify-trade-pricing-2.png",
+      "allImages": [
+        "shopify-trade-pricing-1.png",
+        "shopify-trade-pricing-2.png"
+      ]
+    },
+    {
+      "slug": "shopify-liquid-customizations",
+      "title": "Shopify Liquid Customizations",
+      "service": "Lead Generation",
+      "tag": "Shopify",
+      "featured": "No",
+      "shortDescription": "Shopify customizations to improve lead generation",
+      "problem": "Prestige Theme default newsletter form only collects an email address, which limits personalization and segmentation. There's no built-in option for capturing first and last names — something most email marketing tools benefit from.",
+      "solution": "We added two supported fields — contact[first_name] and contact[last_name] — directly to the newsletter form. These are recognized by Shopify and passed properly to their CRM.",
+      "result": "Visitors can now enter their first name, last name, and email in your newsletter form. Shopify stores this information under the customer's profile. Your email marketing tools (e.g., ActiveCampaign) receive full contact details without extra setup.",
+      "whyThisMatters": "This small update improves personalization, supports better email segmentation, and makes your list far more useful — without requiring extra scripts or apps.",
+      "toolsUsed": [
+        "Shopify (Prestige Theme)",
+        "Liquid templating",
+        "Native Shopify field support"
+      ],
+      "thumbnailImage": "shopify-newsletter-form.png",
+      "allImages": [
+        "shopify-newsletter-form.png"
+      ]
+    },
+    {
+      "slug": "website-engagement-nurturing-automations",
+      "title": "Website Engagement & Nurturing Automations",
+      "service": "Lead Automation",
+      "tag": "ActiveCampaign",
+      "featured": "No",
+      "shortDescription": "3 powerful CRM automations we can do to nurture and track your leads engagement",
+      "automations": [
+        {
+          "name": "Track lead engagement on the website",
+          "description": "This automation begins when a contact submits any form. It then checks if the contact has previously visited the photography section of our website. If they have visited the photography page, the automation ends, indicating they've already shown interest. If they haven't visited the photography page, they receive a series of three emails (one per day) designed to promote website content. After these emails, the automation sets a \"GOAL: Interested in Photography\" and then ends. This flow helps us identify and nurture potential leads interested in photography, guiding them towards a specific goal based on their engagement."
+        },
+        {
+          "name": "Interest Nurturing & Sales Automation",
+          "description": "This automation is triggered when a \"Photography\" tag is added to a contact. It first waits until a weekday at 9 AM in the contact's timezone. Then, it sends a series of four \"Photography Outreach\" emails over several days. After these emails, the \"Photography\" tag is removed, and a \"GOAL: PURCHASED\" is set, implying a desired conversion. Finally, an \"Upsell - Photography\" tag is added, and the contact is entered into another automation called \"Made a Purchase\" before this automation concludes. This flow is designed to nurture contacts tagged with \"Photography\" towards a purchase and then transition them into a post-purchase or upsell sequence."
+        },
+        {
+          "name": "Lead Qualification & Management Automation",
+          "description": "This automation starts when a \"Photography\" tag is added to a contact. It immediately checks if the contact is already in any stage of a \"Business Pipeline.\" If the contact is already in a deal stage, the automation ends, preventing duplicate efforts. If the contact is not in a deal stage, a new deal named \"New Photography Lead\" is created for them, and two \"Call\" tasks are added to this deal. The automation then waits for 30 days. After this waiting period, it checks if the contact's deal has moved to the \"Qualified Lead\" stage within the \"Business Pipeline.\" If the deal has been moved to \"Qualified Lead,\" it's then moved to \"Cold Leads: No Response,\" and the automation ends. This suggests a follow-up or a re-engagement strategy for leads that became qualified but might not have progressed further. If the deal has not been moved to \"Qualified Lead,\" the automation ends, indicating that the lead did not progress as expected within the 30-day period. This automation streamlines the process of qualifying new photography leads, assigning follow-up tasks, and managing their progression within a sales pipeline."
+        }
+      ],
+      "thumbnailImage": "website-engagement-workflow-1.png",
+      "allImages": [
+        "website-engagement-workflow-1.png",
+        "website-engagement-workflow-2.png",
+        "website-engagement-workflow-3.png"
+      ]
+    }
+  ]
+}

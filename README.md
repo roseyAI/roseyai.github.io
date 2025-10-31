@@ -59,53 +59,18 @@ roseyai.github.io/
 ├── index.html              # Homepage
 ├── about.html              # About/Career page
 ├── projects.html           # Projects listing with filters
-├── contact.html            # Contact form and links
+├── contact.html            # Contact form
 ├── styles.css              # Main stylesheet
 ├── script.js               # JavaScript utilities
 ├── profile-photo.png       # Profile image
-│
 ├── projects/               # Individual project detail pages (13 pages)
-│   ├── project-lead-followup.html
-│   ├── project-lead-magnet.html
-│   ├── project-google-maps-scraper.html
-│   ├── project-ai-customer-support.html
-│   ├── project-x-post-generator.html
-│   ├── project-telegram-chatbot.html
-│   ├── project-telegram-booking.html
-│   ├── project-rss-automation.html
-│   ├── project-website-engagement.html
-│   ├── project-shopify-newsletter.html
-│   ├── project-shopify-trade-pricing.html
-│   ├── project-shopify-giveaway.html
-│   └── project-client-onboarding.html
-│
-├── images/
-│   └── projects/           # Project screenshots and thumbnails (28 images)
-│
-├── archive/                # Old design files
-│   ├── index-old.html
-│   ├── styles-old.css
-│   └── script-old.js
-│
-├── portfolio-projects-data.json    # Structured project data
-├── n8n-form-to-airtable-guide.md  # Setup guide for contact form
-└── README.md               # This file
+├── images/projects/        # Project screenshots and thumbnails
+└── archive/                # Old design files
 ```
 
 ## 🚀 Featured Projects
 
-### Automation Platforms
-- **n8n** - 6 projects (Lead follow-up, AI chatbots, Google Maps scraper, X post generator, booking assistant)
-- **ActiveCampaign** - 2 projects (Lead magnet automation, website engagement)
-- **Make.com** - 2 projects (Telegram chatbot, RSS content automation)
-- **Shopify** - 3 projects (Giveaway, trade pricing, newsletter form)
-- **Multi-Platform** - 1 project (Client onboarding workflow)
-
-### Project Highlights
-1. **Automated Lead Follow-up System** (Featured) - n8n template for consistent customer follow-ups
-2. **Multiple Lead Magnet Automation** (Featured) - ActiveCampaign workflow for segmented content delivery
-3. **AI Customer Support Chatbot** - Shopify integration with Google Gemini AI
-4. **Shopify Giveaway** - 527% Instagram growth, 6,150% email list growth
+13 automation projects across multiple platforms including n8n, ActiveCampaign, Make.com, Shopify, and Telegram integrations. Projects range from lead automation and AI chatbots to social media content generation and client onboarding workflows.
 
 ## 📱 Mobile Responsive
 
@@ -148,28 +113,6 @@ Fully optimized for all devices:
 ## 🌐 Live Site
 
 **Visit**: [roseyai.github.io](https://roseyai.github.io/)
-
-## 📬 Contact
-
-- **Upwork**: [Rose Ann Renolla](https://www.upwork.com/freelancers/~01c86edb65b24f814a)
-- **LinkedIn**: [rose-ann-renolla](https://www.linkedin.com/in/rose-ann-renolla/)
-- **Email**: hello@roseyai.com
-
----
-
-## 📝 Notes
-
-### For Future Updates
-- Old design files archived in `/archive/` folder
-- Project pages organized in `/projects/` folder
-- All images centralized in `/images/projects/`
-- Structured data available in `portfolio-projects-data.json`
-
-### To Add New Projects
-1. Add project data to `portfolio-projects-data.json`
-2. Create new project detail page in `/projects/` folder
-3. Add project card to `projects.html` with appropriate filter tags
-4. Include project screenshot in `/images/projects/`
 
 ---
 

@@ -1286,8 +1286,8 @@ body::before {
 }
 
 .hero-profile-photo {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -1495,8 +1495,8 @@ body::before {
     }
 
     .hero-profile-photo {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
     }
 
     .hero-name {
@@ -1677,8 +1677,8 @@ body::before {
     }
 
     .hero-profile-photo {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
     }
 
     .hero-name {

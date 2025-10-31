@@ -1,0 +1,3 @@
+# ActiveCampaign
+
+Type: Software

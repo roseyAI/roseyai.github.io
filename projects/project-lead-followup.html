@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Lead Follow-up System - Rose</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header with Icon Navigation -->
+        <header class="header-nav">
+            <nav class="icon-nav">
+                <a href="../index.html" class="icon-nav-item group">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="32" width="32">
+                            <path stroke="currentColor" stroke-width="1.5" d="M9 22V12H15V22M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"></path>
+                        </svg>
+                    </div>
+                    <span class="icon-tooltip">Home</span>
+                </a>
+
+                <a href="../about.html" class="icon-nav-item group">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"></path>
+                        </svg>
+                    </div>
+                    <span class="icon-tooltip">About</span>
+                </a>
+
+                <a href="../projects.html" class="icon-nav-item group">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z"></path>
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21"></path>
+                        </svg>
+                    </div>
+                    <span class="icon-tooltip">Portfolio</span>
+                </a>
+
+                <a href="../contact.html" class="icon-nav-item group">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z"></path>
+                        </svg>
+                    </div>
+                    <span class="icon-tooltip">Contact</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Project Detail Content -->
+        <main class="page-content">
+            <div class="project-detail-wrapper">
+                <a href="../projects.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+
+                <div class="project-detail-header">
+                    <div class="project-tag">n8n</div>
+                    <h1 class="project-detail-title">Automated Lead Follow-up System</h1>
+                    <p class="project-detail-intro">This automated Lead Follow-Up System is a flexible automation template designed to handle one of the most critical aspects of business: consistent and timely follow-up with your potential customers!</p>
+                </div>
+
+                <div class="project-detail-image">
+                    <img src="../images/projects/lead-followup-system.png" alt="Automated Lead Follow-up System Workflow" class="clickable-image" id="projectImage">
+                </div>
+
+                <div class="project-detail-content">
+                    <h2 class="detail-section-heading">What's the problem?</h2>
+                    <ul class="problem-list">
+                        <li>It takes too much time to keep track of new potential customers (leads)</li>
+                        <li>Sometimes we're slow to reply to them</li>
+                        <li>This means we might miss out on sales</li>
+                    </ul>
+
+                    <h2 class="detail-section-heading">My Solution:</h2>
+                    <p class="solution-text">I built an automatic system to talk to new leads. It makes sure we respond fast and always send the right message. This saves time and helps us get more customers!</p>
+
+                    <h2 class="detail-section-heading">How it Helps (The Good Stuff):</h2>
+                    <ul class="benefits-list">
+                        <li><strong>More Sales:</strong> Helps us turn <strong>35-65% more leads into customers</strong> by talking to them regularly</li>
+                        <li><strong>Saves Time:</strong> Frees up <strong>3-7 hours each week</strong> that used to be spent manually dealing with leads</li>
+                        <li><strong>Fast Replies:</strong> We reply to leads in <strong>minutes</strong>, not hours or days</li>
+                        <li><strong>Clear Messages:</strong> All our messages to potential customers are consistent and clear</li>
+                        <li><strong>Learn What Works:</strong> It shows us which messages and timing work best, so we can keep getting better</li>
+                    </ul>
+
+                    <h2 class="detail-section-heading">How it Works (Step-by-Step):</h2>
+                    <ol class="workflow-steps">
+                        <li><strong>New Lead Appears:</strong> When a new lead is added (like in a spreadsheet), the system instantly notices</li>
+                        <li><strong>First Email:</strong> It immediately sends a welcome email to the new lead</li>
+                        <li><strong>Update Status:</strong> The system marks the lead's status to show they've received the first email</li>
+                        <li><strong>Watches for Replies:</strong> It keeps an eye out for any emails back from the lead</li>
+                        <li><strong>Status Changes:</strong> If the lead replies, their status is changed to "Responded" right away</li>
+                        <li><strong>Smart Follow-Up:</strong>
+                            <ul>
+                                <li>The system waits for 3 days</li>
+                                <li>After 3 days, it checks if the lead has replied</li>
+                                <li><strong>If they HAVEN'T replied:</strong> It sends a follow-up email</li>
+                                <li><strong>If they HAVE replied:</strong> It does nothing, because a person can take over from there</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <a href="../projects.html" class="back-button bottom-back">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Image Zoom Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Image zoom modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const clickableImage = document.getElementById('projectImage');
+        const closeBtn = document.querySelector('.modal-close');
+
+        clickableImage.onclick = function() {
+            modal.style.display = "flex";
+            modalImg.src = this.src;
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

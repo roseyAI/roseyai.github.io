@@ -582,6 +582,49 @@ body::before {
     gap: var(--spacing-lg);
 }
 
+.hidden-job {
+    display: none;
+}
+
+.hidden-job.show {
+    display: flex;
+}
+
+.view-more-container {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.btn-view-more {
+    background: white;
+    color: var(--color-text-dark);
+    padding: 0.875rem 1.75rem;
+    border-radius: 10px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: var(--transition);
+    border: 2px solid var(--color-text-dark);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-view-more:hover {
+    background: var(--color-text-dark);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-view-more i {
+    transition: var(--transition);
+}
+
+.btn-view-more.expanded i {
+    transform: rotate(180deg);
+}
+
 .job-card {
     background: #ffffff;
     border-radius: 16px;
@@ -640,6 +683,101 @@ body::before {
     left: 0;
     color: var(--color-accent);
     font-weight: bold;
+}
+
+/* Education Section */
+.education-section {
+    margin-bottom: 1.5rem;
+}
+
+.education-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.education-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: var(--spacing-xl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+}
+
+.education-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.education-degree {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.education-school {
+    display: block;
+    font-size: 0.99rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-xs);
+}
+
+.education-date {
+    display: block;
+    font-size: 0.81rem;
+    color: rgba(26, 26, 26, 0.6);
+}
+
+/* Certifications Section */
+.certifications-section {
+    margin-bottom: 1.5rem;
+}
+
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.certification-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.certification-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 2px solid var(--color-accent);
+}
+
+.certification-icon {
+    font-size: 1.92rem;
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+.certification-info {
+    flex: 1;
+}
+
+.certification-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.certification-issuer {
+    font-size: 0.72rem;
+    color: rgba(26, 26, 26, 0.7);
 }
 
 /* Tech Stack Section */
@@ -1407,6 +1545,56 @@ body::before {
     text-align: center;
 }
 
+/* Certifications Badge Section (Homepage) */
+.certifications-badge-section {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    max-width: 800px;
+    margin: 0 auto 1.5rem auto;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.certifications-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.cert-badge {
+    background: white;
+    border: 2px solid var(--color-accent);
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    transition: var(--transition);
+}
+
+.cert-badge:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cert-badge i {
+    color: var(--color-accent);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.cert-badge:hover i {
+    color: white;
+}
+
 /* What I Do Section */
 .what-i-do-section {
     padding: var(--spacing-2xl) var(--spacing-xl);
@@ -1590,13 +1778,13 @@ body::before {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(26, 26, 26, 0.08);
     border-radius: 12px;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     text-decoration: none;
     color: var(--color-text-dark);
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
 }
 
 .featured-project-card:hover {
@@ -1606,29 +1794,29 @@ body::before {
 }
 
 .featured-icon {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     background: var(--color-accent);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .featured-project-title {
-    font-size: 1.04rem;
+    font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
+    line-height: 1.3;
 }
 
 .featured-project-desc {
-    font-size: 0.8rem;
-    line-height: 1.6;
+    font-size: 0.75rem;
+    line-height: 1.5;
     color: rgba(26, 26, 26, 0.7);
     margin: 0;
-    flex-grow: 1;
 }
 
 .featured-tag {

@@ -37,4 +37,27 @@ if (menuToggle && cardNav) {
     });
 }
 
+// ================================
+// View More Jobs Toggle
+// ================================
+const viewMoreBtn = document.getElementById('viewMoreJobs');
+if (viewMoreBtn) {
+    viewMoreBtn.addEventListener('click', () => {
+        const hiddenJobs = document.querySelectorAll('.hidden-job');
+        const viewMoreText = viewMoreBtn.querySelector('.view-more-text');
+
+        hiddenJobs.forEach(job => {
+            job.classList.toggle('show');
+        });
+
+        viewMoreBtn.classList.toggle('expanded');
+
+        if (viewMoreBtn.classList.contains('expanded')) {
+            viewMoreText.textContent = 'View Less';
+        } else {
+            viewMoreText.textContent = 'View Previous Roles';
+        }
+    });
+}
+
 console.log('%c✨ Portfolio loaded successfully!', 'color: #7dd3a0; font-weight: bold; font-size: 14px;');

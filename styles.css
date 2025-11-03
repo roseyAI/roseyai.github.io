@@ -587,7 +587,7 @@ body::before {
 }
 
 .hidden-job.show {
-    display: flex;
+    display: grid;
 }
 
 .view-more-container {
@@ -631,6 +631,10 @@ body::before {
     padding: var(--spacing-xl);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: var(--transition);
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
 }
 
 .job-card:hover {
@@ -639,7 +643,8 @@ body::before {
 }
 
 .job-header {
-    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
 }
 
 .job-title {
@@ -844,6 +849,11 @@ body::before {
 
     .page-content {
         padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .job-card {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
 }
 

@@ -587,7 +587,7 @@ body::before {
 }
 
 .hidden-job.show {
-    display: grid;
+    display: block;
 }
 
 .view-more-container {
@@ -631,10 +631,6 @@ body::before {
     padding: var(--spacing-xl);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: var(--transition);
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: var(--spacing-xl);
-    align-items: start;
 }
 
 .job-card:hover {
@@ -643,8 +639,7 @@ body::before {
 }
 
 .job-header {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: var(--spacing-md);
 }
 
 .job-title {
@@ -849,11 +844,6 @@ body::before {
 
     .page-content {
         padding: var(--spacing-lg) var(--spacing-md);
-    }
-
-    .job-card {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
     }
 }
 
@@ -1790,64 +1780,22 @@ body::before {
 }
 
 .featured-project-card {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(26, 26, 26, 0.08);
-    border-radius: 10px;
+    background: #ffffff;
+    border-radius: 12px;
     padding: var(--spacing-md);
-    text-decoration: none;
-    color: var(--color-text-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: var(--transition);
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    min-height: 140px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .featured-project-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border-color: var(--color-accent);
-}
-
-.featured-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--color-accent);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1rem;
-}
-
-.featured-project-title {
-    font-size: 0.88rem;
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.3;
-}
-
-.featured-project-desc {
-    font-size: 0.7rem;
-    line-height: 1.4;
-    color: rgba(26, 26, 26, 0.7);
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.featured-tag {
-    display: inline-block;
-    background: rgba(255, 107, 107, 0.15);
-    color: var(--color-accent);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.64rem;
-    font-weight: 600;
-    width: fit-content;
 }
 
 .featured-cta {

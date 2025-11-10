@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActiveCampaign Account Auto-Update System - Rose Renolla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Rose Renolla</div>
+            <nav class="icon-nav">
+                <a href="../index.html" class="nav-icon" title="Home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span class="nav-tooltip">Home</span>
+                </a>
+                <a href="../about.html" class="nav-icon" title="About">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="nav-tooltip">About</span>
+                </a>
+                <a href="../projects.html" class="nav-icon active" title="Portfolio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span class="nav-tooltip">Portfolio</span>
+                </a>
+                <a href="../contact.html" class="nav-icon" title="Contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="nav-tooltip">Contact</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="project-detail-container">
+            <a href="../projects.html" class="back-button">← Back to Projects</a>
+
+            <h1>ActiveCampaign Account Auto-Update System</h1>
+
+            <div class="project-tags">
+                <span class="tag">n8n</span>
+                <span class="tag">ActiveCampaign</span>
+                <span class="tag">Airtable</span>
+            </div>
+
+            <div class="project-image-container">
+                <img src="../images/projects/activecampaign-auto-update.png" alt="ActiveCampaign Auto-Update Workflow" class="project-screenshot" onclick="openModal(this)">
+            </div>
+
+            <section class="project-section">
+                <h2>Problem</h2>
+                <ul class="problem-list">
+                    <li>Manual data entry between Airtable and ActiveCampaign is time-consuming</li>
+                    <li>Contact information gets outdated quickly</li>
+                    <li>Risk of human error when copying data between systems</li>
+                    <li>No way to automatically filter and update specific contact segments</li>
+                </ul>
+            </section>
+
+            <section class="project-section">
+                <h2>Solution</h2>
+                <p>Created an automated sync workflow that monitors ActiveCampaign lists, filters for specific signup types (trade signups), pulls matching records from Airtable, and updates ActiveCampaign contact fields automatically. The system ensures data consistency across both platforms.</p>
+            </section>
+
+            <section class="project-section">
+                <h2>Benefits</h2>
+                <ul class="benefits-list">
+                    <li>Zero manual data entry required</li>
+                    <li>Real-time contact updates (vs. daily/weekly manual syncs)</li>
+                    <li>Reduced data errors from manual copying</li>
+                    <li>Automatic filtering for specific contact segments</li>
+                    <li>Saves ~3-5 hours per week on data management</li>
+                </ul>
+            </section>
+
+            <section class="project-section">
+                <h2>How It Works</h2>
+                <ol class="workflow-steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>Manual trigger starts the workflow</strong>
+                            <p>On-demand execution for controlled data synchronization.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>Fetches all lists from ActiveCampaign</strong>
+                            <p>Retrieves complete list of contact lists from ActiveCampaign account.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>Filters for "approved-trade-specifiers" list</strong>
+                            <p>Identifies specific target list for trade signup contacts only.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <strong>Retrieves all contacts from filtered list</strong>
+                            <p>Gets complete contact details for all members of the target list.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <div class="step-content">
+                            <strong>Queries Airtable for matching records</strong>
+                            <p>Searches Airtable database for corresponding contact information.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">6</span>
+                        <div class="step-content">
+                            <strong>Updates ActiveCampaign contacts with Airtable data</strong>
+                            <p>Syncs latest information from Airtable back to ActiveCampaign contacts.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">7</span>
+                        <div class="step-content">
+                            <strong>Custom API calls for advanced field updates</strong>
+                            <p>Handles complex field mappings using ActiveCampaign API directly.</p>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <a href="../projects.html" class="back-button">← Back to Projects</a>
+        </div>
+    </main>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+
+        const modal = document.getElementById('imageModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

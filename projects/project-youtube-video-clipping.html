@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Clipping Automation - Rose Renolla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Rose Renolla</div>
+            <nav class="icon-nav">
+                <a href="../index.html" class="nav-icon" title="Home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span class="nav-tooltip">Home</span>
+                </a>
+                <a href="../about.html" class="nav-icon" title="About">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="nav-tooltip">About</span>
+                </a>
+                <a href="../projects.html" class="nav-icon active" title="Portfolio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span class="nav-tooltip">Portfolio</span>
+                </a>
+                <a href="../contact.html" class="nav-icon" title="Contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="nav-tooltip">Contact</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="project-detail-container">
+            <a href="../projects.html" class="back-button">← Back to Projects</a>
+
+            <h1>YouTube Video Clipping Automation</h1>
+
+            <div class="project-tags">
+                <span class="tag">n8n</span>
+                <span class="tag">Vizard.ai</span>
+                <span class="tag">OpenAI</span>
+            </div>
+
+            <div class="project-image-container">
+                <img src="../images/projects/youtube-video-clipping.png" alt="YouTube Video Clipping Workflow" class="project-screenshot" onclick="openModal(this)">
+            </div>
+
+            <section class="project-section">
+                <h2>Problem</h2>
+                <ul class="problem-list">
+                    <li>Manual video clipping is time-intensive</li>
+                    <li>Finding the best moments in long videos requires watching entire content</li>
+                    <li>Inconsistent clip quality and length across social platforms</li>
+                    <li>No systematic way to track video processing status</li>
+                </ul>
+            </section>
+
+            <section class="project-section">
+                <h2>Solution</h2>
+                <p>Built an automated pipeline that submits YouTube videos to Vizard.ai API for AI-powered clipping, waits for processing completion, checks status automatically, and retrieves optimized clips. The system handles API authentication, error checking, and provides status updates throughout the process.</p>
+            </section>
+
+            <section class="project-section">
+                <h2>Benefits</h2>
+                <ul class="benefits-list">
+                    <li>Zero manual video editing required</li>
+                    <li>AI identifies best moments automatically (up to 8 clips per video)</li>
+                    <li>Consistent 2-minute clip format optimized for social media</li>
+                    <li>Automatic status monitoring (no need to manually check)</li>
+                    <li>Saves 3-5 hours per video on clipping and editing</li>
+                </ul>
+            </section>
+
+            <section class="project-section">
+                <h2>How It Works</h2>
+                <ol class="workflow-steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>Receives YouTube video URL as input</strong>
+                            <p>Workflow triggered with target video URL for processing.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>Submits video to Vizard API with preferences</strong>
+                            <p>Sends request with language (English), clip length (2 min), and max clips (8) parameters.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>Waits 10 minutes for initial processing</strong>
+                            <p>Allows Vizard AI time to analyze video and identify optimal clip segments.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <strong>Polls API to check clipping status</strong>
+                            <p>Queries Vizard API using project ID to verify processing completion.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <div class="step-content">
+                            <strong>Validates response code (2000 = success)</strong>
+                            <p>Checks API response to confirm successful clip generation before proceeding.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">6</span>
+                        <div class="step-content">
+                            <strong>Uses OpenAI for additional optimization (if configured)</strong>
+                            <p>Optional step to further analyze or categorize generated clips using GPT-4.1.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-number">7</span>
+                        <div class="step-content">
+                            <strong>Returns processed clips for download/distribution</strong>
+                            <p>Delivers final clip URLs ready for social media publishing or storage.</p>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <a href="../projects.html" class="back-button">← Back to Projects</a>
+        </div>
+    </main>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+
+        const modal = document.getElementById('imageModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

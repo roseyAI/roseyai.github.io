@@ -376,6 +376,111 @@
         "website-engagement-workflow-2.png",
         "website-engagement-workflow-3.png"
       ]
+    },
+    {
+      "slug": "ai-interview-grading",
+      "title": "(n8n) AI-Powered Interview Answer Grading Workflow",
+      "service": "AI Agent",
+      "tag": "n8n, openai",
+      "featured": "No",
+      "shortDescription": "AI coach that grades interview answers using STAR method, provides feedback, and generates improved responses - all synced with Google Sheets for easy practice tracking.",
+      "problem": "Interview candidates struggle to self-assess their answers objectively. Manual feedback takes time and isn't scalable. Difficult to track progress across multiple practice sessions. Hard to know if answers follow proper STAR method structure.",
+      "solution": "Built an automated interview coaching system that reads practice answers from Google Sheets, uses OpenAI to grade them against STAR methodology, provides detailed feedback, and generates improved versions. The system handles behavioral, hypothetical, and generic questions with customized scoring criteria for each type.",
+      "benefits": [
+        "Instant feedback on interview answers (vs. hours waiting for human review)",
+        "Consistent, objective grading based on STAR methodology",
+        "Automated improved answer generation for faster learning",
+        "Complete practice history tracked in Google Sheets",
+        "Scores 45 questions in ~5 minutes"
+      ],
+      "thumbnailImage": "ai-interview-grading.png",
+      "allImages": [
+        "ai-interview-grading.png"
+      ]
+    },
+    {
+      "slug": "activecampaign-auto-update",
+      "title": "(n8n) ActiveCampaign Account Auto-Update System",
+      "service": "Lead Automation",
+      "tag": "n8n, activecampaign, airtable",
+      "featured": "No",
+      "shortDescription": "Automatically syncs trade signup data from Airtable to ActiveCampaign, keeping contact records updated with the latest account details in real-time.",
+      "problem": "Manual data entry between Airtable and ActiveCampaign is time-consuming. Contact information gets outdated quickly. Risk of human error when copying data between systems. No way to automatically filter and update specific contact segments.",
+      "solution": "Created an automated sync workflow that monitors ActiveCampaign lists, filters for specific signup types (trade signups), pulls matching records from Airtable, and updates ActiveCampaign contact fields automatically. The system ensures data consistency across both platforms.",
+      "benefits": [
+        "Zero manual data entry required",
+        "Real-time contact updates (vs. daily/weekly manual syncs)",
+        "Reduced data errors from manual copying",
+        "Automatic filtering for specific contact segments",
+        "Saves ~3-5 hours per week on data management"
+      ],
+      "thumbnailImage": "activecampaign-auto-update.png",
+      "allImages": [
+        "activecampaign-auto-update.png"
+      ]
+    },
+    {
+      "slug": "seo-link-building-planner",
+      "title": "(Make.com) SEO Link Building Campaign Planner",
+      "service": "Marketing Automation",
+      "tag": "make, openai",
+      "featured": "No",
+      "shortDescription": "AI-powered link building planner that analyzes portfolio domains, calculates relevance scores, and generates optimized 12-month outreach campaigns within budget constraints.",
+      "problem": "Manual selection of outreach domains takes hours per campaign. Difficult to balance topical relevance, local relevance, and budget. Hard to ensure campaigns meet minimum link requirements. No systematic way to prioritize domains across large portfolios.",
+      "solution": "Built an intelligent campaign planner that fetches customer requirements and portfolio data from Google Sheets, uses OpenAI to score domains based on topical relevance, locality, DR, and traffic, then generates an optimized shortlist that meets budget constraints and minimum link requirements.",
+      "benefits": [
+        "Campaign planning time reduced from 4-6 hours to ~15 minutes",
+        "Data-driven domain selection with AI scoring",
+        "Automatic budget optimization across 12 months",
+        "Guaranteed to meet minimum link requirements",
+        "Balanced approach (own domains, partner domains, rest of portfolio)"
+      ],
+      "thumbnailImage": "seo-link-building-planner.png",
+      "allImages": [
+        "seo-link-building-planner.png"
+      ]
+    },
+    {
+      "slug": "email-draft-automation",
+      "title": "(n8n) AI Email Draft Generator",
+      "service": "Productivity Automation",
+      "tag": "n8n, openai",
+      "featured": "No",
+      "shortDescription": "Automated email response system that monitors Outlook folders, generates professional draft replies using AI, and organizes emails for review - saving hours of daily email management.",
+      "problem": "High volume of emails requiring personalized responses. Time-consuming to draft professional replies for each message. Difficult to prioritize and organize incoming emails. Repetitive email writing takes focus away from core tasks.",
+      "solution": "Created an intelligent email assistant that runs hourly, checks three designated Outlook folders (Review, To Respond, Greg), analyzes unread emails, and generates professional draft responses using GPT-4o. Drafts are automatically created in Outlook and original emails moved to an organized folder for final review.",
+      "benefits": [
+        "Saves 2-3 hours daily on email drafting",
+        "Professional, consistent tone across all responses",
+        "Automatic email organization and prioritization",
+        "Drafts ready for quick review and send",
+        "Never miss an email that needs response"
+      ],
+      "thumbnailImage": "email-draft-automation.png",
+      "allImages": [
+        "email-draft-automation.png"
+      ]
+    },
+    {
+      "slug": "youtube-video-clipping",
+      "title": "(n8n) YouTube Video Clipping Automation",
+      "service": "Social Media Content",
+      "tag": "n8n, openai",
+      "featured": "No",
+      "shortDescription": "Automated video clipping workflow that submits YouTube videos to Vizard AI, monitors processing status, and extracts optimized short-form clips for social media distribution.",
+      "problem": "Manual video clipping is time-intensive. Finding the best moments in long videos requires watching entire content. Inconsistent clip quality and length across social platforms. No systematic way to track video processing status.",
+      "solution": "Built an automated pipeline that submits YouTube videos to Vizard.ai API for AI-powered clipping, waits for processing completion, checks status automatically, and retrieves optimized clips. The system handles API authentication, error checking, and provides status updates throughout the process.",
+      "benefits": [
+        "Zero manual video editing required",
+        "AI identifies best moments automatically (up to 8 clips per video)",
+        "Consistent 2-minute clip format optimized for social media",
+        "Automatic status monitoring (no need to manually check)",
+        "Saves 3-5 hours per video on clipping and editing"
+      ],
+      "thumbnailImage": "youtube-video-clipping.png",
+      "allImages": [
+        "youtube-video-clipping.png"
+      ]
     }
   ]
 }

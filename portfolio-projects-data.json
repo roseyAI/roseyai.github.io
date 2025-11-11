@@ -460,6 +460,26 @@
       "allImages": [
         "youtube-video-clipping.png"
       ]
+    },
+    {
+      "slug": "pending-invoice-reminder",
+      "title": "(Zapier) Pending Invoice Reminder Sender",
+      "service": "Finance Automation",
+      "tag": "zapier, gmail, google sheets",
+      "featured": "No",
+      "shortDescription": "Automated payment reminder system that sends personalized emails to customers with outstanding invoices, with automatic record tracking.",
+      "problem": "Manual invoice follow-up takes hours each week. Customers forget to pay pending invoices without reminders. Inconsistent payment reminder communication. No systematic way to track which reminders have been sent. Risk of sending duplicate reminders or missing overdue invoices.",
+      "solution": "Built an automated Zapier agent that runs daily at 9:00 AM, checks Google Sheets for pending invoices, filters for reminders that haven't been sent, generates personalized email messages with customer names and payment links, sends friendly branded reminders via Gmail, and updates the spreadsheet to track communication status.",
+      "benefits": [
+        "Saves 3-5 hours weekly on manual invoice follow-ups",
+        "Faster payments with automated daily reminders",
+        "Personalized communication includes customer name, amount, and payment link",
+        "No duplicate reminders with automatic tracking in spreadsheet",
+        "Improved cash flow through consistent follow-up",
+        "Professional brand voice with Tart-led friendly tone"
+      ],
+      "thumbnailImage": "",
+      "allImages": []
     }
   ]
 }

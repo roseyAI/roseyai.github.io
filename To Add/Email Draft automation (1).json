@@ -1,0 +1,582 @@
+{
+  "name": "Email Draft automation",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "4a616318-2394-48d8-a7f5-09a6f2c39bd5",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0HDAAA=",
+          "mode": "list",
+          "cachedResultName": "3. To Respond",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0HDAAA%3D"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        760,
+        260
+      ],
+      "id": "a95b86e2-129d-4acc-8708-eec13e39d86c",
+      "name": "Get emails from To Respond folder",
+      "webhookId": "676306ba-2330-46ab-82dd-ffc5b4b36e28",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0G-AAA=",
+          "mode": "list",
+          "cachedResultName": "2. Review",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0G%2FAAA%3D"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        760,
+        40
+      ],
+      "id": "c10da0bc-b8e7-4bfc-a168-ab82f3b2e84c",
+      "name": "Get emails from Review folder",
+      "webhookId": "b8052490-94d3-449b-bed9-1d6777a2cc97",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        320
+      ],
+      "id": "2df5f78f-7688-44c0-b0b0-a78e5dde7cba",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "XzLUErvBcbuF4lma",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        140
+      ],
+      "id": "cedb5cd3-4dbe-4d72-b1b6-4d3903fa27dd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create a professional email response for this incoming email:\n\nSubject: {{ $json.subject }}\nBody: {{ $json.bodyPreview }}\nFrom: {{ $json.from }}\n\nInstructions:\n- Write ONLY the email body content (no subject line)\n- Start directly with the greeting\n- Acknowledge the email professionally\n- Address any questions or requests\n- Keep it concise and helpful\n- Use proper business tone\n- DO NOT include any closing signature (no \"Best regards\", \"Kind regards\", etc.)\n- End with the main content only\n\nReturn only the email body text - no JSON, no formatting, no \"Subject:\" or \"Body:\" labels.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        80
+      ],
+      "id": "62d2b245-91a7-464d-a940-a6b9a16bc15d",
+      "name": "Draft Generator"
+    },
+    {
+      "parameters": {
+        "content": "## Email Draft assistant\n**This workflow checks for emails moved to Review and To Respond folders and creates draft for them",
+        "height": 200,
+        "width": 200,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        380,
+        -80
+      ],
+      "id": "0b5f6507-9c04-433f-8eb7-431d766ed6af",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0G_AAA=",
+          "mode": "list",
+          "cachedResultName": "1. Greg",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0G_AAA%3D"
+        },
+        "returnAll": true,
+        "filtersUI": {
+          "values": {
+            "filters": {
+              "readStatus": "unread"
+            }
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        780,
+        500
+      ],
+      "id": "57585818-d7fc-47d6-8f81-f75477e7e67c",
+      "name": "Get emails from 1.Greg",
+      "webhookId": "676306ba-2330-46ab-82dd-ffc5b4b36e28",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "messageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0G_AAA=",
+          "mode": "list",
+          "cachedResultName": "1. Greg",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0G_AAA%3D"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2040,
+        100
+      ],
+      "id": "7e59257f-e9cc-4c4c-b0f5-19cd53f77ae1",
+      "name": "Move a message",
+      "webhookId": "f70a4284-4a22-43d0-b575-dc01d3e5b75e",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=Re: {{ $('Merge').item.json.subject }}",
+        "bodyContent": "={{ $json.output }}",
+        "additionalFields": {
+          "toRecipients": "={{ $('Merge').item.json.from }}"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        100
+      ],
+      "id": "43e2dde3-8c0b-4148-bd56-20e7a098c30f",
+      "name": "Create a draft",
+      "webhookId": "e2b181e3-4efe-4bf4-9311-a7f8afe30c59",
+      "executeOnce": true,
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2340,
+        600
+      ],
+      "id": "9a3b7697-4c9a-4bd2-bced-d3837dc300db",
+      "name": "Merge Drafts",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get emails from Merge\nconst emails = items;\n\n// If no emails, return empty\nif (emails.length === 0) {\n  return [];\n}\n\n// Get drafts from the draft checking nodes\n// We need to reference the actual draft nodes by their names\nconst reviewDrafts = $('Check drafts in To respond').all() || [];\nconst toRespondDrafts = $('Check drafts in 1.Greg').all() || [];\nconst gregDrafts = $('Get many folder messages3').all() || []; // Update with actual node name\n\n// Combine all drafts\nconst allDrafts = [...reviewDrafts, ...toRespondDrafts, ...gregDrafts];\n\n// Extract draft subjects\nconst draftSubjects = allDrafts\n  .filter(draft => draft.json && draft.json.subject)\n  .map(draft => draft.json.subject.replace(/^Re:\\s*/i, '').trim().toLowerCase());\n\nconsole.log('Found draft subjects:', draftSubjects);\n\n// Filter emails without drafts\nconst emailsWithoutDrafts = emails.filter(email => {\n  if (!email.json || !email.json.subject) return true;\n  \n  const originalSubject = email.json.subject.replace(/^Re:\\s*/i, '').trim().toLowerCase();\n  const hasDraft = draftSubjects.includes(originalSubject);\n  \n  console.log(`Email \"${originalSubject}\" has draft: ${hasDraft}`);\n  \n  return !hasDraft;\n});\n\nconsole.log('Emails without drafts:', emailsWithoutDrafts.length);\n\nreturn emailsWithoutDrafts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2580,
+        620
+      ],
+      "id": "09311644-e16f-4176-84f7-40c726d925da",
+      "name": "Remove Duplicates",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0G-AAA=",
+          "mode": "list",
+          "cachedResultName": "2. Review",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0G%2FAAA%3D"
+        },
+        "returnAll": true,
+        "filtersUI": {
+          "values": {
+            "filters": {
+              "custom": "isDraft eq true"
+            }
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        480
+      ],
+      "id": "b2f47bb7-04c7-473c-a8bf-8cee9ff143c9",
+      "name": "Check drafts in Review",
+      "webhookId": "b280ba33-f7a3-4cb3-935d-e77aa335081a",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAHEC0HDAAA=",
+          "mode": "list",
+          "cachedResultName": "3. To Respond",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAHEC0HDAAA%3D"
+        },
+        "returnAll": true,
+        "filtersUI": {
+          "values": {
+            "filters": {
+              "custom": "isDraft eq true"
+            }
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2080,
+        720
+      ],
+      "id": "9b252d64-db94-41f0-81f4-ecfe8ba23c1a",
+      "name": "Check drafts in To respond",
+      "webhookId": "b280ba33-f7a3-4cb3-935d-e77aa335081a",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folderMessage",
+        "folderId": {
+          "__rl": true,
+          "value": "AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN-e5NKj5AAMKSb-SAAA=",
+          "mode": "list",
+          "cachedResultName": "1. Greg",
+          "cachedResultUrl": "https://outlook.office365.com/mail/AAMkADA1MjNkZjMxLTExOWYtNDlhNC1hNDA3LTI2MzhjZjgwNGQxZQAuAAAAAABpT9O0cJJ3R4d2j2TBImw5AQA1_BUSS0BHRZFlN%2Fe5NKj5AAMKSb%2FSAAA%3D"
+        },
+        "returnAll": true,
+        "filtersUI": {
+          "values": {
+            "filters": {
+              "custom": "isDraft eq true"
+            }
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        940
+      ],
+      "id": "b8792e2a-46c1-485d-ac2d-d834e0929317",
+      "name": "Check drafts in 1.Greg",
+      "webhookId": "b280ba33-f7a3-4cb3-935d-e77aa335081a",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "hD381HCLASgjTxu2",
+          "name": "Microsoft Outlook account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "test nodes only - will delete after testing"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        360
+      ],
+      "id": "8812f2c2-c76a-462a-a9c4-60363b606405",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Draft Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get emails from To Respond folder": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get emails from Review folder": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Draft Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get emails from Review folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get emails from To Respond folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get emails from 1.Greg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Generator": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get emails from 1.Greg": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Create a draft": {
+      "main": [
+        [
+          {
+            "node": "Move a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Drafts": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        []
+      ]
+    },
+    "Check drafts in Review": {
+      "main": [
+        [
+          {
+            "node": "Merge Drafts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check drafts in To respond": {
+      "main": [
+        [
+          {
+            "node": "Merge Drafts",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Check drafts in 1.Greg": {
+      "main": [
+        [
+          {
+            "node": "Merge Drafts",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Move a message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "649a8f91-43f6-4c99-af60-4c537a9a53ff",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a2945d7afcd72eea07487deb91759681c87da7f2e7a0fe0acaa8976aa66ec446"
+  },
+  "id": "g3aI8wkXToFcBh95",
+  "tags": []
+}

@@ -1,0 +1,1017 @@
+{
+  "name": "YT Vizard flow",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://elb-api.vizard.ai/hvizard-server-front/open-api/v1/project/create",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"lang\": \"en\",\n  \"preferLength\": [2],\n  \"videoUrl\": \"{{ $json['YouTube Video Url'] }}\",\n  \"videoType\": 2,\n  \"maxClipNumber\": 8\n\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -304,
+        96
+      ],
+      "id": "e0126ff4-bc41-4591-aed4-bdeb540b6e22",
+      "name": "submit_video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "jp5h40BtxIRoVPX0",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        96
+      ],
+      "id": "857c7595-1880-44f2-a00f-e5251169aa02",
+      "name": "wait",
+      "webhookId": "65cefde9-1d9f-466c-9b9e-b200eb155023"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0583b406-8a93-4582-9229-7f68aa461320",
+              "leftValue": "={{ $json.code }}",
+              "rightValue": 2000,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        96
+      ],
+      "id": "02ff1051-01e8-47c5-ba09-013c00323b76",
+      "name": "check_status"
+    },
+    {
+      "parameters": {
+        "url": "=https://elb-api.vizard.ai/hvizard-server-front/open-api/v1/project/query/{{ $json.projectId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        144,
+        16
+      ],
+      "id": "4058e46e-473b-4d21-b3db-1fb43f4addf7",
+      "name": "get_clipping_status"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        336
+      ],
+      "id": "32eaef0b-89d0-491a-adda-f9345a67c59f",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a social media content writer for Develop Coaching, which provides coaching and support for contractors and construction business owners in the US, UK, and Australia. The tone should be clear, confident, and practical—aimed at helping busy contractors improve their business mindset, leadership, systems, and profitability. Keep language simple, direct, and free of fluff.\n\nUsing the provided transcript, generate an array called content with the following:\n\nInstagram & Facebook Caption:\nWrite a clear, engaging caption that captures the key message or insight from the transcript. The first lines can be a compelling question. Use a natural, conversational tone that invites interest or interaction. Include 1–2 relevant emojis to enhance the vibe without distracting from the message.\n\nLinkedIn caption:\nWrite a thoughtful, detailed caption (200-400 words) that explores the core idea of the transcript. The tone should be professional, insightful, and supportive. Use paragraph breaks for readability. No emojis.\n\nTwitter caption:\nWrite a short, impactful statement that reflects the key message from the transcript. Keep it direct and thoughtful. No hashtags.\n\nThumbnail text message:\nWrite a brief, compelling text overlay for a video thumbnail (6 words MAXIMUM). Should be punchy and make viewers want to click. Use title case formatting.\n\n\nHere is the transcript: {{ $json.transcript }}\n\nRespond in valid JSON format only.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "3204ea66-0b07-47c0-bfe0-2936ae2840dd",
+      "name": "AI Caption Generator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1040,
+        96
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"content\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"platform\": {\n            \"type\": \"string\"\n          },\n          \"caption\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    },\n    \"thumbnail_text\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1184,
+        336
+      ],
+      "id": "62f39b6b-a0de-4492-b3f5-7067993ba148",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "videos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        816,
+        96
+      ],
+      "id": "7cd006fb-8bb9-4501-ae95-a9c08a951299",
+      "name": "split_videos1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('split_videos1').item.json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        96
+      ],
+      "id": "f308a5a1-66f8-4deb-92b9-9501c4d9d4aa",
+      "name": "Download videos"
+    },
+    {
+      "parameters": {
+        "name": "={{ $json['Thumbnail Text'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1trt0b9qFqgJJ62aDyyP3G0R2q_gAP9d1",
+          "mode": "list",
+          "cachedResultName": "YouTube",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1trt0b9qFqgJJ62aDyyP3G0R2q_gAP9d1"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1904,
+        96
+      ],
+      "id": "15e16804-a53e-4c05-8b1e-d79d2052da39",
+      "name": "Upload videos to Drive"
+    },
+    {
+      "parameters": {
+        "content": "If input gets edited, make sure to edit the request here:\n\n\"videoType\": 2 for youtube\n\"videoType\": 3 for Google Drive\n✅ preferLength: [2] 30-60secs\n\nMore setup details: https://docs.vizard.ai/docs/basic",
+        "height": 420,
+        "width": 204,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -160
+      ],
+      "id": "251c3f0e-130f-4d72-bd59-72ec4c55b020",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/1/folders/1pXWbFOkzvC6Zc6ju-n0OB-fh5izjd50I",
+          "mode": "url"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -240
+      ],
+      "id": "55b51010-ecd3-4942-b3bc-edfd1ddc13c1",
+      "name": "Google Drive Trigger1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1p-2LB0sshtkTGITftLrVO4rab6WNsnXoE8ki7-8Z8Bk",
+          "mode": "list",
+          "cachedResultName": "Clipped videos captions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1p-2LB0sshtkTGITftLrVO4rab6WNsnXoE8ki7-8Z8Bk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Socials",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1p-2LB0sshtkTGITftLrVO4rab6WNsnXoE8ki7-8Z8Bk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Clip URL": "={{ $('split_videos1').item.json.videoUrl }}",
+            "Instagram & FB": "={{ $json.output.content[0].caption }}",
+            "Linkedin": "={{ $json.output.content[1].caption }}",
+            "Twitter": "={{ $json.output.content[2].caption }}",
+            "Thumbnail Text": "={{ $json.output.thumbnail_text }}",
+            "Transcript": "={{ $('split_videos1').item.json.transcript }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Clip URL",
+              "displayName": "Clip URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Thumbnail Text",
+              "displayName": "Thumbnail Text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instagram & FB",
+              "displayName": "Instagram & FB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Linkedin",
+              "displayName": "Linkedin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Twitter",
+              "displayName": "Twitter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Blog Post (US)",
+              "displayName": "Blog Post (US)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Blog Post (UK/AU)",
+              "displayName": "Blog Post (UK/AU)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1440,
+        96
+      ],
+      "id": "b0591a81-1ee5-4a46-8ff4-def5e941cb0d",
+      "name": "Add captions to Sheet1"
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1b0ZzEkcPjLNXFI4SVO_aID-ZHtI1yPqf",
+          "mode": "list",
+          "cachedResultName": "Reels/Shorts",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1b0ZzEkcPjLNXFI4SVO_aID-ZHtI1yPqf"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        96
+      ],
+      "id": "64755c32-db43-489d-b4f2-2fbcff4387bf",
+      "name": "Move file"
+    },
+    {
+      "parameters": {
+        "formTitle": "YouTube Video Clipper",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "YouTube Video Url",
+              "placeholder": "https://www.youtube.com/watch?v=DB9mjd-65gw",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -496,
+        96
+      ],
+      "id": "5e20678d-81e8-4ca6-9b50-71f8fcaad93b",
+      "name": "form_trigger1",
+      "webhookId": "329e16ba-3fc9-48df-85b9-253057473b7b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dd18de51-6e46-48a5-8df6-3fbb6b03474b",
+              "name": "videos",
+              "value": "={{ $('check_status').item.json.videos }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        96
+      ],
+      "id": "9273b937-b035-4c25-9893-cac2e9482cca",
+      "name": "Get videos array"
+    }
+  ],
+  "pinData": {
+    "submit_video": [
+      {
+        "json": {
+          "code": 2000,
+          "projectId": 22581257
+        }
+      }
+    ],
+    "AI Caption Generator": [
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Feeling swamped by admin and constant chaos? 😵‍💫 The builders who grow their business aren’t working harder—they’re systemizing smarter. Imagine having an assistant who never forgets a thing and is always listening. That’s what Fireflies offers. If you’re ready to simplify, just pick one process—like client visits or scope notes—and let Fireflies handle it. Start small, watch it grow. Have you tried a tool like this yet? 🔥"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "As a contractor or construction business owner, staying on top of constant admin and daily chaos can feel nearly impossible. Yet, the difference between those who plateau and those who scale is clear: successful contractors systemize their operations.\n\nThat’s where solutions like Fireflies come into play. Picture having a digital assistant that’s always present, documenting every call, never missing a detail, and never needing a day off. Fireflies can transform how you manage client visits, track scopes of work, and more by acting as a reliable record-keeper in your busy workday.\n\nThe key is to start simply. Choose one critical use case—perhaps documenting client meetings or keeping scope of work notes—and implement Fireflies for that specific need. Once you see firsthand how much time and mental load it can take off your plate, you’ll soon find even more ways to streamline your business.\n\nBy adopting systems like these, you’ll free yourself from repetitive admin tasks, minimize mistakes, and position your business for real, sustainable growth. When you’re ready to scale, the systems you put in place today could be your biggest competitive advantage."
+              },
+              {
+                "platform": "Twitter",
+                "caption": "The builders who scale aren’t working harder—they’re systemizing smarter. Start small, automate admin, and let tools like Fireflies handle the details."
+              }
+            ],
+            "thumbnail_text": "Systemize For Real Growth"
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Ever struggle to remember every detail from your client estimate conversations? 🛠 🤔 \n\nInstead of scrambling to take notes and working out costs in your head, try recording the conversation (with permission) using the Firefly's app. You’ll capture client expectations, scope, material preferences, and even budget—all without missing a beat. Better notes, better service, less stress. How could this change your estimating process?"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "Accurate client estimates are the backbone of a successful contracting business—but juggling note-taking, active listening, and instant pricing during client meetings is a challenge many face.\n\nA simple shift in your workflow can make all the difference. By using the Firefly's app to record your initial estimate conversations (with your client's permission), you free yourself from hasty note-taking and mental calculations. Instead, you can focus on having a natural, thorough dialogue that truly uncovers client needs.\n\nFirefly's automatically captures everything discussed: scope requirements, material preferences, and crucial budget details. After the meeting, you have a complete, accurate transcript to review. This makes it easier to provide detailed estimates, align with client expectations, and avoid costly miscommunications.\n\nAdopting this approach ensures you don’t miss important details. It keeps the process streamlined and professional, ultimately enhancing client trust and helping you deliver better, more profitable projects. If you’re looking to improve your meetings and outcomes, consider leveraging technology like Firefly's—sometimes the simplest tools lead to the biggest wins."
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Stop stressing over estimate meetings—record client conversations (with permission) using Firefly's, so you never miss details on scope, materials, or budgets."
+              }
+            ],
+            "thumbnail_text": "Nail Estimate Conversations Every Time"
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Ever find yourself forgetting details after a site walkthrough? 🏗️ What if you could save 45 minutes on paperwork? \n\nTry this: After each job walk, record a quick voice note in Fireflies. Let it transcribe your notes—then drop the file into ChatGPT and ask for a clear, organized scope of works. Fast, simple, and accurate. How are you streamlining your process?"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "Busy contractors often lose hours documenting site walkthroughs—time that could be better spent on-site or running your business. Many project details, from client preferences to specific fixture choices, can easily be missed or misremembered by the time you're back at your desk typing up notes.\n\nA smarter approach is to use tools already at your fingertips. Right after your walkthrough, use a voice-to-text app like Fireflies to quickly log all important observations: material preferences, feature upgrades, and client requests. The app transcribes your recording, turning your spoken notes into a clear written record.\n\nBut don't stop there. Take that transcript and run it through ChatGPT or another advanced AI tool, asking it to format your notes into a full, professional scope of works. Suddenly, a process that might have taken 45 minutes—or even longer—is finished in under five.\n\nThe bottom line? Leveraging simple digital tools can slash your admin time, reduce mistakes, and let you focus on high-value work. What's your current system for capturing scope details, and how could it be faster or more reliable?"
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Voice note your site walkthrough, transcribe it, and let AI create your scope of works in minutes—instead of losing hours on paperwork."
+              }
+            ],
+            "thumbnail_text": "Speed Up Your Scope Creation"
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Are you making the most of your interviews? 📋\n\nRecording your candidate meetings—whether on Zoom or your phone—gives you a full, searchable transcript that you can review anytime. This means no details get missed, and you can easily compare who’s best for the job. Simple steps like this can save time and help you build a stronger team. Have you tried recording your interviews yet? 🎥"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "Hiring the right person is one of the most important decisions a contractor or construction business owner can make. With the pace of projects and the pressure to get things right, it's easy to miss key details in interviews or make decisions based on memory alone.\n\nA practical way to improve your hiring process is to record your interviews. Whether you're using Zoom for virtual meetings or simply recording from your phone, capturing these conversations allows you to generate full, searchable transcripts. This extra step means you can revisit every detail, ensure consistency, and fairly compare candidates based on actual conversations—not just impressions.\n\nOnce you’ve completed several interviews, use technology to your advantage. You can compile transcripts alongside the job description and use an AI tool like ChatGPT to help analyze which candidate best matches your needs. This cuts down on bias and guesswork, and helps you make data-driven hiring decisions that benefit your team and business longevity.\n\nTaking the time to document and review interviews doesn’t just streamline your process—it leads to better hires, stronger teams, and ultimately, a more profitable business. How could recording your interviews improve your next hire?"
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Recording interviews and reviewing transcripts helps you choose the right hire with confidence and clarity."
+              }
+            ],
+            "thumbnail_text": "Record Interviews, Hire Smarter"
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Ever wish you could connect your conversations directly to your project management tools? 🔗 Fireflies' integrations let you push key discussions straight into Notion, Asana, Slack, and more. It’s a simple shift that could transform the way you manage projects—no more lost info or missed tasks. If you’ve got an AI tool that’s changed your workflow, let us know below! 🚀"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "In today's fast-paced construction industry, the ability to integrate and streamline your workflow isn't just a nice-to-have—it's essential. That's why AI tools with robust integrations, like Fireflies, can be true catalysts for efficiency. \n\nImagine being able to connect your team conversations seamlessly with project management platforms such as Notion, Asana, or Slack. This means that important discussions, decisions, and next steps are no longer buried in your inbox or scattered across various platforms. Instead, they're pushed directly to the tools your team uses daily, reducing the risk of missed information and keeping everyone aligned.\n\nFor contractors and business owners, this is more than just convenience. It's about creating clarity amidst the daily chaos, leading more effectively, and ensuring that no critical detail falls through the cracks. These kinds of integrations also help you make the most of your time, allowing you to focus more on leading projects and less on administrative overhead.\n\nIf you've found an AI tool that has made a genuine impact on your workflow, feel free to share your experience. Leveraging the right technology can make a significant difference in how you operate and grow your business."
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Integrate your conversations directly into your project management tools with Fireflies. Efficiency, clarity, and real impact—right where you need it."
+              }
+            ],
+            "thumbnail_text": "Integrate AI. Work Smarter Now."
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Have you ever truly listened to what your clients care about most? 👷‍♂️ It’s not just the build details—sometimes their biggest concerns are safety and family. Next time a client shares what matters to them, use it as a chance to stand out. Show them you deliver a site that’s clean, safe, and family-friendly. That’s how you build trust—and win more work. 🚀"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "Every contractor knows the importance of delivering quality work, but what really sets you apart is recognizing and addressing your client’s true concerns—right from the first meeting.\n\nFor example, if a client mentions they have young children and emphasizes the need for a clean and safe site, this isn’t just a project requirement—it’s invaluable insight into their core values. This information gives you a powerful opportunity to customize your approach and position your business in a way that others may overlook.\n\nInstead of simply noting the need for safety and cleanliness on site, use it to craft a unique selling proposition in your quote or proposal. Let your client know you prioritize operating a clean, organized, and family-friendly environment. Doing so demonstrates not only technical competence but genuine empathy and attention to what matters most to your clients.\n\nThis is how trust is built and why you become the contractor of choice. It’s practical, actionable, and a clear step you can take right now to differentiate yourself in a competitive market. Listen closely at every initial client meeting—your next big opportunity could reveal itself in a single offhand comment."
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Real success comes from listening—pick up on what your clients value, and make it your edge in every quote."
+              }
+            ],
+            "thumbnail_text": "Stand Out: Listen To Clients"
+          }
+        }
+      },
+      {
+        "json": {
+          "output": {
+            "content": [
+              {
+                "platform": "Instagram & Facebook",
+                "caption": "Ever find yourself scribbling notes only to lose track of important details later? 🤔\n\nIt's not about being forgetful—it's the overload we all feel in construction. Imagine having an AI tool that catches every detail, automates your notes, and keeps you in control. That's what Fireflies.ai does for busy contractors. Ready to work smarter, not harder? 🚀"
+              },
+              {
+                "platform": "LinkedIn",
+                "caption": "In the fast-paced world of construction, information overload is a common struggle. Whether it's jotting down notes on the nearest scrap of paper or chasing your virtual assistant for updates, it’s easy to lose track of important client conversations and project details. This doesn't mean you're forgetful or disorganized; it’s just the reality of managing a demanding business.\n\nWhat if you could change all that with a single tool? Enter Fireflies.ai—an AI assistant designed to streamline how contractors run their businesses. By recording and transcribing meetings automatically, it ensures that every detail is captured and nothing slips through the cracks.\n\nFrom my own experience using Fireflies daily, I've seen how it transforms the way information flows. You spend less time hunting for conversations or clarifying instructions, and more time focusing on leadership, refining your systems, and boosting profitability.\n\nAdopting tech like Fireflies.ai isn’t just about convenience—it’s about raising your professional game. When you always have accurate records, it shows your clients and your team that you’re organized, proactive, and serious about building a better business.\n\nIf you’re ready to stop chasing loose ends and start leading with more confidence, it might be time to add AI-powered solutions to your toolkit. The results speak for themselves."
+              },
+              {
+                "platform": "Twitter",
+                "caption": "Fireflies.ai keeps every client detail organized so you can focus on leading your construction business, not chasing notes."
+              }
+            ],
+            "thumbnail_text": "Never Miss a Client Detail"
+          }
+        }
+      }
+    ],
+    "Add captions to Sheet1": [
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987521-ffa2e265234c43a6ac3f2a8762e6d010.mp4?Expires=1754995825&Signature=CatCM4kNDhQe8~QhW52l7ZpHmhiORoSJB0PazLxblK972~cSGkyasdsK3jdt28sh~CjSAUjMyJecODVRPZJi~6UHrKtDdHSSumpoCso8EjIIFEjsJDnJ6B5gI5jT14jvESBWnyaQovNp6ZqJNkAWuPjFGcNSjWdODNNOR1cFoR-66-ZvefIkCaUFFzjEU~uBMNFgmGehtM~c9YnP2sojuxJjmNFxTe-896MLV-EtgRfhEJY8YWRg0n~zyLhJdAVbhbRcRyyny7db-pDICklCaAmuHdUXqZRn1tZ6XyJxK-ox-wt52Z3f6jDEScuBHbtf833snTFabw8gGnvhdxkaWA__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Feeling swamped by admin and constant chaos? 😵‍💫 The builders who grow their business aren’t working harder—they’re systemizing smarter. Imagine having an assistant who never forgets a thing and is always listening. That’s what Fireflies offers. If you’re ready to simplify, just pick one process—like client visits or scope notes—and let Fireflies handle it. Start small, watch it grow. Have you tried a tool like this yet? 🔥",
+          "Linkedin": "As a contractor or construction business owner, staying on top of constant admin and daily chaos can feel nearly impossible. Yet, the difference between those who plateau and those who scale is clear: successful contractors systemize their operations.\n\nThat’s where solutions like Fireflies come into play. Picture having a digital assistant that’s always present, documenting every call, never missing a detail, and never needing a day off. Fireflies can transform how you manage client visits, track scopes of work, and more by acting as a reliable record-keeper in your busy workday.\n\nThe key is to start simply. Choose one critical use case—perhaps documenting client meetings or keeping scope of work notes—and implement Fireflies for that specific need. Once you see firsthand how much time and mental load it can take off your plate, you’ll soon find even more ways to streamline your business.\n\nBy adopting systems like these, you’ll free yourself from repetitive admin tasks, minimize mistakes, and position your business for real, sustainable growth. When you’re ready to scale, the systems you put in place today could be your biggest competitive advantage.",
+          "Twitter": "The builders who scale aren’t working harder—they’re systemizing smarter. Start small, automate admin, and let tools like Fireflies handle the details.",
+          "Thumbnail Text": "Systemize For Real Growth",
+          "Transcript": "We know that as a builder, you're probably drowning in all the admin and chaos, but the guys who manage to scale, they scale because they systemize. And Fireflies is really like having a little assistant sitting there next to you all day who's listening to every call, who remembers absolutely everything, never takes a day off, never forgets anything. It's absolutely brilliant. So if you were going to simplify this, just start with one use case, even if it's the client visits or the scope of work notes. Just start with that and then build it out from there. And then you'll see exactly how you can really use Fireflies in your day-to-day business."
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987520-e85852f071b342158530f89c670a00ea.mp4?Expires=1754995825&Signature=I9AtiDAayAFUb0BFxdRgT6HNxl2WTm7Py9FFvqIrLLC6k~w-NxogaykIJV9UcFqdAuJQZHRiqf6iRbsbchGz-X6IewC4DWXUhlR0OzBKex7VBb7EYPLtaBrMXX2w4GpI2VMCWYF0yDH23qqMoF9Pp2r8gL94980Fi5XLVfLG5R92lC0QeiifhzPtDR5VVGO4c7YeeTTFW~pEkBAYLJCL~IE29a4pTcMW1agsPapRX0qG2ujZWztqXDVwk9a2514gsIRm-NZjclJ1gFbNL0DpkF7OrzkeIeYC-9-m-hxhDn0PoYqQ-8Qts6A4cc3y2pU8LGL0oWNwmOKIVqDaRqdsig__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Ever struggle to remember every detail from your client estimate conversations? 🛠 🤔 \n\nInstead of scrambling to take notes and working out costs in your head, try recording the conversation (with permission) using the Firefly's app. You’ll capture client expectations, scope, material preferences, and even budget—all without missing a beat. Better notes, better service, less stress. How could this change your estimating process?",
+          "Linkedin": "Accurate client estimates are the backbone of a successful contracting business—but juggling note-taking, active listening, and instant pricing during client meetings is a challenge many face.\n\nA simple shift in your workflow can make all the difference. By using the Firefly's app to record your initial estimate conversations (with your client's permission), you free yourself from hasty note-taking and mental calculations. Instead, you can focus on having a natural, thorough dialogue that truly uncovers client needs.\n\nFirefly's automatically captures everything discussed: scope requirements, material preferences, and crucial budget details. After the meeting, you have a complete, accurate transcript to review. This makes it easier to provide detailed estimates, align with client expectations, and avoid costly miscommunications.\n\nAdopting this approach ensures you don’t miss important details. It keeps the process streamlined and professional, ultimately enhancing client trust and helping you deliver better, more profitable projects. If you’re looking to improve your meetings and outcomes, consider leveraging technology like Firefly's—sometimes the simplest tools lead to the biggest wins.",
+          "Twitter": "Stop stressing over estimate meetings—record client conversations (with permission) using Firefly's, so you never miss details on scope, materials, or budgets.",
+          "Thumbnail Text": "Nail Estimate Conversations Every Time",
+          "Transcript": "The first use case, this one really is a no-brainer, is for your client estimate conversations. So this is when you first go and meet a potential client. Now, you know what happens, you go in there, you're trying to listen, you're trying to take notes, and you're trying to price it all up in your head all at once. Instead, what I want you to do is you're gonna open the Firefly's app on your phone, you're just gonna hit record and get the client's permission, and then you're just gonna have a normal conversation. Now what Fireflies will do is it will listen to that whole conversation. It will capture what they want built, the scope. It will talk about the materials that they may prefer. You might get budget expectations in there."
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987519-6ad1b5391e01457d96a57ebb4c03c7ac.mp4?Expires=1754995825&Signature=qESjgrTUiFxX97eCUaPNMDqP43mDAwTbP~Ihuwsc~ilLXLd61ITsffriM1EEUUUB63ruuVREyyt0WkF0tQWDbE~Mc356rK6XHHl-NwRV5UcKM5QD~f90li3cSQfd7YYjDAsPehIOar1Ox1K-1G0vUJPYZiJRNxHVdnhRPYRinZHzyTxEn8iMQv0Phclaw1xUCNVGga1IkfjoiBBPk95UOnLdcipGQrmDOYr3AfSKqd8WIIuUpqdK~sqcRhBB4r6MZqJIu9GHu4-tpkcuOfGkr2tP1SA1lqKcS8pCQoQEwyCuXQp9k5uSyhqt~Q3ADPFoO4JGaD6qr1dGgrtV5gyf6A__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Ever find yourself forgetting details after a site walkthrough? 🏗️ What if you could save 45 minutes on paperwork? \n\nTry this: After each job walk, record a quick voice note in Fireflies. Let it transcribe your notes—then drop the file into ChatGPT and ask for a clear, organized scope of works. Fast, simple, and accurate. How are you streamlining your process?",
+          "Linkedin": "Busy contractors often lose hours documenting site walkthroughs—time that could be better spent on-site or running your business. Many project details, from client preferences to specific fixture choices, can easily be missed or misremembered by the time you're back at your desk typing up notes.\n\nA smarter approach is to use tools already at your fingertips. Right after your walkthrough, use a voice-to-text app like Fireflies to quickly log all important observations: material preferences, feature upgrades, and client requests. The app transcribes your recording, turning your spoken notes into a clear written record.\n\nBut don't stop there. Take that transcript and run it through ChatGPT or another advanced AI tool, asking it to format your notes into a full, professional scope of works. Suddenly, a process that might have taken 45 minutes—or even longer—is finished in under five.\n\nThe bottom line? Leveraging simple digital tools can slash your admin time, reduce mistakes, and let you focus on high-value work. What's your current system for capturing scope details, and how could it be faster or more reliable?",
+          "Twitter": "Voice note your site walkthrough, transcribe it, and let AI create your scope of works in minutes—instead of losing hours on paperwork.",
+          "Thumbnail Text": "Speed Up Your Scope Creation",
+          "Transcript": "After you've done the site walkthrough, again, instead of trying to remember and type everything up, you can speak into your Firefly's app and you're going to say, this was for a kitchen reno, the client wants shaker doors, matte black fixtures, fridge space to be widened, all that sort of stuff. You could just voice note it into Fireflies. It's then gonna transcribe it. And then you could literally take that transcription, put it into ChatGPT, and then you can ask ChatGPT to turn that into a full scope of works creation for you. So something that might have taken you 45 minutes to an hour is literally done in five."
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987518-6ee9a8d961584a71b82213f7a1956efe.mp4?Expires=1754995826&Signature=JCzYF8XnC~sTWxjXd1Mo225VBy5877tbhG6HPmBq5OY7WOBDb1oaJneEO2LX8SL1w79114yH3684tqhauecYVL6PI6krWdSCKdnbIkQO6d6Y-CWJFNp-bNTq0Cc7897xOm6fDaNOFtzZVejimq9fqB8pnT5F5xMsxsi~VOyzFUKpIul3w5K6CFAzdM0lskN86D4yvg29b04xY12b~ZrxjdrBB2ZoJqB9UbuQFTnh30H2oU2O88F0P1TjddTbqih773iQTIfWSQINn857r8OHjZhSV07aP2V05uU260H0WKj9T3mOovUDsN49yTen37FhEerU7EKIO0e6nDjgrFkzTw__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Are you making the most of your interviews? 📋\n\nRecording your candidate meetings—whether on Zoom or your phone—gives you a full, searchable transcript that you can review anytime. This means no details get missed, and you can easily compare who’s best for the job. Simple steps like this can save time and help you build a stronger team. Have you tried recording your interviews yet? 🎥",
+          "Linkedin": "Hiring the right person is one of the most important decisions a contractor or construction business owner can make. With the pace of projects and the pressure to get things right, it's easy to miss key details in interviews or make decisions based on memory alone.\n\nA practical way to improve your hiring process is to record your interviews. Whether you're using Zoom for virtual meetings or simply recording from your phone, capturing these conversations allows you to generate full, searchable transcripts. This extra step means you can revisit every detail, ensure consistency, and fairly compare candidates based on actual conversations—not just impressions.\n\nOnce you’ve completed several interviews, use technology to your advantage. You can compile transcripts alongside the job description and use an AI tool like ChatGPT to help analyze which candidate best matches your needs. This cuts down on bias and guesswork, and helps you make data-driven hiring decisions that benefit your team and business longevity.\n\nTaking the time to document and review interviews doesn’t just streamline your process—it leads to better hires, stronger teams, and ultimately, a more profitable business. How could recording your interviews improve your next hire?",
+          "Twitter": "Recording interviews and reviewing transcripts helps you choose the right hire with confidence and clarity.",
+          "Thumbnail Text": "Record Interviews, Hire Smarter",
+          "Transcript": "Let's imagine you're hiring a new chippy or a new project manager and you want to make sure that you push record on that meeting. Now you can either, you can actually push record in Zoom if it's a virtual meeting or again you can just push record on the app and when you're doing this Once you've done it, you've got a full transcript. It's fully searchable. It's fully stored. So you can really use this to compare candidates. What I find really useful is when you've done, say, three or five interviews, you can take all those transcripts. You can take the job description. You can put it into ChatGPT. And then you can say, based on the transcripts, who is the person that matches this role the best?"
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987517-2cae2859f9264df2a5973887e3ae9efb.mp4?Expires=1754995826&Signature=YnG9GwFY6iBdEOUdMGzVhNP1OCQCzkTMgmkCFILmS6JAPOroXbnpEkHDz-~W-1aMT51YqsMEB5XQFT2Rfbn52N-ozg4v8MsBtZccXnnrbcYKgCkzv2-XG3Ki~hIFWkXO2lV2rmcJmoBlKRRq-bX~bxGpWodVKh6jKy1YYvISySbXIAJIp6AqmpZgOe14JxvIpfbDuKV0V6PytsF7eJPa5x8AO5tktkI1HZ2ttHlO-FzShi-PMgZ9gde1QAWtJAdmnxyVZRxOzWYbjJlweujb-AXfnavsnHaKPwjSfpfuxR0IxRCmmF-Rr6Fb6SKYvYFSatMpd-2uzJRMkErBLsDFFQ__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Ever wish you could connect your conversations directly to your project management tools? 🔗 Fireflies' integrations let you push key discussions straight into Notion, Asana, Slack, and more. It’s a simple shift that could transform the way you manage projects—no more lost info or missed tasks. If you’ve got an AI tool that’s changed your workflow, let us know below! 🚀",
+          "Linkedin": "In today's fast-paced construction industry, the ability to integrate and streamline your workflow isn't just a nice-to-have—it's essential. That's why AI tools with robust integrations, like Fireflies, can be true catalysts for efficiency. \n\nImagine being able to connect your team conversations seamlessly with project management platforms such as Notion, Asana, or Slack. This means that important discussions, decisions, and next steps are no longer buried in your inbox or scattered across various platforms. Instead, they're pushed directly to the tools your team uses daily, reducing the risk of missed information and keeping everyone aligned.\n\nFor contractors and business owners, this is more than just convenience. It's about creating clarity amidst the daily chaos, leading more effectively, and ensuring that no critical detail falls through the cracks. These kinds of integrations also help you make the most of your time, allowing you to focus more on leading projects and less on administrative overhead.\n\nIf you've found an AI tool that has made a genuine impact on your workflow, feel free to share your experience. Leveraging the right technology can make a significant difference in how you operate and grow your business.",
+          "Twitter": "Integrate your conversations directly into your project management tools with Fireflies. Efficiency, clarity, and real impact—right where you need it.",
+          "Thumbnail Text": "Integrate AI. Work Smarter Now.",
+          "Transcript": "As a bonus as well, Fireflies has got some amazing integrations that you can use. So if you're using other project management tools like notion or Asana, anything like that, or Slack, then you can integrate it into those and it will push those conversations straight into those apps for you, which can be an absolute game changer if you're using them well. So hope that helps. That's just one ai tool, but you've got five use cases there. So hope you found that helpful. Give us a like if you have and leave me a comment as well if you've got any other ai tools that you're loving at the moment that you really enjoy."
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987515-cec873a2c2294df5a0b20e8a4ce06770.mp4?Expires=1754995826&Signature=GtI8Sg0MMhiSDqyUJODJy5NVoi4VsoFyHP18ZuFA5US2lRDr7r3A3Tuh7YLM99dZiFHUZsUbf7yyhWrZiuS-An-uAFctOswMBmp8StRicyjb6mzrRVbCWWO6SJuQ6RzLZlqk698vWdD~X2vi3Vn-CeRn7BkGoPE20hCJRx6GuLHIM52OFoER~Fe3R1wjE9FOSnqf8oKu3aOkH~1cYL9MQSBGtAfvRkemkGkvIfVdnoYFvXEamq0kKv-K2fswc8a9unoRUDamumm8hEwJf6MCQ1zxPrClZTrZhhbo46bwGeos9dIIO-bu3q8~y86ivUqN93SxQHrXitez3HfBD4JrYg__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Have you ever truly listened to what your clients care about most? 👷‍♂️ It’s not just the build details—sometimes their biggest concerns are safety and family. Next time a client shares what matters to them, use it as a chance to stand out. Show them you deliver a site that’s clean, safe, and family-friendly. That’s how you build trust—and win more work. 🚀",
+          "Linkedin": "Every contractor knows the importance of delivering quality work, but what really sets you apart is recognizing and addressing your client’s true concerns—right from the first meeting.\n\nFor example, if a client mentions they have young children and emphasizes the need for a clean and safe site, this isn’t just a project requirement—it’s invaluable insight into their core values. This information gives you a powerful opportunity to customize your approach and position your business in a way that others may overlook.\n\nInstead of simply noting the need for safety and cleanliness on site, use it to craft a unique selling proposition in your quote or proposal. Let your client know you prioritize operating a clean, organized, and family-friendly environment. Doing so demonstrates not only technical competence but genuine empathy and attention to what matters most to your clients.\n\nThis is how trust is built and why you become the contractor of choice. It’s practical, actionable, and a clear step you can take right now to differentiate yourself in a competitive market. Listen closely at every initial client meeting—your next big opportunity could reveal itself in a single offhand comment.",
+          "Twitter": "Real success comes from listening—pick up on what your clients value, and make it your edge in every quote.",
+          "Thumbnail Text": "Stand Out: Listen To Clients",
+          "Transcript": "One thing that I always talk about when you're first meeting a client, you're really gonna understand their real concerns and their values. So let's imagine, for example, the client says, I've got two young kids. I really want this site to be clean and safe. Well, just not a build detail that you need to remember. That's actually your opportunity to tailor a brilliant USP for that when you send back your quote. So now you can be sending back a quote as a builder who runs safe site you know, a clean, organized, and family friendly site so that's just one little use case of that."
+        }
+      },
+      {
+        "json": {
+          "Clip URL": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987514-4eaea687bc924bc1a1f7e21fd30957a0.mp4?Expires=1754995826&Signature=pkFDkamlEk86DXtyH56S5VCB68Ox7S7A5UUpyBNcJUef12OZaWH8uEZjYE~cqvbqbX2wRMuOGE6ieWXn991VKzAicS8UwiCjVOn1fF~sa0k9upqQST14Ao8Z4U7rLpEXVPAtDK-Z6UR4ZE8uxZcrddq2z-cpzDnhV0HV-GKQo3O66AaMmzz9SrsD4MsFP~9E~e4r1xn6yaG0RwqVMrrSmiX9ptIsQpMrzMjP4G07M1ZFj-h6qb0-jTbH2Kn7wTMtLpu59Z2DKt3XSgWfD-aHginnjKenA6J3tjqIhOD-BKk-qWZb5v-Ymp30xseo-r4FZ0nTJIbpkMnWR4h5PY975g__&Key-Pair-Id=K1STSG6HQYFY8F",
+          "Instagram & FB": "Ever find yourself scribbling notes only to lose track of important details later? 🤔\n\nIt's not about being forgetful—it's the overload we all feel in construction. Imagine having an AI tool that catches every detail, automates your notes, and keeps you in control. That's what Fireflies.ai does for busy contractors. Ready to work smarter, not harder? 🚀",
+          "Linkedin": "In the fast-paced world of construction, information overload is a common struggle. Whether it's jotting down notes on the nearest scrap of paper or chasing your virtual assistant for updates, it’s easy to lose track of important client conversations and project details. This doesn't mean you're forgetful or disorganized; it’s just the reality of managing a demanding business.\n\nWhat if you could change all that with a single tool? Enter Fireflies.ai—an AI assistant designed to streamline how contractors run their businesses. By recording and transcribing meetings automatically, it ensures that every detail is captured and nothing slips through the cracks.\n\nFrom my own experience using Fireflies daily, I've seen how it transforms the way information flows. You spend less time hunting for conversations or clarifying instructions, and more time focusing on leadership, refining your systems, and boosting profitability.\n\nAdopting tech like Fireflies.ai isn’t just about convenience—it’s about raising your professional game. When you always have accurate records, it shows your clients and your team that you’re organized, proactive, and serious about building a better business.\n\nIf you’re ready to stop chasing loose ends and start leading with more confidence, it might be time to add AI-powered solutions to your toolkit. The results speak for themselves.",
+          "Twitter": "Fireflies.ai keeps every client detail organized so you can focus on leading your construction business, not chasing notes.",
+          "Thumbnail Text": "Never Miss a Client Detail",
+          "Transcript": "Well, you're probably scribbling notes on the back of a pad. Maybe you forget what clients talk to you about. Maybe you're chasing your VA for updates. It's not that you're lazy and you forget things. It's just sometimes your mind gets a little bit overloaded in construction. And what we really want is an AI tool that can really change how you run your construction business and make you really professional so you never forget a thing. And that tool is Fireflies.ai. Now, I use Fireflies every single day in my business. I love it. It records. It transcribes."
+        }
+      }
+    ],
+    "get_clipping_status": [
+      {
+        "json": {
+          "code": 2000,
+          "videos": [
+            {
+              "viralScore": "10",
+              "relatedTopic": "[]",
+              "transcript": "We know that as a builder, you're probably drowning in all the admin and chaos, but the guys who manage to scale, they scale because they systemize. And Fireflies is really like having a little assistant sitting there next to you all day who's listening to every call, who remembers absolutely everything, never takes a day off, never forgets anything. It's absolutely brilliant. So if you were going to simplify this, just start with one use case, even if it's the client visits or the scope of work notes. Just start with that and then build it out from there. And then you'll see exactly how you can really use Fireflies in your day-to-day business.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987521-ffa2e265234c43a6ac3f2a8762e6d010.mp4?Expires=1754995825&Signature=CatCM4kNDhQe8~QhW52l7ZpHmhiORoSJB0PazLxblK972~cSGkyasdsK3jdt28sh~CjSAUjMyJecODVRPZJi~6UHrKtDdHSSumpoCso8EjIIFEjsJDnJ6B5gI5jT14jvESBWnyaQovNp6ZqJNkAWuPjFGcNSjWdODNNOR1cFoR-66-ZvefIkCaUFFzjEU~uBMNFgmGehtM~c9YnP2sojuxJjmNFxTe-896MLV-EtgRfhEJY8YWRg0n~zyLhJdAVbhbRcRyyny7db-pDICklCaAmuHdUXqZRn1tZ6XyJxK-ox-wt52Z3f6jDEScuBHbtf833snTFabw8gGnvhdxkaWA__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543871&type=clip",
+              "videoMsDuration": 33866,
+              "videoId": 17987521,
+              "title": "Simplify Construction Tasks with Fireflies.ai",
+              "viralReason": "The clip highlights a practical solution to a common pain point for builders: managing overwhelming administrative tasks. The relatable narrative, coupled with a clear value proposition and actionable tips, makes it highly shareable within the construction and business communities."
+            },
+            {
+              "viralScore": "8.7",
+              "relatedTopic": "[\"client\",\"estimate,\",\"Fireflies.ai,\",\"recording,\",\"client\",\"conversation,\",\"construction\"]",
+              "transcript": "The first use case, this one really is a no-brainer, is for your client estimate conversations. So this is when you first go and meet a potential client. Now, you know what happens, you go in there, you're trying to listen, you're trying to take notes, and you're trying to price it all up in your head all at once. Instead, what I want you to do is you're gonna open the Firefly's app on your phone, you're just gonna hit record and get the client's permission, and then you're just gonna have a normal conversation. Now what Fireflies will do is it will listen to that whole conversation. It will capture what they want built, the scope. It will talk about the materials that they may prefer. You might get budget expectations in there.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987520-e85852f071b342158530f89c670a00ea.mp4?Expires=1754995825&Signature=I9AtiDAayAFUb0BFxdRgT6HNxl2WTm7Py9FFvqIrLLC6k~w-NxogaykIJV9UcFqdAuJQZHRiqf6iRbsbchGz-X6IewC4DWXUhlR0OzBKex7VBb7EYPLtaBrMXX2w4GpI2VMCWYF0yDH23qqMoF9Pp2r8gL94980Fi5XLVfLG5R92lC0QeiifhzPtDR5VVGO4c7YeeTTFW~pEkBAYLJCL~IE29a4pTcMW1agsPapRX0qG2ujZWztqXDVwk9a2514gsIRm-NZjclJ1gFbNL0DpkF7OrzkeIeYC-9-m-hxhDn0PoYqQ-8Qts6A4cc3y2pU8LGL0oWNwmOKIVqDaRqdsig__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543870&type=clip",
+              "videoMsDuration": 40466,
+              "videoId": 17987520,
+              "title": "Never Forget Client Details Again with This Simple Trick!",
+              "viralReason": "Captures the relatable struggle of remembering client details and demonstrates a simple, smart solution with Fireflies.ai, appealing to busy construction professionals looking to save time and improve professionalism."
+            },
+            {
+              "viralScore": "8.3",
+              "relatedTopic": "[\"scope\",\"of\",\"works,\",\"ChatGPT,\",\"transcription,\",\"Fireflies,\",\"construction\"]",
+              "transcript": "After you've done the site walkthrough, again, instead of trying to remember and type everything up, you can speak into your Firefly's app and you're going to say, this was for a kitchen reno, the client wants shaker doors, matte black fixtures, fridge space to be widened, all that sort of stuff. You could just voice note it into Fireflies. It's then gonna transcribe it. And then you could literally take that transcription, put it into ChatGPT, and then you can ask ChatGPT to turn that into a full scope of works creation for you. So something that might have taken you 45 minutes to an hour is literally done in five.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987519-6ad1b5391e01457d96a57ebb4c03c7ac.mp4?Expires=1754995825&Signature=qESjgrTUiFxX97eCUaPNMDqP43mDAwTbP~Ihuwsc~ilLXLd61ITsffriM1EEUUUB63ruuVREyyt0WkF0tQWDbE~Mc356rK6XHHl-NwRV5UcKM5QD~f90li3cSQfd7YYjDAsPehIOar1Ox1K-1G0vUJPYZiJRNxHVdnhRPYRinZHzyTxEn8iMQv0Phclaw1xUCNVGga1IkfjoiBBPk95UOnLdcipGQrmDOYr3AfSKqd8WIIuUpqdK~sqcRhBB4r6MZqJIu9GHu4-tpkcuOfGkr2tP1SA1lqKcS8pCQoQEwyCuXQp9k5uSyhqt~Q3ADPFoO4JGaD6qr1dGgrtV5gyf6A__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543869&type=clip",
+              "videoMsDuration": 34900,
+              "videoId": 17987519,
+              "title": "Create Detailed Scope of Works in 5 Minutes with AI",
+              "viralReason": "Shows a clever and time-saving hack by pairing Fireflies.ai transcription with ChatGPT to generate detailed scopes of work quickly, making it easy for viewers to replicate and save hours."
+            },
+            {
+              "viralScore": "7.9",
+              "relatedTopic": "[\"staff\",\"interviews,\",\"transcription,\",\"Fireflies,\",\"hiring,\",\"AI\",\"analysis\"]",
+              "transcript": "Let's imagine you're hiring a new chippy or a new project manager and you want to make sure that you push record on that meeting. Now you can either, you can actually push record in Zoom if it's a virtual meeting or again you can just push record on the app and when you're doing this Once you've done it, you've got a full transcript. It's fully searchable. It's fully stored. So you can really use this to compare candidates. What I find really useful is when you've done, say, three or five interviews, you can take all those transcripts. You can take the job description. You can put it into ChatGPT. And then you can say, based on the transcripts, who is the person that matches this role the best?",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987518-6ee9a8d961584a71b82213f7a1956efe.mp4?Expires=1754995826&Signature=JCzYF8XnC~sTWxjXd1Mo225VBy5877tbhG6HPmBq5OY7WOBDb1oaJneEO2LX8SL1w79114yH3684tqhauecYVL6PI6krWdSCKdnbIkQO6d6Y-CWJFNp-bNTq0Cc7897xOm6fDaNOFtzZVejimq9fqB8pnT5F5xMsxsi~VOyzFUKpIul3w5K6CFAzdM0lskN86D4yvg29b04xY12b~ZrxjdrBB2ZoJqB9UbuQFTnh30H2oU2O88F0P1TjddTbqih773iQTIfWSQINn857r8OHjZhSV07aP2V05uU260H0WKj9T3mOovUDsN49yTen37FhEerU7EKIO0e6nDjgrFkzTw__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543868&type=clip",
+              "videoMsDuration": 39300,
+              "videoId": 17987518,
+              "title": "Hire the Best Candidate with AI-Powered Interview Transcripts",
+              "viralReason": "Demonstrates a fresh way to optimize hiring processes using AI transcripts and analysis, helping busy construction managers make better decisions and compare candidates efficiently."
+            },
+            {
+              "viralScore": "7.2",
+              "relatedTopic": "[\"Fireflies.ai,\",\"integration,\",\"Asana,\",\"Notion,\",\"Slack\"]",
+              "transcript": "As a bonus as well, Fireflies has got some amazing integrations that you can use. So if you're using other project management tools like notion or Asana, anything like that, or Slack, then you can integrate it into those and it will push those conversations straight into those apps for you, which can be an absolute game changer if you're using them well. So hope that helps. That's just one ai tool, but you've got five use cases there. So hope you found that helpful. Give us a like if you have and leave me a comment as well if you've got any other ai tools that you're loving at the moment that you really enjoy.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987517-2cae2859f9264df2a5973887e3ae9efb.mp4?Expires=1754995826&Signature=YnG9GwFY6iBdEOUdMGzVhNP1OCQCzkTMgmkCFILmS6JAPOroXbnpEkHDz-~W-1aMT51YqsMEB5XQFT2Rfbn52N-ozg4v8MsBtZccXnnrbcYKgCkzv2-XG3Ki~hIFWkXO2lV2rmcJmoBlKRRq-bX~bxGpWodVKh6jKy1YYvISySbXIAJIp6AqmpZgOe14JxvIpfbDuKV0V6PytsF7eJPa5x8AO5tktkI1HZ2ttHlO-FzShi-PMgZ9gde1QAWtJAdmnxyVZRxOzWYbjJlweujb-AXfnavsnHaKPwjSfpfuxR0IxRCmmF-Rr6Fb6SKYvYFSatMpd-2uzJRMkErBLsDFFQ__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543867&type=clip",
+              "videoMsDuration": 33333,
+              "videoId": 17987517,
+              "title": "Boost Your Workflow: Fireflies.ai Integrates with Asana & Slack",
+              "viralReason": "Adds valuable insight about app integrations making Fireflies highly functional in existing management systems, appealing to tech-savvy users looking for workflow automation and enhanced productivity."
+            },
+            {
+              "viralScore": "7",
+              "relatedTopic": "[\"client\",\"concerns,\",\"unique\",\"selling\",\"point,\",\"construction\",\"marketing\"]",
+              "transcript": "One thing that I always talk about when you're first meeting a client, you're really gonna understand their real concerns and their values. So let's imagine, for example, the client says, I've got two young kids. I really want this site to be clean and safe. Well, just not a build detail that you need to remember. That's actually your opportunity to tailor a brilliant USP for that when you send back your quote. So now you can be sending back a quote as a builder who runs safe site you know, a clean, organized, and family friendly site so that's just one little use case of that.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987515-cec873a2c2294df5a0b20e8a4ce06770.mp4?Expires=1754995826&Signature=GtI8Sg0MMhiSDqyUJODJy5NVoi4VsoFyHP18ZuFA5US2lRDr7r3A3Tuh7YLM99dZiFHUZsUbf7yyhWrZiuS-An-uAFctOswMBmp8StRicyjb6mzrRVbCWWO6SJuQ6RzLZlqk698vWdD~X2vi3Vn-CeRn7BkGoPE20hCJRx6GuLHIM52OFoER~Fe3R1wjE9FOSnqf8oKu3aOkH~1cYL9MQSBGtAfvRkemkGkvIfVdnoYFvXEamq0kKv-K2fswc8a9unoRUDamumm8hEwJf6MCQ1zxPrClZTrZhhbo46bwGeos9dIIO-bu3q8~y86ivUqN93SxQHrXitez3HfBD4JrYg__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543866&type=clip",
+              "videoMsDuration": 32599,
+              "videoId": 17987515,
+              "title": "Turn Client Details Into Your Best Sales Pitch Instantly",
+              "viralReason": "Teaches how to use detailed client info captured by Fireflies to create personalized, trust-building quotes, a subtle but valuable sales tactic for builders that can inspire immediate action."
+            },
+            {
+              "viralScore": "6.8",
+              "relatedTopic": "[\"Fireflies.ai,\",\"note\",\"taking,\",\"construction\",\"chaos,\",\"overwhelmed\"]",
+              "transcript": "Well, you're probably scribbling notes on the back of a pad. Maybe you forget what clients talk to you about. Maybe you're chasing your VA for updates. It's not that you're lazy and you forget things. It's just sometimes your mind gets a little bit overloaded in construction. And what we really want is an AI tool that can really change how you run your construction business and make you really professional so you never forget a thing. And that tool is Fireflies.ai. Now, I use Fireflies every single day in my business. I love it. It records. It transcribes.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987514-4eaea687bc924bc1a1f7e21fd30957a0.mp4?Expires=1754995826&Signature=pkFDkamlEk86DXtyH56S5VCB68Ox7S7A5UUpyBNcJUef12OZaWH8uEZjYE~cqvbqbX2wRMuOGE6ieWXn991VKzAicS8UwiCjVOn1fF~sa0k9upqQST14Ao8Z4U7rLpEXVPAtDK-Z6UR4ZE8uxZcrddq2z-cpzDnhV0HV-GKQo3O66AaMmzz9SrsD4MsFP~9E~e4r1xn6yaG0RwqVMrrSmiX9ptIsQpMrzMjP4G07M1ZFj-h6qb0-jTbH2Kn7wTMtLpu59Z2DKt3XSgWfD-aHginnjKenA6J3tjqIhOD-BKk-qWZb5v-Ymp30xseo-r4FZ0nTJIbpkMnWR4h5PY975g__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543865&type=clip",
+              "videoMsDuration": 32766,
+              "videoId": 17987514,
+              "title": "Stop Scribbling Notes: How to Stay Professional in Construction",
+              "viralReason": "Relates to the emotional pain point of overwhelmed professionals juggling note-taking and client management, positioning Fireflies as a practical solution to regain control and stay professional."
+            }
+          ],
+          "projectId": 22581257
+        }
+      }
+    ],
+    "Get videos array": [
+      {
+        "json": {
+          "videos": [
+            {
+              "viralScore": "10",
+              "relatedTopic": "[]",
+              "transcript": "We know that as a builder, you're probably drowning in all the admin and chaos, but the guys who manage to scale, they scale because they systemize. And Fireflies is really like having a little assistant sitting there next to you all day who's listening to every call, who remembers absolutely everything, never takes a day off, never forgets anything. It's absolutely brilliant. So if you were going to simplify this, just start with one use case, even if it's the client visits or the scope of work notes. Just start with that and then build it out from there. And then you'll see exactly how you can really use Fireflies in your day-to-day business.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987521-ffa2e265234c43a6ac3f2a8762e6d010.mp4?Expires=1754995825&Signature=CatCM4kNDhQe8~QhW52l7ZpHmhiORoSJB0PazLxblK972~cSGkyasdsK3jdt28sh~CjSAUjMyJecODVRPZJi~6UHrKtDdHSSumpoCso8EjIIFEjsJDnJ6B5gI5jT14jvESBWnyaQovNp6ZqJNkAWuPjFGcNSjWdODNNOR1cFoR-66-ZvefIkCaUFFzjEU~uBMNFgmGehtM~c9YnP2sojuxJjmNFxTe-896MLV-EtgRfhEJY8YWRg0n~zyLhJdAVbhbRcRyyny7db-pDICklCaAmuHdUXqZRn1tZ6XyJxK-ox-wt52Z3f6jDEScuBHbtf833snTFabw8gGnvhdxkaWA__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543871&type=clip",
+              "videoMsDuration": 33866,
+              "videoId": 17987521,
+              "title": "Simplify Construction Tasks with Fireflies.ai",
+              "viralReason": "The clip highlights a practical solution to a common pain point for builders: managing overwhelming administrative tasks. The relatable narrative, coupled with a clear value proposition and actionable tips, makes it highly shareable within the construction and business communities."
+            },
+            {
+              "viralScore": "8.7",
+              "relatedTopic": "[\"client\",\"estimate,\",\"Fireflies.ai,\",\"recording,\",\"client\",\"conversation,\",\"construction\"]",
+              "transcript": "The first use case, this one really is a no-brainer, is for your client estimate conversations. So this is when you first go and meet a potential client. Now, you know what happens, you go in there, you're trying to listen, you're trying to take notes, and you're trying to price it all up in your head all at once. Instead, what I want you to do is you're gonna open the Firefly's app on your phone, you're just gonna hit record and get the client's permission, and then you're just gonna have a normal conversation. Now what Fireflies will do is it will listen to that whole conversation. It will capture what they want built, the scope. It will talk about the materials that they may prefer. You might get budget expectations in there.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987520-e85852f071b342158530f89c670a00ea.mp4?Expires=1754995825&Signature=I9AtiDAayAFUb0BFxdRgT6HNxl2WTm7Py9FFvqIrLLC6k~w-NxogaykIJV9UcFqdAuJQZHRiqf6iRbsbchGz-X6IewC4DWXUhlR0OzBKex7VBb7EYPLtaBrMXX2w4GpI2VMCWYF0yDH23qqMoF9Pp2r8gL94980Fi5XLVfLG5R92lC0QeiifhzPtDR5VVGO4c7YeeTTFW~pEkBAYLJCL~IE29a4pTcMW1agsPapRX0qG2ujZWztqXDVwk9a2514gsIRm-NZjclJ1gFbNL0DpkF7OrzkeIeYC-9-m-hxhDn0PoYqQ-8Qts6A4cc3y2pU8LGL0oWNwmOKIVqDaRqdsig__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543870&type=clip",
+              "videoMsDuration": 40466,
+              "videoId": 17987520,
+              "title": "Never Forget Client Details Again with This Simple Trick!",
+              "viralReason": "Captures the relatable struggle of remembering client details and demonstrates a simple, smart solution with Fireflies.ai, appealing to busy construction professionals looking to save time and improve professionalism."
+            },
+            {
+              "viralScore": "8.3",
+              "relatedTopic": "[\"scope\",\"of\",\"works,\",\"ChatGPT,\",\"transcription,\",\"Fireflies,\",\"construction\"]",
+              "transcript": "After you've done the site walkthrough, again, instead of trying to remember and type everything up, you can speak into your Firefly's app and you're going to say, this was for a kitchen reno, the client wants shaker doors, matte black fixtures, fridge space to be widened, all that sort of stuff. You could just voice note it into Fireflies. It's then gonna transcribe it. And then you could literally take that transcription, put it into ChatGPT, and then you can ask ChatGPT to turn that into a full scope of works creation for you. So something that might have taken you 45 minutes to an hour is literally done in five.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987519-6ad1b5391e01457d96a57ebb4c03c7ac.mp4?Expires=1754995825&Signature=qESjgrTUiFxX97eCUaPNMDqP43mDAwTbP~Ihuwsc~ilLXLd61ITsffriM1EEUUUB63ruuVREyyt0WkF0tQWDbE~Mc356rK6XHHl-NwRV5UcKM5QD~f90li3cSQfd7YYjDAsPehIOar1Ox1K-1G0vUJPYZiJRNxHVdnhRPYRinZHzyTxEn8iMQv0Phclaw1xUCNVGga1IkfjoiBBPk95UOnLdcipGQrmDOYr3AfSKqd8WIIuUpqdK~sqcRhBB4r6MZqJIu9GHu4-tpkcuOfGkr2tP1SA1lqKcS8pCQoQEwyCuXQp9k5uSyhqt~Q3ADPFoO4JGaD6qr1dGgrtV5gyf6A__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543869&type=clip",
+              "videoMsDuration": 34900,
+              "videoId": 17987519,
+              "title": "Create Detailed Scope of Works in 5 Minutes with AI",
+              "viralReason": "Shows a clever and time-saving hack by pairing Fireflies.ai transcription with ChatGPT to generate detailed scopes of work quickly, making it easy for viewers to replicate and save hours."
+            },
+            {
+              "viralScore": "7.9",
+              "relatedTopic": "[\"staff\",\"interviews,\",\"transcription,\",\"Fireflies,\",\"hiring,\",\"AI\",\"analysis\"]",
+              "transcript": "Let's imagine you're hiring a new chippy or a new project manager and you want to make sure that you push record on that meeting. Now you can either, you can actually push record in Zoom if it's a virtual meeting or again you can just push record on the app and when you're doing this Once you've done it, you've got a full transcript. It's fully searchable. It's fully stored. So you can really use this to compare candidates. What I find really useful is when you've done, say, three or five interviews, you can take all those transcripts. You can take the job description. You can put it into ChatGPT. And then you can say, based on the transcripts, who is the person that matches this role the best?",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987518-6ee9a8d961584a71b82213f7a1956efe.mp4?Expires=1754995826&Signature=JCzYF8XnC~sTWxjXd1Mo225VBy5877tbhG6HPmBq5OY7WOBDb1oaJneEO2LX8SL1w79114yH3684tqhauecYVL6PI6krWdSCKdnbIkQO6d6Y-CWJFNp-bNTq0Cc7897xOm6fDaNOFtzZVejimq9fqB8pnT5F5xMsxsi~VOyzFUKpIul3w5K6CFAzdM0lskN86D4yvg29b04xY12b~ZrxjdrBB2ZoJqB9UbuQFTnh30H2oU2O88F0P1TjddTbqih773iQTIfWSQINn857r8OHjZhSV07aP2V05uU260H0WKj9T3mOovUDsN49yTen37FhEerU7EKIO0e6nDjgrFkzTw__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543868&type=clip",
+              "videoMsDuration": 39300,
+              "videoId": 17987518,
+              "title": "Hire the Best Candidate with AI-Powered Interview Transcripts",
+              "viralReason": "Demonstrates a fresh way to optimize hiring processes using AI transcripts and analysis, helping busy construction managers make better decisions and compare candidates efficiently."
+            },
+            {
+              "viralScore": "7.2",
+              "relatedTopic": "[\"Fireflies.ai,\",\"integration,\",\"Asana,\",\"Notion,\",\"Slack\"]",
+              "transcript": "As a bonus as well, Fireflies has got some amazing integrations that you can use. So if you're using other project management tools like notion or Asana, anything like that, or Slack, then you can integrate it into those and it will push those conversations straight into those apps for you, which can be an absolute game changer if you're using them well. So hope that helps. That's just one ai tool, but you've got five use cases there. So hope you found that helpful. Give us a like if you have and leave me a comment as well if you've got any other ai tools that you're loving at the moment that you really enjoy.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987517-2cae2859f9264df2a5973887e3ae9efb.mp4?Expires=1754995826&Signature=YnG9GwFY6iBdEOUdMGzVhNP1OCQCzkTMgmkCFILmS6JAPOroXbnpEkHDz-~W-1aMT51YqsMEB5XQFT2Rfbn52N-ozg4v8MsBtZccXnnrbcYKgCkzv2-XG3Ki~hIFWkXO2lV2rmcJmoBlKRRq-bX~bxGpWodVKh6jKy1YYvISySbXIAJIp6AqmpZgOe14JxvIpfbDuKV0V6PytsF7eJPa5x8AO5tktkI1HZ2ttHlO-FzShi-PMgZ9gde1QAWtJAdmnxyVZRxOzWYbjJlweujb-AXfnavsnHaKPwjSfpfuxR0IxRCmmF-Rr6Fb6SKYvYFSatMpd-2uzJRMkErBLsDFFQ__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543867&type=clip",
+              "videoMsDuration": 33333,
+              "videoId": 17987517,
+              "title": "Boost Your Workflow: Fireflies.ai Integrates with Asana & Slack",
+              "viralReason": "Adds valuable insight about app integrations making Fireflies highly functional in existing management systems, appealing to tech-savvy users looking for workflow automation and enhanced productivity."
+            },
+            {
+              "viralScore": "7",
+              "relatedTopic": "[\"client\",\"concerns,\",\"unique\",\"selling\",\"point,\",\"construction\",\"marketing\"]",
+              "transcript": "One thing that I always talk about when you're first meeting a client, you're really gonna understand their real concerns and their values. So let's imagine, for example, the client says, I've got two young kids. I really want this site to be clean and safe. Well, just not a build detail that you need to remember. That's actually your opportunity to tailor a brilliant USP for that when you send back your quote. So now you can be sending back a quote as a builder who runs safe site you know, a clean, organized, and family friendly site so that's just one little use case of that.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987515-cec873a2c2294df5a0b20e8a4ce06770.mp4?Expires=1754995826&Signature=GtI8Sg0MMhiSDqyUJODJy5NVoi4VsoFyHP18ZuFA5US2lRDr7r3A3Tuh7YLM99dZiFHUZsUbf7yyhWrZiuS-An-uAFctOswMBmp8StRicyjb6mzrRVbCWWO6SJuQ6RzLZlqk698vWdD~X2vi3Vn-CeRn7BkGoPE20hCJRx6GuLHIM52OFoER~Fe3R1wjE9FOSnqf8oKu3aOkH~1cYL9MQSBGtAfvRkemkGkvIfVdnoYFvXEamq0kKv-K2fswc8a9unoRUDamumm8hEwJf6MCQ1zxPrClZTrZhhbo46bwGeos9dIIO-bu3q8~y86ivUqN93SxQHrXitez3HfBD4JrYg__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543866&type=clip",
+              "videoMsDuration": 32599,
+              "videoId": 17987515,
+              "title": "Turn Client Details Into Your Best Sales Pitch Instantly",
+              "viralReason": "Teaches how to use detailed client info captured by Fireflies to create personalized, trust-building quotes, a subtle but valuable sales tactic for builders that can inspire immediate action."
+            },
+            {
+              "viralScore": "6.8",
+              "relatedTopic": "[\"Fireflies.ai,\",\"note\",\"taking,\",\"construction\",\"chaos,\",\"overwhelmed\"]",
+              "transcript": "Well, you're probably scribbling notes on the back of a pad. Maybe you forget what clients talk to you about. Maybe you're chasing your VA for updates. It's not that you're lazy and you forget things. It's just sometimes your mind gets a little bit overloaded in construction. And what we really want is an AI tool that can really change how you run your construction business and make you really professional so you never forget a thing. And that tool is Fireflies.ai. Now, I use Fireflies every single day in my business. I love it. It records. It transcribes.",
+              "videoUrl": "https://cdn-video.vizard.ai/vizard/video/export/20250805/17987514-4eaea687bc924bc1a1f7e21fd30957a0.mp4?Expires=1754995826&Signature=pkFDkamlEk86DXtyH56S5VCB68Ox7S7A5UUpyBNcJUef12OZaWH8uEZjYE~cqvbqbX2wRMuOGE6ieWXn991VKzAicS8UwiCjVOn1fF~sa0k9upqQST14Ao8Z4U7rLpEXVPAtDK-Z6UR4ZE8uxZcrddq2z-cpzDnhV0HV-GKQo3O66AaMmzz9SrsD4MsFP~9E~e4r1xn6yaG0RwqVMrrSmiX9ptIsQpMrzMjP4G07M1ZFj-h6qb0-jTbH2Kn7wTMtLpu59Z2DKt3XSgWfD-aHginnjKenA6J3tjqIhOD-BKk-qWZb5v-Ymp30xseo-r4FZ0nTJIbpkMnWR4h5PY975g__&Key-Pair-Id=K1STSG6HQYFY8F",
+              "clipEditorUrl": "https://vizard.ai/editor?id=124543865&type=clip",
+              "videoMsDuration": 32766,
+              "videoId": 17987514,
+              "title": "Stop Scribbling Notes: How to Stay Professional in Construction",
+              "viralReason": "Relates to the emotional pain point of overwhelmed professionals juggling note-taking and client management, positioning Fireflies as a practical solution to regain control and stay professional."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "connections": {
+    "submit_video": {
+      "main": [
+        [
+          {
+            "node": "wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "wait": {
+      "main": [
+        [
+          {
+            "node": "get_clipping_status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_status": {
+      "main": [
+        [
+          {
+            "node": "Get videos array",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_clipping_status": {
+      "main": [
+        [
+          {
+            "node": "check_status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Caption Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Caption Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Caption Generator": {
+      "main": [
+        [
+          {
+            "node": "Add captions to Sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split_videos1": {
+      "main": [
+        [
+          {
+            "node": "AI Caption Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download videos": {
+      "main": [
+        [
+          {
+            "node": "Upload videos to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload videos to Drive": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add captions to Sheet1": {
+      "main": [
+        [
+          {
+            "node": "Download videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "form_trigger1": {
+      "main": [
+        [
+          {
+            "node": "submit_video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file": {
+      "main": [
+        []
+      ]
+    },
+    "Get videos array": {
+      "main": [
+        [
+          {
+            "node": "split_videos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d6ef26df-2137-42eb-9e7b-21a88031e3c8",
+  "meta": {
+    "instanceId": "cb1f5c1bcc343b65682dd8e6057a59f10a2b53fede8171465579f6fafa318ab2"
+  },
+  "id": "MSMbeSmdMf96WcUh",
+  "tags": []
+}

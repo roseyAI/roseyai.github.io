@@ -1,0 +1,306 @@
+{
+  "name": "Update Account details automatically in AC",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        0
+      ],
+      "id": "13b223ca-6f1c-4e93-b2ad-80caa384e7b7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "list",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -16
+      ],
+      "id": "2a4a86b1-7226-4dc3-8958-f413aead3a43",
+      "name": "Get many lists",
+      "credentials": {
+        "activeCampaignApi": {
+          "id": "0TAdXQOCXHxwVQXQ",
+          "name": "ActiveCampaign account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        480,
+        160
+      ],
+      "id": "af5e3fde-4ac1-4725-ae04-0669bf07c29e",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "additionalFields": {
+          "listid": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -96
+      ],
+      "id": "244cad13-b032-45f6-b19e-c5da9707e7a3",
+      "name": "Get many contacts",
+      "alwaysOutputData": true,
+      "credentials": {
+        "activeCampaignApi": {
+          "id": "0TAdXQOCXHxwVQXQ",
+          "name": "ActiveCampaign account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "86f86405-5c98-422d-9234-8433beb64fbc",
+              "leftValue": "={{ $json.stringid }}",
+              "rightValue": "=approved-trade-specifiers",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        -16
+      ],
+      "id": "d79b9d22-c381-42f9-9999-120eff508c8b",
+      "name": "Filter only Trade signups"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "options": {
+          "permissionLevel": []
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        -96
+      ],
+      "id": "0f382d31-e296-4ba2-a872-b408fa351ea4",
+      "name": "Get many bases",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4aAroVJAxXhQ5Cd1",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appOAdLBTR0VGFDOC",
+          "mode": "list",
+          "cachedResultName": "Trade Signups",
+          "cachedResultUrl": "https://airtable.com/appOAdLBTR0VGFDOC"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblFrqIlidPpRKAGR",
+          "mode": "list",
+          "cachedResultName": "Trade Signups",
+          "cachedResultUrl": "https://airtable.com/appOAdLBTR0VGFDOC/tblFrqIlidPpRKAGR"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "398fcce5-2175-4f2c-b788-cd6a8d25da49",
+      "name": "Search records",
+      "executeOnce": false,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4aAroVJAxXhQ5Cd1",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "contactId": "={{ $('Get many contacts').item.json.id }}",
+        "updateFields": {
+          "fieldValues": {
+            "property": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        -96
+      ],
+      "id": "23281fa7-31e1-45c3-af5e-5adad93e574f",
+      "name": "Update a contact1",
+      "executeOnce": true,
+      "credentials": {
+        "activeCampaignApi": {
+          "id": "0TAdXQOCXHxwVQXQ",
+          "name": "ActiveCampaign account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "__CUSTOM_API_CALL__"
+      },
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        -96
+      ],
+      "id": "2ace5ae5-d974-479b-9f85-4ba51353b6cd",
+      "name": "__CUSTOM_API_CALL__ contact",
+      "credentials": {
+        "activeCampaignApi": {
+          "id": "0TAdXQOCXHxwVQXQ",
+          "name": "ActiveCampaign account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many lists": {
+      "main": [
+        [
+          {
+            "node": "Filter only Trade signups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many contacts": {
+      "main": [
+        [
+          {
+            "node": "Get many bases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter only Trade signups": {
+      "main": [
+        [
+          {
+            "node": "Get many contacts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many bases": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "Update a contact1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a contact1": {
+      "main": [
+        [
+          {
+            "node": "__CUSTOM_API_CALL__ contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4b185b43-143d-4149-b74f-2ed929efa1c0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cb1f5c1bcc343b65682dd8e6057a59f10a2b53fede8171465579f6fafa318ab2"
+  },
+  "id": "3nOsfN3zKGmNwU0D",
+  "tags": []
+}

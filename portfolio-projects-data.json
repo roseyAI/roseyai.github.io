@@ -420,27 +420,6 @@
       ]
     },
     {
-      "slug": "seo-link-building-planner",
-      "title": "(Make.com) SEO Link Building Campaign Planner",
-      "service": "Marketing Automation",
-      "tag": "make, openai",
-      "featured": "No",
-      "shortDescription": "AI-powered link building planner that analyzes portfolio domains, calculates relevance scores, and generates optimized 12-month outreach campaigns within budget constraints.",
-      "problem": "Manual selection of outreach domains takes hours per campaign. Difficult to balance topical relevance, local relevance, and budget. Hard to ensure campaigns meet minimum link requirements. No systematic way to prioritize domains across large portfolios.",
-      "solution": "Built an intelligent campaign planner that fetches customer requirements and portfolio data from Google Sheets, uses OpenAI to score domains based on topical relevance, locality, DR, and traffic, then generates an optimized shortlist that meets budget constraints and minimum link requirements.",
-      "benefits": [
-        "Campaign planning time reduced from 4-6 hours to ~15 minutes",
-        "Data-driven domain selection with AI scoring",
-        "Automatic budget optimization across 12 months",
-        "Guaranteed to meet minimum link requirements",
-        "Balanced approach (own domains, partner domains, rest of portfolio)"
-      ],
-      "thumbnailImage": "seo-link-building-planner.png",
-      "allImages": [
-        "seo-link-building-planner.png"
-      ]
-    },
-    {
       "slug": "email-draft-automation",
       "title": "(n8n) AI Email Draft Generator",
       "service": "Productivity Automation",

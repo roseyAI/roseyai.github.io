@@ -1,0 +1,1094 @@
+{
+  "name": "AI-Powered Interview Answer Grading Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a Google's hiring and interview coach. Grade this interview answer 1-10 using STAR method.\n\n**Question Type:** {{ $json.QUESTION_TYPE }}\n**Question:** {{ $json.QUESTION }}\n**Key Points:** {{ $json.KEY_POINTS_TO_HIT }}\n**Answer:** {{ $json.YOUR_ANSWER }}\n\n## SCORING GUIDE\n\n\nSCORING (1-10)\nBEHAVIORAL: Situation (2) + Task (2) + Action (3) + Result (3)\nHYPOTHETICAL: Problem understanding (3) + Approach (3) + Solutions (2) + Communication (2)\nGENERIC: Authentic (3) + Relevant (2) + Evidence (2) + Clear (2) + Growth (1)\nFEEDBACK REQUIREMENTS (5-6 sentences ONLY)\n\nDid they follow STAR? (For behavioral)\nIs the answer too long or too short?\nWhat's missing or weak?\n1-2 specific edits/improvements\nOverall readiness for this question\n\nKeep it concise and actionable.\n\n\njson{\n  \"score\": 8,\n  \"grader_notes\": \"5-6 sentence feedback here addressing STAR adherence, length, what's missing, and specific improvements. Make it direct and actionable.\"\n}\n\nRespond ONLY with this JSON. No other text.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ddf7ef8c-b2c9-4c8e-949d-549658f71ae0",
+      "name": "AI Agent",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "executeOnce": false,
+      "notes": "This AI agent checks the answer to the interview question and grades and provide a feedback"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        224
+      ],
+      "id": "d9c6b60f-e670-4e3b-bbed-5999bde7ba84",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "S1Wy8FKomsr6T924",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.QUESTION }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        224
+      ],
+      "id": "4873e0a2-9e48-44e0-84d7-a8332b3e01f3",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ",
+          "mode": "list",
+          "cachedResultName": "GOC review",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "QUESTION_NUMBER": "={{ $('Get row(s) in sheet').item.json.QUESTION_NUMBER }}",
+            "AI score": "={{ $json.score }}",
+            "AI grader feedback": "={{ $json.grader_notes }}"
+          },
+          "matchingColumns": [
+            "QUESTION_NUMBER"
+          ],
+          "schema": [
+            {
+              "id": "QUESTION_TYPE",
+              "displayName": "QUESTION_TYPE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CATEGORY",
+              "displayName": "CATEGORY",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "QUESTION_NUMBER",
+              "displayName": "QUESTION_NUMBER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "QUESTION",
+              "displayName": "QUESTION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "KEY_POINTS_TO_HIT",
+              "displayName": "KEY_POINTS_TO_HIT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "YOUR_ANSWER",
+              "displayName": "YOUR_ANSWER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOTES",
+              "displayName": "NOTES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI score",
+              "displayName": "AI score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AI grader feedback",
+              "displayName": "AI grader feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "dd235b29-3f18-4a5b-843b-b789cc3880c6",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VSM16YG92UrHGNW1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const output = JSON.parse(item.json.output);\n  \n  return {\n    QUESTION_NUMBER: item.json.QUESTION_NUMBER,\n    score: output.score,\n    grader_notes: output.grader_notes\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        0
+      ],
+      "id": "47c5d224-84ae-4f86-8b1d-3302b0b1bcc1",
+      "name": "Code in JavaScript",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        16
+      ],
+      "id": "ecf0fddd-b022-4de0-8d6e-d38c8a233dc7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ",
+          "mode": "list",
+          "cachedResultName": "GOC review",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        144,
+        16
+      ],
+      "id": "e336984d-2c0e-402c-9afe-3ec273f94ec1",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VSM16YG92UrHGNW1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert interview coach specializing in the STAR method (Situation, Task, Action, Result). \n\nYour job is to take an interview answer and improve it to better follow the STAR approach based on feedback.\n\n**Current Score and Feedback:**\nScore: {{ $node['Code in JavaScript'].json.score }}\nFeedback: {{ $node['Code in JavaScript'].json.grader_notes }}\n\n**Original Answer:**\n{{ $('Get row(s) in sheet').item.json.YOUR_ANSWER }}\n\n## Your Task\n\nImprove this answer so it better follows the STAR method. Use the feedback provided to guide your improvements.\n\n**Requirements:**\n1. Clearly structure the answer with Situation, Task, Action, and Result sections\n2. Address the specific feedback points mentioned\n3. Keep it concise but detailed (2-3 minutes to deliver, not longer)\n4. Make it more compelling and business-focused\n5. Add specific metrics or impact where possible\n\n## Output Format\n\nRespond with ONLY the improved answer and don't include any sycophancy. No explanations, no labels. Just the better version of the answer ready to practice.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "d4de3eb5-3e55-47db-885a-d407c2f795f6",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1104,
+        208
+      ],
+      "id": "3fd53c67-b82a-4ed1-aa71-2d0f062023ae",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "S1Wy8FKomsr6T924",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json['AI score'] }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1248,
+        208
+      ],
+      "id": "f8752c84-a57b-4b70-b461-d4de10801470",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ",
+          "mode": "list",
+          "cachedResultName": "GOC review",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1b5Qm6NO4IRMkrpr5iQXrogLmHgyhfg82J-L2tzQiICQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "QUESTION_NUMBER": "={{ $('Get row(s) in sheet').item.json.QUESTION_NUMBER }}",
+            "Improved answers": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "QUESTION_NUMBER"
+          ],
+          "schema": [
+            {
+              "id": "QUESTION_TYPE",
+              "displayName": "QUESTION_TYPE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CATEGORY",
+              "displayName": "CATEGORY",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "QUESTION_NUMBER",
+              "displayName": "QUESTION_NUMBER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "QUESTION",
+              "displayName": "QUESTION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "KEY_POINTS_TO_HIT",
+              "displayName": "KEY_POINTS_TO_HIT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "YOUR_ANSWER",
+              "displayName": "YOUR_ANSWER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOTES",
+              "displayName": "NOTES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI score",
+              "displayName": "AI score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI grader feedback",
+              "displayName": "AI grader feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Improved answers",
+              "displayName": "Improved answers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1632,
+        16
+      ],
+      "id": "97a735be-a8cd-42f6-af45-943dbed0b264",
+      "name": "Append or update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VSM16YG92UrHGNW1",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "AI Agent": [
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer follows the STAR method reasonably well, clearly describing the Situation and Task, and providing detailed Actions taken. However, the Result could be stronger by quantifying impact (e.g., number of leads recovered or increase in conversions). The response is somewhat wordy and lacks clarity in places, making it harder to follow. It would improve by tightening the narrative, breaking long sentences, and explicitly stating the challenge faced upfront. Also, mentioning how you collaborated or influenced others more directly would enhance the answer. Overall, the candidate shows good problem-solving but can bolster impact and communication clarity.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer partially follows the STAR method, with a basic Situation and Task described, but the Actions and Results are vague. The response is quite short and lacks structure, making it difficult to grasp the full context and impact. Key details such as specific steps taken to address the failure or measurable outcomes are missing. To improve, explicitly outline the root cause, describe concrete actions you took after missing the deadline, and detail how you applied lessons learned in subsequent projects. Adding clarity and breaking the answer into clear STAR components would enhance overall effectiveness and readiness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 4,\n  \"grader_notes\": \"The answer loosely follows the STAR method but lacks clear structure and missing key details—especially around ROI calculation, effort assessment, and concrete business impact. The response is vague and somewhat fragmented, making it hard to understand the full scope of the automation opportunity or how the decision was data-driven. It would benefit greatly from explicitly stating the Situation, Task, specific Actions taken, and measurable Results. Also, quantifying the impact and describing how you assessed the effort would strengthen the response. Improving clarity and organization will enhance readiness for this question.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer partially follows the STAR method, clearly presenting the Situation and Task but lacking a structured description of Actions and Results. While the candidate mentions researching and being honest about limitations, they do not describe the specific approach or structured learning methods used, nor the outcome of their efforts. The response is somewhat long-winded and could be clearer and more concise. To improve, explicitly outline the steps taken to learn quickly and highlight the impact or results achieved. Adding measurable outcomes or reflections on how this experience enhanced skills would increase overall readiness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer provides a basic Situation and Task, but the Action and Result parts lack depth and detail. While the candidate mentions researching forums to find a solution, the description of the debugging process is vague and doesn’t clearly outline a systematic approach or root cause analysis. The outcome and prevention measures are also missing or unclear. The response is somewhat disorganized and could be clearer with more specific steps taken to fix the problem and how future issues were prevented. Improving structure, clarity, and including measurable results would strengthen the answer and readiness for this question.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer follows the STAR method by clearly outlining the Situation, Task, Actions taken, and a positive Result. It effectively demonstrates problem-solving and technical skills with persistence. However, it could be stronger by quantifying the impact, such as time saved or efficiency gained, to underscore business value. Adding a brief mention of any challenges faced during integration and how they were overcome would also add depth. The response is concise and relevant but would benefit from a bit more structure and clarity around the specific technical steps taken.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer demonstrates a good understanding of the hypothetical situation with a clear approach focused on discovery, analysis, prioritization, execution, and measurement. However, the response lacks detail and clarity in some areas and could be structured more explicitly to address each key point. It would benefit from concrete examples of tools or methods for process mining and how specific metrics would be tracked. Additionally, mentioning stakeholder involvement or team collaboration would enhance the communication aspect. Improving sentence structure and providing a step-by-step plan would make the answer stronger and more convincing.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer shows a basic understanding of the problem and mentions using impact and effort to prioritize, which is good. However, it lacks depth, clarity, and structure expected in a STAR response, especially in the hypothetical context. It would improve significantly by outlining a clear framework or methodology (e.g., ROI calculation, stakeholder input), detailing how to measure impact and effort, and highlighting communication with the team. The answer is too brief and somewhat vague, lacking concrete examples or a systematic approach. Adding specificity and clear steps would elevate the response and demonstrate stronger problem-solving and communication skills.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer addresses key elements like reassessment, communication, and timeline management, showing awareness of the problem and client management. However, it is brief and lacks detail on how the candidate pivots or explores alternative solutions after reassessment. The response would benefit from elaborating on the specific steps taken to troubleshoot, collaborate with others, or learn from the setback. Including a reflection on what was learned and how future workflows could be improved would make the answer stronger. Adding a bit more structure and clarity can improve overall readiness for this question.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer superficially addresses the situation but lacks clear structure and depth expected in a STAR or strong hypothetical response. It mentions honesty and saving resources but doesn’t provide data-driven reasoning, specific alternative solutions, or how ROI was explained to the client. The response is too brief and vague, missing concrete examples of how the conversation was handled or how the decision benefited the client. To improve, explicitly articulate the analysis process, communication tactics, and suggest alternative options with evidence. Adding structure and clarity will better demonstrate problem-solving and communication skills.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer demonstrates good accountability and a clear commitment to root cause analysis and prevention, covering important aspects of the hypothetical scenario. However, it lacks a structured STAR format with specific Situation and Task details, and the communication with the client could be more explicitly described beyond general reassurance. Additionally, including how you would manage client expectations or update them throughout the resolution process would enhance communication clarity. The response is appropriately concise but would benefit from more concrete examples or steps taken. Overall, the candidate shows awareness and responsibility but could strengthen the response with more detail and structure.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The response demonstrates a solid approach covering research, incremental testing, troubleshooting, and leveraging community resources, which aligns well with the key points. However, it lacks specificity around contingency planning if integrations fail and does not explicitly mention communication with stakeholders about progress or challenges. The answer is clear and appropriately concise but would benefit from a structured explanation of how success is measured or how risks are mitigated. Adding a concrete example or outlining a fallback plan would strengthen the response. Overall, it's a strong answer but with room for more detail and strategic thinking.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The candidate demonstrates awareness of the need to diagnose, optimize, monitor, and plan for scalability, which aligns with the key points. However, the answer lacks structure, depth, and specific actions—such as how they would diagnose the problem, what optimizations they might consider, or tools they would use for monitoring. It also misses communication aspects, like informing stakeholders or collaborating with the team. The response is brief and could be clearer with examples or a more detailed process. To improve, they should articulate a step-by-step approach and include measurable results or prevention strategies.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer effectively addresses the need for clear, jargon-free communication and realistic timelines, demonstrating good understanding of the key points. The candidate highlights honesty, building trust, and translating technical issues into simple terms, which is strong. However, the response could be more structured with explicit mention of the Situation and Task to align better with STAR. Additionally, including an example of how this communication was successfully handled in the past would strengthen evidence and impact. To improve, briefly outline a step-by-step communication plan and incorporate a concrete example to enhance clarity and credibility.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and relevant, effectively highlighting BPO experience, passion for automation, and personal qualities like discipline and attention to detail. It provides insight into growth and learning style, aligning with key points. However, the response is somewhat lengthy and could be more structured to improve clarity and impact. It lacks concrete examples or measurable results that would provide stronger evidence of impact. To improve, the candidate should tighten the narrative, focus on key highlights, and briefly mention a specific achievement illustrating their automation work or growth journey. Overall, a good foundation that can be refined for better flow and specificity.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 4,\n  \"grader_notes\": \"The answer is authentic but lacks depth and specificity regarding Google Operations Center. It mainly shows admiration for Google as a company and personal investment but does not address the key points such as scale, tech stack, global impact, or role relevance. The response is brief and does not follow the STAR format or provide concrete reasons tied to the GOC specifically. To improve, the candidate should research the GOC’s mission, technologies, and impact, and clearly articulate how their skills align with the role and center’s objectives. Adding more relevant and role-specific motivations will significantly strengthen this answer.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and touches on growth, scale, and appreciation for the current role, aligning well with the key points. It provides relevant reasoning for transitioning, but lacks specific examples of challenges faced or skills gained that prepare the candidate for the new role. The communication is clear but could be strengthened by explicitly mentioning the desire for team learning and stability. To improve, the candidate should include concrete experiences that highlight their readiness for complex challenges and emphasize how the new position aligns with their career goals. Overall, it’s a solid response with room to add more detail and specificity.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 4,\n  \"grader_notes\": \"The answer is very brief and lacks depth, missing key elements such as passion, lean thinking, specific examples of process improvement, or clear articulation of business impact. It doesn’t follow STAR format and provides minimal insight into why the candidate is genuinely attracted to the role beyond stating it’s their current focus. To improve, the candidate should elaborate on their passion for automation, share relevant experiences demonstrating process improvements, and connect these to the business value delivered. Adding structure and specific evidence would make the response much stronger and more compelling.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer is authentic and gives a clear vision related to leadership, impact, and knowledge sharing, which aligns well with the key points. However, it lacks a structured STAR format and concrete steps or examples showing how the candidate plans to achieve these goals. The response is somewhat vague about growth at Google and technical depth, missing specific aspirations or milestones. To improve, the candidate should outline actionable steps toward leadership and technical mastery, and explicitly link their vision to Google’s values or mission. Adding clarity and detail will increase the answer’s impact and readiness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer authentically highlights problem-solving and process thinking as strengths, which aligns well with the key points. However, it lacks a clear STAR structure and specific examples illustrating how these strengths were applied successfully. The response also does not explicitly mention communication or learning agility, which are part of the key points. To improve, the candidate should provide a concrete situation and actions taken to demonstrate problem-solving and process improvement, and briefly touch on communication or continuous learning. Adding more specificity and structure will enhance clarity and impact.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer is authentic and relevant, clearly identifying key technical skills the candidate wants to develop, which aligns well with the key points. However, it lacks specificity and does not follow the STAR format; there is no mention of a situation or action plan to acquire these skills or how the candidate has begun addressing this growth area. The response could be stronger by outlining concrete steps or timelines for learning and relating these skills back to the role. To improve, the candidate should briefly describe how they have started or plan to start learning these skills and the impact it will have on their work.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and touches on relevant experience, cultural fit, and technical expertise, addressing key points effectively. However, it lacks structure and a clear STAR narrative—situation, task, action, and result are implied but not explicitly stated. Evidence of proven results, such as specific achievements or metrics, would strengthen the response considerably. The length is appropriate but could be more concise and focused. To improve, the candidate should include a concrete example demonstrating impact and highlight their Lean certification explicitly to align with the key points.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and demonstrates a proactive approach to staying current with automation tools, leveraging social media, content creators, and a custom prompt tool, which reflects experimentation and learning by doing. However, it lacks the STAR structure and concrete examples of how this knowledge has been applied to achieve results. The response could be more concise and would benefit from mentioning participation in communities, formal courses, or documentation review for a well-rounded approach. To improve, include an example where this continuous learning led to a specific improvement or solution. Overall, a good foundation that can be enhanced with more structure and specific outcomes.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer is authentic, communicates a good balance between independent work and collaboration, and highlights communication preferences clearly. However, it lacks the STAR structure, specific examples, and evidence demonstrating how this working style benefited a team or project. The response could be more concise and include mention of being detail-oriented or a humble learner to fully address the key points. To improve, the candidate should provide a brief example illustrating successful teamwork and communication, and explicitly mention how they embrace feedback and continuous learning.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is relevant and demonstrates good knowledge of key automation tools, explaining pros and cons which aligns well with the decision framework key point. However, it lacks a clear STAR structure and specific examples of situations where the candidate successfully applied these tools to solve real problems. The explanation could be more concise and include a brief mention of how they assess technical constraints or user needs during tool selection. To improve, add a concrete example showcasing tool choice and impact, and structure the response to reflect a problem, action, and result for better clarity and effectiveness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer is relevant and authentic, covering the key tools like PostgreSQL, Supabase, REST APIs, and webhooks, which aligns with the question’s expectations. However, it lacks a clear STAR structure and concrete examples of real projects or outcomes demonstrating the candidate’s impact. The response is somewhat vague on the complexity of tasks handled or challenges overcome, missing an opportunity to showcase problem-solving skills and technical depth. To improve, the candidate should share a specific project or scenario outlining the situation, their responsibilities, the actions taken, and the results achieved. Adding those elements will greatly enhance clarity and persuasiveness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 8,\n  \"grader_notes\": \"The answer is authentic and provides relevant examples of hands-on experience with Google Cloud tools like AI Studio and managing APIs for automation workflows, which addresses the key points well. It demonstrates willingness to learn and highlights specific actions taken, although the STAR structure could be clearer by explicitly defining the situation, task, actions, and results. The response is a bit long and could be made more concise without losing detail. To improve, focus on succinctly outlining the impact of these experiences and explicitly state how these learning experiences prepare you for the role. Overall, it shows strong readiness with room for tighter communication.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer addresses key points like root cause analysis, replication of errors, and documentation, showing a good understanding of troubleshooting principles. However, it lacks the STAR format—there is no specific situation, task, actions taken, or results shared. The response is brief and somewhat vague, missing concrete examples or a systematic process. To improve, the candidate should outline a clear step-by-step approach with an example of a past troubleshooting experience, including how testing and documentation helped resolve or prevent issues. Adding specificity and structure will greatly enhance clarity and persuasiveness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and relevant, clearly mentioning Lean certification and how it has been applied in current and past roles, aligning well with key points. It shows a solid understanding of process improvement methodologies and a strategic approach towards automations. However, the STAR structure is only loosely followed; the candidate could improve by explicitly describing a specific situation, task, the actions taken, and the measurable results achieved from applying Lean principles. The response is a bit long and could be made more concise with sharper focus on their impact. To improve, add a concrete example with quantified results and clarify the certification details for clarity.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and relevant, clearly showcasing extensive BPO experience and progression into quality analyst and SME roles, which aligns well with the key points. However, it lacks a clear STAR format; the response would be stronger if the candidate provided a specific situation or challenge, their role (task), the actions taken, and measurable results or impact. The length is appropriate, but clarity could be improved by avoiding repetition and providing concrete examples of customer orientation or quality improvements. To improve, add a concise example of a quality improvement project and include outcomes to demonstrate impact and growth.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and clearly addresses the key points, emphasizing staying calm, prioritization, and communication when handling stress in fast-paced environments. However, it lacks a full STAR structure as it does not include a specific situation or measurable results, making it more hypothetical than behavioral. The response is slightly long and could be more concise while incorporating a brief example to showcase adaptability and effectiveness in a real scenario. To improve, the candidate should provide a concrete instance illustrating how these strategies helped them manage stress successfully and deliver results.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 4,\n  \"grader_notes\": \"The answer is authentic and addresses flexibility in working with different time zones, but it lacks depth, STAR structure, and concrete examples of collaboration or use of communication tools. The response is very brief and misses key points about remote work experience, specific tools used, or communication strategies. To improve, the candidate should provide a detailed example demonstrating how they successfully managed time zone challenges, leveraged collaboration tools, and maintained effective communication. Adding measurable results or outcomes would also strengthen the answer significantly.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer shows authenticity and a strong grasp of key behaviors—professionalism, empathy, and solution focus—when handling difficult clients, addressing the key points well. However, it lacks a full STAR structure as it does not describe a concrete situation, task, specific actions taken, or measurable results achieved. The response is somewhat lengthy and could be made more concise with a clear example illustrating how these principles were applied in practice. To improve, include a brief story with a challenge faced, how empathy and communication were used to resolve it, and a positive outcome to demonstrate effectiveness.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and relevant, covering key aspects of quality assurance, root cause analysis, and process improvement. However, it lacks a clear STAR structure, missing a specific situation or task, detailed actions taken, and measurable results. The response is slightly long and could be more concise with a stronger focus on concrete examples and outcomes. To improve, the candidate should provide a specific example illustrating how they identified a bottleneck, implemented a process improvement, and the impact it had on customer experience or operational efficiency.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer is honest and relevant, briefly addressing availability and flexibility, which aligns with the key points. However, it is too short and lacks any STAR structure or supporting examples to demonstrate true commitment or adaptability. The response would benefit from elaboration on past experiences working flexible schedules and how the candidate successfully managed such shifts. To improve, include a specific example showing flexibility in scheduling and how it positively impacted work or team outcomes, providing more assurance of commitment.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic and demonstrates a relevant, systematic approach to ensuring accuracy and attention to detail, with good emphasis on documentation and continuous improvement. However, it lacks a clear STAR structure—there is no specific situation or measurable result provided. The response is slightly long and could benefit from a concise example highlighting how these practices led to improved outcomes or error reduction. To improve, add a brief story illustrating application of these steps in a real project, including the impact on quality or efficiency.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 5,\n  \"grader_notes\": \"The answer is authentic and relevant, listing several tools used for dashboards and reporting, which aligns with the key points. However, it lacks the STAR format entirely; there is no specific situation or task, detailed actions, or measurable results shared. The response is very brief and somewhat generic, missing evidence of how the dashboards influenced data-driven decisions or KPI tracking. To improve, provide a detailed example of a dashboard you created, the problem it addressed, the process you followed, and the impact it had on decision-making or business outcomes.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 6,\n  \"grader_notes\": \"The answer is authentic and addresses key motivations such as growth, deeper expertise, team environment, and impact at scale, aligning well with the key points. However, it lacks a clear STAR structure and could be more concise and focused. The response would be stronger with a specific example or story illustrating why the candidate is motivated to transition and how their past experience prepares them for the automation specialist role. To improve, add a brief situation or context from freelancing, the task of growing expertise, actions taken toward that goal, and expected results from joining a larger team.\"\n}"
+        }
+      },
+      {
+        "json": {
+          "output": "{\n  \"score\": 7,\n  \"grader_notes\": \"The answer is authentic, clearly expressing openness to feedback, a growth mindset, and professionalism, aligning with key points. However, it lacks a full STAR format—no specific situation, task, or measurable result is mentioned. The response is somewhat long and can be more concise with a concrete example illustrating how feedback was received and led to improvement. To improve, include a brief story highlighting an instance of receiving feedback, the action taken to correct and learn from it, and the positive outcome.\"\n}"
+        }
+      }
+    ],
+    "Append or update row in sheet": [
+      {
+        "json": {
+          "QUESTION_NUMBER": 1,
+          "AI score": 7,
+          "AI grader feedback": "The answer follows the STAR method reasonably well, clearly describing the Situation and Task, and providing detailed Actions taken. However, the Result could be stronger by quantifying impact (e.g., number of leads recovered or increase in conversions). The response is somewhat wordy and lacks clarity in places, making it harder to follow. It would improve by tightening the narrative, breaking long sentences, and explicitly stating the challenge faced upfront. Also, mentioning how you collaborated or influenced others more directly would enhance the answer. Overall, the candidate shows good problem-solving but can bolster impact and communication clarity."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 2,
+          "AI score": 5,
+          "AI grader feedback": "The answer partially follows the STAR method, with a basic Situation and Task described, but the Actions and Results are vague. The response is quite short and lacks structure, making it difficult to grasp the full context and impact. Key details such as specific steps taken to address the failure or measurable outcomes are missing. To improve, explicitly outline the root cause, describe concrete actions you took after missing the deadline, and detail how you applied lessons learned in subsequent projects. Adding clarity and breaking the answer into clear STAR components would enhance overall effectiveness and readiness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 4,
+          "AI score": 4,
+          "AI grader feedback": "The answer loosely follows the STAR method but lacks clear structure and missing key details—especially around ROI calculation, effort assessment, and concrete business impact. The response is vague and somewhat fragmented, making it hard to understand the full scope of the automation opportunity or how the decision was data-driven. It would benefit greatly from explicitly stating the Situation, Task, specific Actions taken, and measurable Results. Also, quantifying the impact and describing how you assessed the effort would strengthen the response. Improving clarity and organization will enhance readiness for this question."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 8,
+          "AI score": 6,
+          "AI grader feedback": "The answer partially follows the STAR method, clearly presenting the Situation and Task but lacking a structured description of Actions and Results. While the candidate mentions researching and being honest about limitations, they do not describe the specific approach or structured learning methods used, nor the outcome of their efforts. The response is somewhat long-winded and could be clearer and more concise. To improve, explicitly outline the steps taken to learn quickly and highlight the impact or results achieved. Adding measurable outcomes or reflections on how this experience enhanced skills would increase overall readiness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 9,
+          "AI score": 5,
+          "AI grader feedback": "The answer provides a basic Situation and Task, but the Action and Result parts lack depth and detail. While the candidate mentions researching forums to find a solution, the description of the debugging process is vague and doesn’t clearly outline a systematic approach or root cause analysis. The outcome and prevention measures are also missing or unclear. The response is somewhat disorganized and could be clearer with more specific steps taken to fix the problem and how future issues were prevented. Improving structure, clarity, and including measurable results would strengthen the answer and readiness for this question."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 10,
+          "AI score": 7,
+          "AI grader feedback": "The answer follows the STAR method by clearly outlining the Situation, Task, Actions taken, and a positive Result. It effectively demonstrates problem-solving and technical skills with persistence. However, it could be stronger by quantifying the impact, such as time saved or efficiency gained, to underscore business value. Adding a brief mention of any challenges faced during integration and how they were overcome would also add depth. The response is concise and relevant but would benefit from a bit more structure and clarity around the specific technical steps taken."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 11,
+          "AI score": 6,
+          "AI grader feedback": "The answer demonstrates a good understanding of the hypothetical situation with a clear approach focused on discovery, analysis, prioritization, execution, and measurement. However, the response lacks detail and clarity in some areas and could be structured more explicitly to address each key point. It would benefit from concrete examples of tools or methods for process mining and how specific metrics would be tracked. Additionally, mentioning stakeholder involvement or team collaboration would enhance the communication aspect. Improving sentence structure and providing a step-by-step plan would make the answer stronger and more convincing."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 12,
+          "AI score": 5,
+          "AI grader feedback": "The answer shows a basic understanding of the problem and mentions using impact and effort to prioritize, which is good. However, it lacks depth, clarity, and structure expected in a STAR response, especially in the hypothetical context. It would improve significantly by outlining a clear framework or methodology (e.g., ROI calculation, stakeholder input), detailing how to measure impact and effort, and highlighting communication with the team. The answer is too brief and somewhat vague, lacking concrete examples or a systematic approach. Adding specificity and clear steps would elevate the response and demonstrate stronger problem-solving and communication skills."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 13,
+          "AI score": 6,
+          "AI grader feedback": "The answer addresses key elements like reassessment, communication, and timeline management, showing awareness of the problem and client management. However, it is brief and lacks detail on how the candidate pivots or explores alternative solutions after reassessment. The response would benefit from elaborating on the specific steps taken to troubleshoot, collaborate with others, or learn from the setback. Including a reflection on what was learned and how future workflows could be improved would make the answer stronger. Adding a bit more structure and clarity can improve overall readiness for this question."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 14,
+          "AI score": 5,
+          "AI grader feedback": "The answer superficially addresses the situation but lacks clear structure and depth expected in a STAR or strong hypothetical response. It mentions honesty and saving resources but doesn’t provide data-driven reasoning, specific alternative solutions, or how ROI was explained to the client. The response is too brief and vague, missing concrete examples of how the conversation was handled or how the decision benefited the client. To improve, explicitly articulate the analysis process, communication tactics, and suggest alternative options with evidence. Adding structure and clarity will better demonstrate problem-solving and communication skills."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 15,
+          "AI score": 7,
+          "AI grader feedback": "The answer demonstrates good accountability and a clear commitment to root cause analysis and prevention, covering important aspects of the hypothetical scenario. However, it lacks a structured STAR format with specific Situation and Task details, and the communication with the client could be more explicitly described beyond general reassurance. Additionally, including how you would manage client expectations or update them throughout the resolution process would enhance communication clarity. The response is appropriately concise but would benefit from more concrete examples or steps taken. Overall, the candidate shows awareness and responsibility but could strengthen the response with more detail and structure."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 17,
+          "AI score": 7,
+          "AI grader feedback": "The response demonstrates a solid approach covering research, incremental testing, troubleshooting, and leveraging community resources, which aligns well with the key points. However, it lacks specificity around contingency planning if integrations fail and does not explicitly mention communication with stakeholders about progress or challenges. The answer is clear and appropriately concise but would benefit from a structured explanation of how success is measured or how risks are mitigated. Adding a concrete example or outlining a fallback plan would strengthen the response. Overall, it's a strong answer but with room for more detail and strategic thinking."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 18,
+          "AI score": 5,
+          "AI grader feedback": "The candidate demonstrates awareness of the need to diagnose, optimize, monitor, and plan for scalability, which aligns with the key points. However, the answer lacks structure, depth, and specific actions—such as how they would diagnose the problem, what optimizations they might consider, or tools they would use for monitoring. It also misses communication aspects, like informing stakeholders or collaborating with the team. The response is brief and could be clearer with examples or a more detailed process. To improve, they should articulate a step-by-step approach and include measurable results or prevention strategies."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 20,
+          "AI score": 7,
+          "AI grader feedback": "The answer effectively addresses the need for clear, jargon-free communication and realistic timelines, demonstrating good understanding of the key points. The candidate highlights honesty, building trust, and translating technical issues into simple terms, which is strong. However, the response could be more structured with explicit mention of the Situation and Task to align better with STAR. Additionally, including an example of how this communication was successfully handled in the past would strengthen evidence and impact. To improve, briefly outline a step-by-step communication plan and incorporate a concrete example to enhance clarity and credibility."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 21,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and relevant, effectively highlighting BPO experience, passion for automation, and personal qualities like discipline and attention to detail. It provides insight into growth and learning style, aligning with key points. However, the response is somewhat lengthy and could be more structured to improve clarity and impact. It lacks concrete examples or measurable results that would provide stronger evidence of impact. To improve, the candidate should tighten the narrative, focus on key highlights, and briefly mention a specific achievement illustrating their automation work or growth journey. Overall, a good foundation that can be refined for better flow and specificity."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 22,
+          "AI score": 4,
+          "AI grader feedback": "The answer is authentic but lacks depth and specificity regarding Google Operations Center. It mainly shows admiration for Google as a company and personal investment but does not address the key points such as scale, tech stack, global impact, or role relevance. The response is brief and does not follow the STAR format or provide concrete reasons tied to the GOC specifically. To improve, the candidate should research the GOC’s mission, technologies, and impact, and clearly articulate how their skills align with the role and center’s objectives. Adding more relevant and role-specific motivations will significantly strengthen this answer."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 23,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and touches on growth, scale, and appreciation for the current role, aligning well with the key points. It provides relevant reasoning for transitioning, but lacks specific examples of challenges faced or skills gained that prepare the candidate for the new role. The communication is clear but could be strengthened by explicitly mentioning the desire for team learning and stability. To improve, the candidate should include concrete experiences that highlight their readiness for complex challenges and emphasize how the new position aligns with their career goals. Overall, it’s a solid response with room to add more detail and specificity."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 24,
+          "AI score": 4,
+          "AI grader feedback": "The answer is very brief and lacks depth, missing key elements such as passion, lean thinking, specific examples of process improvement, or clear articulation of business impact. It doesn’t follow STAR format and provides minimal insight into why the candidate is genuinely attracted to the role beyond stating it’s their current focus. To improve, the candidate should elaborate on their passion for automation, share relevant experiences demonstrating process improvements, and connect these to the business value delivered. Adding structure and specific evidence would make the response much stronger and more compelling."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 25,
+          "AI score": 6,
+          "AI grader feedback": "The answer is authentic and gives a clear vision related to leadership, impact, and knowledge sharing, which aligns well with the key points. However, it lacks a structured STAR format and concrete steps or examples showing how the candidate plans to achieve these goals. The response is somewhat vague about growth at Google and technical depth, missing specific aspirations or milestones. To improve, the candidate should outline actionable steps toward leadership and technical mastery, and explicitly link their vision to Google’s values or mission. Adding clarity and detail will increase the answer’s impact and readiness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 26,
+          "AI score": 6,
+          "AI grader feedback": "The answer authentically highlights problem-solving and process thinking as strengths, which aligns well with the key points. However, it lacks a clear STAR structure and specific examples illustrating how these strengths were applied successfully. The response also does not explicitly mention communication or learning agility, which are part of the key points. To improve, the candidate should provide a concrete situation and actions taken to demonstrate problem-solving and process improvement, and briefly touch on communication or continuous learning. Adding more specificity and structure will enhance clarity and impact."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 27,
+          "AI score": 6,
+          "AI grader feedback": "The answer is authentic and relevant, clearly identifying key technical skills the candidate wants to develop, which aligns well with the key points. However, it lacks specificity and does not follow the STAR format; there is no mention of a situation or action plan to acquire these skills or how the candidate has begun addressing this growth area. The response could be stronger by outlining concrete steps or timelines for learning and relating these skills back to the role. To improve, the candidate should briefly describe how they have started or plan to start learning these skills and the impact it will have on their work."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 28,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and touches on relevant experience, cultural fit, and technical expertise, addressing key points effectively. However, it lacks structure and a clear STAR narrative—situation, task, action, and result are implied but not explicitly stated. Evidence of proven results, such as specific achievements or metrics, would strengthen the response considerably. The length is appropriate but could be more concise and focused. To improve, the candidate should include a concrete example demonstrating impact and highlight their Lean certification explicitly to align with the key points."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 29,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and demonstrates a proactive approach to staying current with automation tools, leveraging social media, content creators, and a custom prompt tool, which reflects experimentation and learning by doing. However, it lacks the STAR structure and concrete examples of how this knowledge has been applied to achieve results. The response could be more concise and would benefit from mentioning participation in communities, formal courses, or documentation review for a well-rounded approach. To improve, include an example where this continuous learning led to a specific improvement or solution. Overall, a good foundation that can be enhanced with more structure and specific outcomes."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 30,
+          "AI score": 6,
+          "AI grader feedback": "The answer is authentic, communicates a good balance between independent work and collaboration, and highlights communication preferences clearly. However, it lacks the STAR structure, specific examples, and evidence demonstrating how this working style benefited a team or project. The response could be more concise and include mention of being detail-oriented or a humble learner to fully address the key points. To improve, the candidate should provide a brief example illustrating successful teamwork and communication, and explicitly mention how they embrace feedback and continuous learning."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 31,
+          "AI score": 7,
+          "AI grader feedback": "The answer is relevant and demonstrates good knowledge of key automation tools, explaining pros and cons which aligns well with the decision framework key point. However, it lacks a clear STAR structure and specific examples of situations where the candidate successfully applied these tools to solve real problems. The explanation could be more concise and include a brief mention of how they assess technical constraints or user needs during tool selection. To improve, add a concrete example showcasing tool choice and impact, and structure the response to reflect a problem, action, and result for better clarity and effectiveness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 32,
+          "AI score": 6,
+          "AI grader feedback": "The answer is relevant and authentic, covering the key tools like PostgreSQL, Supabase, REST APIs, and webhooks, which aligns with the question’s expectations. However, it lacks a clear STAR structure and concrete examples of real projects or outcomes demonstrating the candidate’s impact. The response is somewhat vague on the complexity of tasks handled or challenges overcome, missing an opportunity to showcase problem-solving skills and technical depth. To improve, the candidate should share a specific project or scenario outlining the situation, their responsibilities, the actions taken, and the results achieved. Adding those elements will greatly enhance clarity and persuasiveness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 33,
+          "AI score": 8,
+          "AI grader feedback": "The answer is authentic and provides relevant examples of hands-on experience with Google Cloud tools like AI Studio and managing APIs for automation workflows, which addresses the key points well. It demonstrates willingness to learn and highlights specific actions taken, although the STAR structure could be clearer by explicitly defining the situation, task, actions, and results. The response is a bit long and could be made more concise without losing detail. To improve, focus on succinctly outlining the impact of these experiences and explicitly state how these learning experiences prepare you for the role. Overall, it shows strong readiness with room for tighter communication."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 34,
+          "AI score": 5,
+          "AI grader feedback": "The answer addresses key points like root cause analysis, replication of errors, and documentation, showing a good understanding of troubleshooting principles. However, it lacks the STAR format—there is no specific situation, task, actions taken, or results shared. The response is brief and somewhat vague, missing concrete examples or a systematic process. To improve, the candidate should outline a clear step-by-step approach with an example of a past troubleshooting experience, including how testing and documentation helped resolve or prevent issues. Adding specificity and structure will greatly enhance clarity and persuasiveness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 35,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and relevant, clearly mentioning Lean certification and how it has been applied in current and past roles, aligning well with key points. It shows a solid understanding of process improvement methodologies and a strategic approach towards automations. However, the STAR structure is only loosely followed; the candidate could improve by explicitly describing a specific situation, task, the actions taken, and the measurable results achieved from applying Lean principles. The response is a bit long and could be made more concise with sharper focus on their impact. To improve, add a concrete example with quantified results and clarify the certification details for clarity."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 36,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and relevant, clearly showcasing extensive BPO experience and progression into quality analyst and SME roles, which aligns well with the key points. However, it lacks a clear STAR format; the response would be stronger if the candidate provided a specific situation or challenge, their role (task), the actions taken, and measurable results or impact. The length is appropriate, but clarity could be improved by avoiding repetition and providing concrete examples of customer orientation or quality improvements. To improve, add a concise example of a quality improvement project and include outcomes to demonstrate impact and growth."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 37,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and clearly addresses the key points, emphasizing staying calm, prioritization, and communication when handling stress in fast-paced environments. However, it lacks a full STAR structure as it does not include a specific situation or measurable results, making it more hypothetical than behavioral. The response is slightly long and could be more concise while incorporating a brief example to showcase adaptability and effectiveness in a real scenario. To improve, the candidate should provide a concrete instance illustrating how these strategies helped them manage stress successfully and deliver results."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 38,
+          "AI score": 4,
+          "AI grader feedback": "The answer is authentic and addresses flexibility in working with different time zones, but it lacks depth, STAR structure, and concrete examples of collaboration or use of communication tools. The response is very brief and misses key points about remote work experience, specific tools used, or communication strategies. To improve, the candidate should provide a detailed example demonstrating how they successfully managed time zone challenges, leveraged collaboration tools, and maintained effective communication. Adding measurable results or outcomes would also strengthen the answer significantly."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 39,
+          "AI score": 7,
+          "AI grader feedback": "The answer shows authenticity and a strong grasp of key behaviors—professionalism, empathy, and solution focus—when handling difficult clients, addressing the key points well. However, it lacks a full STAR structure as it does not describe a concrete situation, task, specific actions taken, or measurable results achieved. The response is somewhat lengthy and could be made more concise with a clear example illustrating how these principles were applied in practice. To improve, include a brief story with a challenge faced, how empathy and communication were used to resolve it, and a positive outcome to demonstrate effectiveness."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 40,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and relevant, covering key aspects of quality assurance, root cause analysis, and process improvement. However, it lacks a clear STAR structure, missing a specific situation or task, detailed actions taken, and measurable results. The response is slightly long and could be more concise with a stronger focus on concrete examples and outcomes. To improve, the candidate should provide a specific example illustrating how they identified a bottleneck, implemented a process improvement, and the impact it had on customer experience or operational efficiency."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 41,
+          "AI score": 5,
+          "AI grader feedback": "The answer is honest and relevant, briefly addressing availability and flexibility, which aligns with the key points. However, it is too short and lacks any STAR structure or supporting examples to demonstrate true commitment or adaptability. The response would benefit from elaboration on past experiences working flexible schedules and how the candidate successfully managed such shifts. To improve, include a specific example showing flexibility in scheduling and how it positively impacted work or team outcomes, providing more assurance of commitment."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 42,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic and demonstrates a relevant, systematic approach to ensuring accuracy and attention to detail, with good emphasis on documentation and continuous improvement. However, it lacks a clear STAR structure—there is no specific situation or measurable result provided. The response is slightly long and could benefit from a concise example highlighting how these practices led to improved outcomes or error reduction. To improve, add a brief story illustrating application of these steps in a real project, including the impact on quality or efficiency."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 43,
+          "AI score": 5,
+          "AI grader feedback": "The answer is authentic and relevant, listing several tools used for dashboards and reporting, which aligns with the key points. However, it lacks the STAR format entirely; there is no specific situation or task, detailed actions, or measurable results shared. The response is very brief and somewhat generic, missing evidence of how the dashboards influenced data-driven decisions or KPI tracking. To improve, provide a detailed example of a dashboard you created, the problem it addressed, the process you followed, and the impact it had on decision-making or business outcomes."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 44,
+          "AI score": 6,
+          "AI grader feedback": "The answer is authentic and addresses key motivations such as growth, deeper expertise, team environment, and impact at scale, aligning well with the key points. However, it lacks a clear STAR structure and could be more concise and focused. The response would be stronger with a specific example or story illustrating why the candidate is motivated to transition and how their past experience prepares them for the automation specialist role. To improve, add a brief situation or context from freelancing, the task of growing expertise, actions taken toward that goal, and expected results from joining a larger team."
+        }
+      },
+      {
+        "json": {
+          "QUESTION_NUMBER": 45,
+          "AI score": 7,
+          "AI grader feedback": "The answer is authentic, clearly expressing openness to feedback, a growth mindset, and professionalism, aligning with key points. However, it lacks a full STAR format—no specific situation, task, or measurable result is mentioned. The response is somewhat long and can be more concise with a concrete example illustrating how feedback was received and led to improvement. To improve, include a brief story highlighting an instance of receiving feedback, the action taken to correct and learn from it, and the positive outcome."
+        }
+      }
+    ]
+  },
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Gg8ezpJqsDmVkxDI",
+    "timeSavedPerExecution": 300
+  },
+  "versionId": "4d21d358-0183-4b8b-9687-4ab4c40c804c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cb1f5c1bcc343b65682dd8e6057a59f10a2b53fede8171465579f6fafa318ab2"
+  },
+  "id": "FjiSpGx5n1pS3jD7",
+  "tags": [
+    {
+      "updatedAt": "2025-11-08T16:03:24.903Z",
+      "createdAt": "2025-11-08T16:03:24.903Z",
+      "id": "v4CemmlCEx5Awg2L",
+      "name": "gmail"
+    },
+    {
+      "updatedAt": "2025-11-08T16:03:20.577Z",
+      "createdAt": "2025-11-08T16:03:20.577Z",
+      "id": "HgrFOR5lkDx6ARH4",
+      "name": "openai"
+    },
+    {
+      "updatedAt": "2025-11-08T16:03:07.732Z",
+      "createdAt": "2025-11-08T16:03:07.732Z",
+      "id": "Xd207hyVT4zGuRyL",
+      "name": "ai agent"
+    },
+    {
+      "updatedAt": "2025-11-08T16:02:59.733Z",
+      "createdAt": "2025-11-08T16:02:59.733Z",
+      "id": "YJLwj9nseipVFlsz",
+      "name": "google sheets"
+    }
+  ]
+}

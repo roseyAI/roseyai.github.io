@@ -480,6 +480,28 @@
       ],
       "thumbnailImage": "",
       "allImages": []
+    },
+    {
+      "slug": "instagram-auto-dm",
+      "title": "(GoHighLevel) Instagram Auto DM & Lead Qualifier",
+      "service": "Social Media Lead Gen",
+      "tag": "ghl, instagram, facebook",
+      "featured": "No",
+      "shortDescription": "Automated Instagram engagement system that likes comments, sends personalized DMs, qualifies leads through conversation, and delivers booking links to interested prospects.",
+      "problem": "Instagram comments are engagement opportunities going to waste. Manually DMing every commenter is impossible to scale. Leads get cold while waiting for manual follow-up. No systematic way to qualify leads before sending booking links. Missing out on hot leads who comment but never take next step. Team spends hours copying/pasting the same DM sequences.",
+      "solution": "Built an intelligent GoHighLevel automation that monitors both Instagram and Facebook comments, automatically likes each comment for engagement, sends personalized welcome DMs, guides prospects through qualifying questions using interactive messenger, and delivers the booking link only to qualified leads - all while the business owner sleeps.",
+      "benefits": [
+        "Instant engagement - Comments liked and DMs sent within seconds",
+        "Higher conversion rates - Strike while leads are hot",
+        "Automated lead qualification - Only qualified leads get booking links",
+        "Works 24/7 - Never miss a comment, even at 3 AM",
+        "Scales infinitely - Handle 10 or 1000 comments with same effort",
+        "Saves 10-15 hours weekly on manual DM responses",
+        "Consistent messaging - Every lead gets the same quality experience",
+        "Multi-platform - Works for both Instagram and Facebook comments"
+      ],
+      "thumbnailImage": "",
+      "allImages": []
     }
   ]
 }

@@ -1757,6 +1757,36 @@ body::before {
     color: white;
 }
 
+/* Certification Badge Link (clickable badge on homepage) */
+.cert-badge-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.cert-badge-img {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cert-badge-link:hover .cert-badge-img {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+}
+
+.cert-badge-label {
+    margin-top: var(--spacing-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    text-align: center;
+}
+
 /* What I Do Section */
 .what-i-do-section {
     padding: var(--spacing-2xl) var(--spacing-xl);

@@ -15,15 +15,6 @@
         <!-- Header with Icon Navigation -->
         <header class="header-nav">
             <nav class="icon-nav">
-                <a href="../index.html" class="icon-nav-item group">
-                    <div class="icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="32" width="32">
-                            <path stroke="currentColor" stroke-width="1.5" d="M9 22V12H15V22M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"></path>
-                        </svg>
-                    </div>
-                    <span class="icon-tooltip">Home</span>
-                </a>
-
                 <a href="../about.html" class="icon-nav-item group">
                     <div class="icon-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
@@ -81,6 +72,11 @@
                     <h2 class="detail-section-heading">Solution</h2>
                     <p class="solution-text">Built an intelligent GoHighLevel automation that monitors both Instagram and Facebook comments, automatically likes each comment for engagement, sends personalized welcome DMs, guides prospects through qualifying questions using interactive messenger, and delivers the booking link only to qualified leads - all while the business owner sleeps.</p>
 
+                    <div class="project-screenshot-container">
+                        <img src="../images/projects/instagram-auto-dm-workflow.png" alt="Instagram Auto DM Workflow" class="project-screenshot clickable-image">
+                        <p class="image-caption">GoHighLevel workflow showing dual triggers for Instagram and Facebook comments</p>
+                    </div>
+
                     <h2 class="detail-section-heading">Benefits</h2>
                     <ul class="benefits-list">
                         <li><strong>Instant engagement</strong> - Comments liked and DMs sent within seconds</li>
@@ -123,5 +119,36 @@
             </div>
         </main>
     </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Image zoom modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const clickableImages = document.querySelectorAll('.clickable-image');
+        const closeBtn = document.querySelector('.close-modal');
+
+        clickableImages.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

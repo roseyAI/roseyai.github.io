@@ -1271,6 +1271,14 @@ body::before {
     margin-bottom: var(--spacing-lg);
 }
 
+.looker-embed-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
